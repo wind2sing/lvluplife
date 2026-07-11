@@ -1,13 +1,13 @@
-# Archived UI screenshots
+# 原站界面截图
 
-Viewport screenshots captured from the Wayback Machine for visual and product-architecture reference.
+以下截图来自 Wayback Machine，用于保留原站的视觉语言和产品架构。
 
-| File | Archived page | What it shows |
+| 文件 | 页面 | 主要内容 |
 | --- | --- | --- |
-| `home-2017.png` | 2017 home page | Public registration hero, community feed, category rail, card anatomy |
-| `profile-eccsup-2017.png` | 2017 public profile | Personal achievement feed and right-side character sheet |
-| `category-fitness-2016.png` | 2016 fitness category | Locked achievement progression and category layout |
-| `high-scores-2016.png` | 2016 high scores | Weekly/monthly/all-time ranking structure |
-| `help-2016.png` | 2016 help page | Original rules and explanatory content layout |
+| `home-2017.png` | 2017 年首页 | 注册区、社区动态、分类侧栏和成就卡片 |
+| `profile-eccsup-2017.png` | 2017 年公开主页 | 个人成就时间线与角色数据侧栏 |
+| `category-fitness-2016.png` | 2016 年健身分类 | 等级锁定占位和分类结构 |
+| `high-scores-2016.png` | 2016 年排行榜 | 周榜、月榜与总榜 |
+| `help-2016.png` | 2016 年帮助页 | 原版玩法和规则说明 |
 
-The Wayback toolbar is intentionally retained so the capture date and provenance remain visible.
+截图保留了 Wayback 顶部工具栏，便于确认日期与来源。

@@ -1,93 +1,121 @@
-# Original LvlUpLife architecture notes
+# 原版 LvlUpLife 产品架构考古
 
-This document records the recoverable product architecture of the original LvlUpLife, based on the public challenge backup and archived pages from 2016–2018.
+本文基于公开挑战备份，以及 Wayback Machine 中 2016–2018 年保存的首页、分类页、帮助页、排行榜和用户主页整理。
 
-## Core loop
+## 核心循环
 
-1. Browse an achievement category.
-2. Pick a real-world achievement, or star it as a goal.
-3. Do it in real life.
-4. Record the completion with optional notes and a photo.
-5. Receive XP and one or more of six skill-point types.
-6. Publish the completion to a personal activity log and, depending on privacy, the community/friends feed.
-7. Level up, unlock harder achievements, and compare progress through profiles and high scores.
+1. 进入一个成就分类。
+2. 选择已解锁成就，或将它收藏为目标。
+3. 在现实中真正完成它。
+4. 写下说明，也可以附照片。
+5. 获得经验和六项属性中的一种或多种成长。
+6. 完成记录进入个人动态，并根据隐私设置进入社区或好友动态。
+7. 升级、解锁更难的成就，并通过角色资料和排行榜观察成长。
 
-The original help page explicitly described the service as an honour system. The product's emotional reward came from attaching a small, visible RPG reward to a truthful real-world action.
+原站明确采用“荣誉规则”：系统不会验证现实行为，成就是否完成由玩家自己判断。产品的关键体验，是给一个诚实的现实行动附上即时、可见的 RPG 奖励。
 
-## Progression model
+## 已确认的解锁规则
 
-- XP determined the player's level.
-- Higher levels required more XP and unlocked harder achievements.
-- Achievements could repeat once per day, week, month, year, or lifetime.
-- Longer cooldowns generally awarded more XP.
-- Completing an achievement consumed one energy heart; one heart regenerated each hour.
-- New accounts started with three maximum hearts, with capacity increasing through progression.
-- Level-up events appeared in the same activity feed as achievement completions.
+原站不是简单展示全部成就，而是分成三层：
 
-## Six life stats
+1. **当前等级已达到**：显示成就名称、分类图标和完成入口。
+2. **即将解锁**：隐藏真实名称与奖励，只显示 `LOCKED` 和所需等级。例如匿名状态下的健身分类依次显示等级 `1、1、2、2、3` 的五个锁定占位。
+3. **更远的成就**：不渲染单独卡片，只显示“还有更多成就被隐藏”。
 
-| Code | Name | Meaning |
+帮助页原文确认：等级不足时，成就会同时处于“锁定”和“隐藏”状态；升级会逐步让更困难的成就出现。
+
+不同分类的首批等级并不采用完全统一的数学公式，而是按实际难度人工配置。已从归档页面恢复的例子包括：
+
+| 分类 | 首批成就所需等级 |
+| --- | --- |
+| 健身与健康 | 1、1、2、2、3 |
+| 音乐 | 1、1、2、3、3 |
+| 摄影 | 1、2、3、4、5 |
+| 写作 | 1、3、4、5、6 |
+| 阅读 | 1、2、3、4、4 |
+| 经典书单 | 1、1、1、1、1 |
+| 运动 | 10、11、11、12、12 |
+| 旅行 | 1、2、2、4、6 |
+
+当前重制版优先使用这些已恢复等级；归档中无法恢复的后续项目，则依据备份顺序单调递增，最高延伸到等级 30。
+
+## 重复完成与冷却
+
+成就分为五种重复周期：
+
+- 每日一次
+- 每周一次
+- 每月一次
+- 每年一次
+- 终身一次
+
+完成后的成就仍会显示，但冷却结束前不能再次领取经验。周期越长，通常奖励越高。终身成就相当于人生愿望清单，只能领取一次奖励，但原记录可以继续编辑补充。
+
+## 等级与行动力
+
+- 总经验决定等级，等级越高，下一次升级需要的经验越多。
+- 升级会解锁更多成就，并在部分等级获得额外能力。
+- 每完成一个成就消耗一颗心。
+- 每小时恢复一颗心。
+- 新账号初始最多拥有三颗心，升级后上限会增加。
+- 删除刚完成的记录会返还对应行动力。
+
+## 六项现实属性
+
+| 原代码 | 中文 | 含义 |
 | --- | --- | --- |
-| STR | Strength | Physical health and fitness |
-| CUL | Culture | Arts, history, traditions, and worldliness |
-| ENV | Environment | Home, outdoors, city, country, and surroundings |
-| CHA | Charisma | Social skills, communication, and interaction |
-| TAL | Talent | Specialized skills and abilities |
-| INT | Intellect | Knowledge, education, and research |
+| STR | 力量 | 身体健康、体能和运动 |
+| CUL | 文化 | 艺术、历史、传统和开阔眼界 |
+| ENV | 环境 | 家庭、户外、城市与周围世界 |
+| CHA | 魅力 | 社交、表达、沟通和人际互动 |
+| TAL | 才能 | 专业技能与特殊能力 |
+| INT | 智慧 | 知识、教育、学习和研究 |
 
-Profile stat bars were relative to the player's strongest stat, not an absolute cap.
+个人主页的属性条不是固定满值，而是以玩家当前最高属性作为百分之百，其余属性按相对比例显示。
 
-## Recovered information architecture
+## 已恢复的信息架构
 
-Public routes found in the Wayback index and archived navigation:
+- `/`：注册入口与社区成就动态
+- `/category/{slug}`：分类成就、已解锁内容和锁定占位
+- `/category/goals`：收藏目标
+- `/category/{slug}/hidden`、`/all`：隐藏或全部状态变体
+- `/achievement/{id}/{slug}`：成就详情与完成表单
+- `/achievement/{id}/{slug}/community`：同一成就的社区完成记录
+- `/users/{username}`：公开个人时间线和角色数据
+- `/u/{username}/v/{count}`：更早的个人动态分页
+- `/highscores`、`/highscores/community`：不同时间范围和社交范围的排行榜
+- `/friends`：好友关系和好友动态
+- `/notifications`：好友请求与通知
+- `/profile`、`/profile/new`：个人资料与新用户流程
+- `/settings`：账号与隐私设置
+- `/help`：玩法规则
+- `/feedback`、`/terms`：反馈和法律页面
 
-- `/` — registration plus community achievement feed
-- `/category/{slug}` — category list with locked/unlocked achievements
-- `/category/goals` — starred achievements
-- `/category/{slug}/hidden` and `/all` — hidden/all variants
-- `/achievement/{id}/{slug}` — achievement completion/details
-- `/achievement/{id}/{slug}/community` — community completions for one achievement
-- `/users/{username}` — public player timeline and profile statistics
-- `/u/{username}/v/{count}` — older profile activity pagination
-- `/highscores` and `/highscores/community` — rankings for time windows and social scope
-- `/friends` — friends management/feed scope
-- `/notifications` — friend requests and other activity
-- `/profile`, `/profile/new` — profile management/onboarding
-- `/settings` — account and privacy preferences
-- `/help` — rules and how-to-play documentation
-- `/feedback` and `/terms` — support/legal
+## 社交与个人主页
 
-## Categories recovered from the challenge backup
+- 首页默认展示社区成就动态。
+- 添加好友后可以切换到好友动态和好友排行榜。
+- 个人主页包含头像、等级进度、六项属性、总经验、日均经验、排名、完成总数、不同成就数量、日均完成数和当前等级持续时间。
+- 动态卡片包含用户、日期、等级、分类图标、成就名称、说明或照片、经验与属性奖励。
+- 私密主页仍可对已接受的好友开放。
 
-The supplied backup contains 538 challenges across 18 headings: Arts & Creativity, Music, Photography, Writing, Career & Finances, Fitness & Health, Sports, Food & Cooking, Household & DIY, Humanity, Mental, Outdoors, Reading, Top 150, School & Learning, Social, Travel, and Destinations.
+## 自定义成就
 
-The archived website also exposed a `Fun` category and a personal `Goals` category. The supplied backup is treated as canonical for initial imported content; future data work can reconcile additional archived challenges without mutating the source backup.
+玩家可以创建只属于自己的成就，选择分类、等级、属性奖励和重复周期。可分配属性点上限为成就等级的三倍；如果自定义成就等级高于当前等级，它同样会隐藏并锁定。
 
-## Social and profile model
+## 当前单人重制版的取舍
 
-- The home page defaulted to a community achievement feed.
-- Friends unlocked a friends-only feed and a friends-only leaderboard.
-- Profiles included avatar, level progress, six skill bars, total XP, average XP per day, rank, total completions, unique achievements, completion rate, and time spent at the current level.
-- Activity cards included username, date, current level, category icon, challenge title, optional note/photo, XP, and skill gains.
-- Private profiles remained visible to accepted friends.
+- 保留现实行动、诚实记录和即时奖励的核心循环。
+- 保留等级解锁、冷却、行动力、经验、六项属性、目标与冒险日志。
+- 所有数据优先保存在本地，不要求注册。
+- 这版明确保持单人模式，不实现好友、社区、公共排行榜或账号同步。
+- 锁定成就不泄露名称与奖励，只展示少量下一阶段占位，其余隐藏在迷雾中。
 
-## Custom achievements
+## 资料来源
 
-Players could add private custom achievements to a category, choose an achievement level, distribute a limited number of skill points, and choose a repeat cadence. The available skill-point budget was three times the achievement level.
-
-## Modernization decisions for this rebuild
-
-- Keep the real-world action → proof/note → immediate reward loop.
-- Keep XP, levels, six stats, goals, repeat cadence, an activity chronicle, and custom quests.
-- Start local-first with no mandatory registration; persist progress in the browser.
-- Show the complete imported library instead of hiding most content, while using recommended levels and difficulty tiers for guidance.
-- Keep this build intentionally single-player. Public social features, friends, public rankings, accounts, and server sync are out of scope unless the project direction changes later.
-
-## Sources
-
-- Challenge backup: <https://docs.google.com/document/d/1ji2-rvl26vksrx874wFnt8Ixs-zXcBKL/edit>
-- Archived home page: <https://web.archive.org/web/20170604105300/http://lvluplife.com/>
-- Archived help page: <https://web.archive.org/web/20160126233355/http://lvluplife.com/help>
-- Archived high scores: <https://web.archive.org/web/20160125082506/http://lvluplife.com/highscores>
-- Archived public profile: <https://web.archive.org/web/20170606154601/http://lvluplife.com/users/eccsup>
-- Wayback CDX route index: <https://web.archive.org/cdx/search/cdx?url=lvluplife.com/*>
+- 挑战备份：<https://docs.google.com/document/d/1ji2-rvl26vksrx874wFnt8Ixs-zXcBKL/edit>
+- 2017 年首页：<https://web.archive.org/web/20170604105300/http://lvluplife.com/>
+- 2016 年帮助页：<https://web.archive.org/web/20160126233355/http://lvluplife.com/help>
+- 2016 年排行榜：<https://web.archive.org/web/20160125082506/http://lvluplife.com/highscores>
+- 2017 年公开用户主页：<https://web.archive.org/web/20170606154601/http://lvluplife.com/users/eccsup>
+- Wayback 路由索引：<https://web.archive.org/cdx/search/cdx?url=lvluplife.com/*>

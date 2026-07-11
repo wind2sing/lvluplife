@@ -1,13 +1,15 @@
-# Current rebuild screenshots
+# 当前重制版验收截图
 
-Screenshots saved during browser-based visual and interaction testing.
+这些截图是在浏览器实际运行和交互测试过程中保存的。
 
-| File | State |
+| 文件 | 状态 |
 | --- | --- |
-| `home.png` | Fresh single-player camp dashboard |
-| `quest-board.png` | Full imported quest library and filters |
-| `completion-modal.png` | Honour-system completion note and reward claim |
-| `chronicle.png` | Verified completion displayed in the private activity log |
-| `mobile-home.png` | Responsive mobile camp view at 390 × 844 |
+| `home.png` | 中文版单人营地首页与行动力 |
+| `quest-board.png` | 中文版任务公会、解锁进度与筛选 |
+| `locked-category.png` | 中文版等级锁定、未知成就迷雾与隐藏数量 |
+| `completion-modal.png` | 中文版荣誉规则与完成奖励弹窗 |
+| `chronicle.png` | 中文版私人冒险日志 |
+| `level-up.png` | 等级提升与新成就解锁反馈 |
+| `mobile-home.png` | 390 × 844 中文移动端首页 |
 
-The completion and chronicle screenshots use temporary test data created while verifying local persistence.
+其中完成弹窗和日志截图使用的是验收时创建的临时测试记录。
