@@ -6,10 +6,13 @@
   "scripts": {
     "data:generate": "node scripts/generate-challenges.mjs",
     "data:translate": "node scripts/translate-challenges.mjs",
-    "dev": "vite",
+    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:server\"",
+    "dev:web": "vite",
+    "dev:server": "node --disable-warning=ExperimentalWarning --watch server/index.mjs",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node --disable-warning=ExperimentalWarning server/index.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.24.0",
@@ -21,6 +24,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "concurrently": "^9.2.1",
     "oxlint": "^1.71.0",
     "typescript": "~6.0.2",
     "vite": "^8.1.1"
