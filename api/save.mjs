@@ -4,6 +4,7 @@ function normalizeSave(value) {
   return {
     activeIds: Array.isArray(value.activeIds) ? value.activeIds.filter((item) => typeof item === 'string') : [],
     favoriteIds: Array.isArray(value.favoriteIds) ? value.favoriteIds.filter((item) => typeof item === 'string') : [],
+    hiddenIds: Array.isArray(value.hiddenIds) ? value.hiddenIds.filter((item) => typeof item === 'string') : [],
     completions: Array.isArray(value.completions) ? value.completions.filter((item) => item && typeof item.id === 'string' && typeof item.challengeId === 'string' && typeof item.completedAt === 'string').map((item) => ({
       id: item.id,
       challengeId: item.challengeId,

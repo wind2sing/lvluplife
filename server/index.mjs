@@ -14,6 +14,9 @@ mkdirSync(dataDir, { recursive: true })
 const db = new DatabaseSync(join(dataDir, 'lvluplife.sqlite'))
 db.exec(readFileSync(join(root, 'server/schema.sql'), 'utf8'))
 
+const questStateColumns = db.prepare('PRAGMA table_info(quest_state)').all().map((item) => item.name)
+if (!questStateColumns.includes('hidden')) db.exec('ALTER TABLE quest_state ADD COLUMN hidden INTEGER NOT NULL DEFAULT 0 CHECK (hidden IN (0, 1))')
+
 const settingsTableSql = db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'settings'").get()?.sql ?? ''
 if (!settingsTableSql.includes("'pixel'")) {
   db.exec(`
@@ -79,13 +82,13 @@ const selectChallenges = db.prepare(`
     tier_name_zh, xp, cadence_zh, stats_json, source
   FROM challenges ORDER BY rowid
 `)
-const selectQuestState = db.prepare('SELECT challenge_id, active, favorite FROM quest_state')
+const selectQuestState = db.prepare('SELECT challenge_id, active, favorite, hidden FROM quest_state')
 const selectCompletions = db.prepare('SELECT id, challenge_id, note, completed_at FROM completions ORDER BY completed_at DESC')
 const selectSettings = db.prepare('SELECT language, font FROM settings WHERE id = 1')
 const selectInitialized = db.prepare("SELECT value FROM app_meta WHERE key = 'state_initialized'")
 const upsertQuestState = db.prepare(`
-  INSERT INTO quest_state (challenge_id, active, favorite) VALUES (?, ?, ?)
-  ON CONFLICT(challenge_id) DO UPDATE SET active = excluded.active, favorite = excluded.favorite
+  INSERT INTO quest_state (challenge_id, active, favorite, hidden) VALUES (?, ?, ?, ?)
+  ON CONFLICT(challenge_id) DO UPDATE SET active = excluded.active, favorite = excluded.favorite, hidden = excluded.hidden
 `)
 const insertCompletion = db.prepare('INSERT INTO completions (id, challenge_id, note, completed_at) VALUES (?, ?, ?, ?)')
 const updateSettings = db.prepare('UPDATE settings SET language = ?, font = ? WHERE id = 1')
@@ -131,6 +134,7 @@ function getBootstrap() {
     save: {
       activeIds: stateRows.filter((item) => item.active).map((item) => item.challenge_id),
       favoriteIds: stateRows.filter((item) => item.favorite).map((item) => item.challenge_id),
+      hiddenIds: stateRows.filter((item) => item.hidden).map((item) => item.challenge_id),
       completions,
     },
     settings: { language: settings.language, font: settings.font },
@@ -140,13 +144,14 @@ function getBootstrap() {
 function replaceSave(save) {
   const activeIds = new Set(Array.isArray(save.activeIds) ? save.activeIds : [])
   const favoriteIds = new Set(Array.isArray(save.favoriteIds) ? save.favoriteIds : [])
-  const challengeIds = new Set([...activeIds, ...favoriteIds])
+  const hiddenIds = new Set(Array.isArray(save.hiddenIds) ? save.hiddenIds : [])
+  const challengeIds = new Set([...activeIds, ...favoriteIds, ...hiddenIds])
   const completions = Array.isArray(save.completions) ? save.completions : []
 
   db.exec('BEGIN')
   try {
     db.exec('DELETE FROM quest_state; DELETE FROM completions;')
-    for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0)
+    for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)
     for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt)
     markInitialized.run()
     db.exec('COMMIT')

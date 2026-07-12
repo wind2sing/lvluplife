@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS challenges (
 CREATE TABLE IF NOT EXISTS quest_state (
   challenge_id TEXT PRIMARY KEY REFERENCES challenges(id) ON DELETE CASCADE,
   active INTEGER NOT NULL DEFAULT 0 CHECK (active IN (0, 1)),
-  favorite INTEGER NOT NULL DEFAULT 0 CHECK (favorite IN (0, 1))
+  favorite INTEGER NOT NULL DEFAULT 0 CHECK (favorite IN (0, 1)),
+  hidden INTEGER NOT NULL DEFAULT 0 CHECK (hidden IN (0, 1))
 );
 
 CREATE TABLE IF NOT EXISTS completions (

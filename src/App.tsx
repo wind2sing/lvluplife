@@ -104,6 +104,7 @@ type Attachment = {
 type SaveState = {
   activeIds: string[]
   favoriteIds: string[]
+  hiddenIds: string[]
   completions: Completion[]
 }
 
@@ -121,7 +122,7 @@ type BootstrapData = {
 
 const STORAGE_KEY = 'lvluplife-save-v1'
 const ACCESS_KEY_STORAGE = 'lvluplife-access-key-v1'
-const emptySave: SaveState = { activeIds: [], favoriteIds: [], completions: [] }
+const emptySave: SaveState = { activeIds: [], favoriteIds: [], hiddenIds: [], completions: [] }
 const defaultSettings: AppSettings = { language: 'zh', font: 'noto' }
 
 const LanguageContext = createContext<Language>('zh')
@@ -290,6 +291,7 @@ function App() {
   const [view, setView] = useState<View>(() => readBrowserRoute().view)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('全部任务')
+  const [showSealed, setShowSealed] = useState(false)
   const [selected, setSelected] = useState<Challenge | null>(null)
   const [detailChallengeId, setDetailChallengeId] = useState<string | null>(() => readBrowserRoute().challengeId)
   const [undoTarget, setUndoTarget] = useState<{ completion: Completion; challenge: Challenge } | null>(null)
@@ -313,7 +315,7 @@ function App() {
         }
         if (!response.ok) throw new Error('Neon 云存档服务不可用')
         const data = (await response.json()) as BootstrapData
-        let initialSave = data.save
+        let initialSave = { ...emptySave, ...data.save }
         if (!data.initialized) {
           initialSave = loadSave()
           const migration = await fetch('/api/save', {
@@ -367,6 +369,7 @@ function App() {
       setUndoTarget(null)
       setEnergyHelp(false)
       setMobileNav(false)
+      setShowSealed(false)
       window.scrollTo({ top: 0 })
     }
     window.addEventListener('popstate', syncBrowserRoute)
@@ -394,8 +397,9 @@ function App() {
   )
 
   const unlockedChallenges = challenges.filter((item) => item.level <= level.level)
-  const availableChallenges = unlockedChallenges.filter((item) => !getCooldownLabel(item, save.completions, settings.language))
-  const dailyPool = availableChallenges.length ? availableChallenges : unlockedChallenges
+  const recommendationPool = unlockedChallenges.filter((item) => !save.hiddenIds.includes(item.id))
+  const availableChallenges = recommendationPool.filter((item) => !getCooldownLabel(item, save.completions, settings.language))
+  const dailyPool = availableChallenges.length ? availableChallenges : recommendationPool
   const dayIndex = dailyPool.length ? Math.floor(Date.now() / 86400000) % dailyPool.length : 0
   const featuredQuests = dailyPool.length ? [dailyPool[dayIndex], dailyPool[(dayIndex + 17) % dailyPool.length], dailyPool[(dayIndex + 41) % dailyPool.length]].filter(
     (item, index, items) => item && items.findIndex((candidate) => candidate.id === item.id) === index,
@@ -404,23 +408,25 @@ function App() {
   const visibleChallenges = useMemo(() => {
     const query = search.trim().toLowerCase()
     const categoryPool = challenges.filter((item) => category === '全部任务' || item.category === category)
+    const visibilityPool = categoryPool.filter((item) => showSealed ? save.hiddenIds.includes(item.id) : !save.hiddenIds.includes(item.id))
     if (query) {
-      return categoryPool.filter(
-        (item) => item.level <= level.level && ([item.title, item.titleOriginal, item.category, item.categoryOriginal].some((value) => value.toLowerCase().includes(query))),
+      return visibilityPool.filter(
+        (item) => (showSealed || item.level <= level.level) && ([item.title, item.titleOriginal, item.category, item.categoryOriginal].some((value) => value.toLowerCase().includes(query))),
       )
     }
-    const unlocked = categoryPool.filter((item) => item.level <= level.level)
+    if (showSealed) return visibilityPool
+    const unlocked = visibilityPool.filter((item) => item.level <= level.level)
     if (category === '全部任务') return unlocked
-    const nextLocked = categoryPool.filter((item) => item.level > level.level).sort((a, b) => a.level - b.level).slice(0, 5)
+    const nextLocked = visibilityPool.filter((item) => item.level > level.level).sort((a, b) => a.level - b.level).slice(0, 5)
     return [...unlocked, ...nextLocked]
-  }, [category, challenges, level.level, search])
+  }, [category, challenges, level.level, save.hiddenIds, search, showSealed])
 
-  const selectedCategoryPool = challenges.filter((item) => category === '全部任务' || item.category === category)
+  const selectedCategoryPool = challenges.filter((item) => (category === '全部任务' || item.category === category) && !save.hiddenIds.includes(item.id))
   const selectedLockedCount = selectedCategoryPool.filter((item) => item.level > level.level).length
   const hiddenLockedCount = category === '全部任务' ? selectedLockedCount : Math.max(0, selectedLockedCount - 5)
 
-  const activeChallenges = save.activeIds.map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
-  const favoriteChallenges = save.favoriteIds.map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
+  const activeChallenges = save.activeIds.filter((id) => !save.hiddenIds.includes(id)).map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
+  const favoriteChallenges = save.favoriteIds.filter((id) => !save.hiddenIds.includes(id)).map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
 
   useEffect(() => {
     if (!ready || !detailChallengeId || detailChallenge) return
@@ -444,6 +450,18 @@ function App() {
         ? current.favoriteIds.filter((item) => item !== id)
         : [...current.favoriteIds, id],
     }))
+  }
+
+  function toggleSealed(id: string) {
+    setSave((current) => {
+      const sealed = current.hiddenIds.includes(id)
+      return {
+        ...current,
+        activeIds: sealed ? current.activeIds : current.activeIds.filter((item) => item !== id),
+        favoriteIds: sealed ? current.favoriteIds : current.favoriteIds.filter((item) => item !== id),
+        hiddenIds: sealed ? current.hiddenIds.filter((item) => item !== id) : [...current.hiddenIds, id],
+      }
+    })
   }
 
   function completeQuest(attachments: Attachment[] = []) {
@@ -516,6 +534,7 @@ function App() {
     setSelected(null)
     setUndoTarget(null)
     setEnergyHelp(false)
+    setShowSealed(false)
     setMobileNav(false)
     if (window.location.pathname !== viewPaths[next]) window.history.pushState({ lvluplife: true }, '', viewPaths[next])
     window.scrollTo({ top: 0 })
@@ -554,10 +573,12 @@ function App() {
           challenge={detailChallenge}
           completions={save.completions}
           favorite={save.favoriteIds.includes(detailChallenge.id)}
+          sealed={save.hiddenIds.includes(detailChallenge.id)}
           level={level.level}
           onBack={closeChallenge}
           onComplete={setSelected}
           onFavorite={toggleFavorite}
+          onSeal={toggleSealed}
           onStart={toggleActive}
           onUndo={(completion) => setUndoTarget({ completion, challenge: detailChallenge })}
         />
@@ -571,6 +592,7 @@ function App() {
           category={category}
           completions={save.completions}
           favoriteIds={save.favoriteIds}
+          hiddenIds={save.hiddenIds}
           hiddenLockedCount={hiddenLockedCount}
           level={level.level}
           totalChallenges={challenges.length}
@@ -579,10 +601,14 @@ function App() {
           onCategory={setCategory}
           onComplete={setSelected}
           onFavorite={toggleFavorite}
+          onSeal={toggleSealed}
           onOpen={openChallenge}
           onStart={toggleActive}
           search={search}
+          sealedCount={save.hiddenIds.length}
           setSearch={setSearch}
+          showSealed={showSealed}
+          onShowSealed={() => setShowSealed((current) => !current)}
           visibleChallenges={visibleChallenges}
         />
       )
@@ -804,16 +830,21 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
   )
 }
 
-function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onFavorite, onOpen, onStart, search, setSearch, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
+function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
   category: string
+  hiddenIds: string[]
   hiddenLockedCount: number
   level: number
   totalChallenges: number
   unlockedTotal: number
   nextLevel: number
   onCategory: (value: string) => void
+  onSeal: (id: string) => void
+  onShowSealed: () => void
   search: string
+  sealedCount: number
   setSearch: (value: string) => void
+  showSealed: boolean
   visibleChallenges: Challenge[]
 }) {
   const { language, text } = useLanguage()
@@ -829,13 +860,13 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLock
       <div className="category-strip">
         {categories.map((item) => <button key={item} className={category === item ? 'active' : ''} onClick={() => onCategory(item)}>{item === '全部任务' ? <Sparkles size={17} /> : (() => { const Icon = categoryMeta[item].icon; return <Icon size={17} /> })()}<span>{item === '全部任务' ? text('全部任务', 'All') : language === 'zh' ? categoryMeta[item].short : categoryMeta[item].shortEn}</span></button>)}
       </div>
-      <div className="result-meta"><strong>{visibleChallenges.filter((item) => item.level <= level).length}</strong> {text('项可领取任务', 'available quests')} <span>•</span> {category === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? category : categoryMeta[category].labelEn}</div>
-      <div className="quest-list">
-        {visibleChallenges.slice(0, 80).map((challenge) => challenge.level > level
+      <div className="result-toolbar"><div className="result-meta"><strong>{showSealed ? visibleChallenges.length : visibleChallenges.filter((item) => item.level <= level).length}</strong> {showSealed ? text('项封印任务', 'sealed quests') : text('项可领取任务', 'available quests')} <span>•</span> {showSealed ? text('封印库', 'Sealed vault') : category === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? category : categoryMeta[category].labelEn}</div><button className={`sealed-filter ${showSealed ? 'active' : ''}`} onClick={onShowSealed}><LockKeyhole size={14} /> {showSealed ? text('返回任务', 'Back to quests') : text('封印库', 'Sealed vault')} {sealedCount > 0 && <b>{sealedCount}</b>}</button></div>
+      {visibleChallenges.length > 0 ? <div className="quest-list">
+        {visibleChallenges.slice(0, 80).map((challenge) => !showSealed && challenge.level > level
           ? <LockedQuestRow key={challenge.id} challenge={challenge} />
-          : <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}
-      </div>
-      {hiddenLockedCount > 0 && !search && <div className="hidden-quests"><LockKeyhole size={17} /><strong>{text(`还有 ${hiddenLockedCount} 项成就隐藏在迷雾中`, `${hiddenLockedCount} achievements remain hidden in the fog`)}</strong><span>{text('继续获得经验并提升等级后，它们才会显露名称。', 'Earn XP and level up to reveal their names.')}</span></div>}
+          : <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} sealed={hiddenIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onSeal={onSeal} onStart={onStart} />)}
+      </div> : showSealed ? <EmptyState compact icon={LockKeyhole} title={text('封印库还是空的', 'The sealed vault is empty')} text={text('在不想再看到的任务详情中选择“封印任务”，它们会收纳在这里。', 'Seal quests you no longer want to see and they will be stored here.')} /> : null}
+      {!showSealed && hiddenLockedCount > 0 && !search && <div className="hidden-quests"><LockKeyhole size={17} /><strong>{text(`还有 ${hiddenLockedCount} 项成就隐藏在迷雾中`, `${hiddenLockedCount} achievements remain hidden in the fog`)}</strong><span>{text('继续获得经验并提升等级后，它们才会显露名称。', 'Earn XP and level up to reveal their names.')}</span></div>}
       {visibleChallenges.length > 80 && <p className="result-note">{text('当前显示前 80 项结果，请使用搜索或分类继续缩小范围。', 'Showing the first 80 results. Search or filter to narrow the list.')}</p>}
     </>
   )
@@ -886,7 +917,7 @@ function QuestCard({ active, challenge, completions, favorite, featured, onCompl
   )
 }
 
-function QuestRow({ active, challenge, completions, favorite, onComplete, onFavorite, onOpen, onStart }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onOpen: (challenge: Challenge) => void; onStart: (id: string) => void }) {
+function QuestRow({ active, challenge, completions, favorite, onComplete, onFavorite, onOpen, onSeal, onStart, sealed = false }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onOpen: (challenge: Challenge) => void; onSeal?: (id: string) => void; onStart: (id: string) => void; sealed?: boolean }) {
   const { category, language, text, title } = useLanguage()
   const meta = categoryMeta[challenge.category]
   const Icon = meta.icon
@@ -895,8 +926,8 @@ function QuestRow({ active, challenge, completions, favorite, onComplete, onFavo
     <article className={`quest-row ${active ? 'quest-row--active' : ''}`} onClick={() => onOpen(challenge)} onKeyDown={(event) => { if (event.key === 'Enter') onOpen(challenge) }} role="button" tabIndex={0} style={{ '--category-color': meta.color } as React.CSSProperties}>
       <div className="category-icon"><Icon size={21} /></div>
       <div className="quest-row-copy"><span>{category(challenge)} · {language === 'zh' ? challenge.tierName : tierLabels[challenge.tierName]}</span><h3>{title(challenge)}</h3><div className="quest-rewards"><span><Zap size={13} /> {challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}<em>{text('等级', 'Level')} {challenge.level}</em>{cooldown && <em className="cooldown-label">{cooldown}</em>}</div></div>
-      <button className={`star-button ${favorite ? 'active' : ''}`} onClick={(event) => { event.stopPropagation(); onFavorite(challenge.id) }} aria-label={text('收藏任务', 'Save quest')}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button>
-      {cooldown ? <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={15} /> {text('冷却中', 'Cooldown')}</button> : active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> {text('完成', 'Complete')}</button></div> : <button className="row-add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={18} /><span>{text('接取任务', 'Start quest')}</span></button>}
+      <button className={`star-button ${favorite ? 'active' : ''}`} disabled={sealed} onClick={(event) => { event.stopPropagation(); onFavorite(challenge.id) }} aria-label={text('收藏任务', 'Save quest')}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button>
+      {sealed ? <button className="restore-button" onClick={(event) => { event.stopPropagation(); onSeal?.(challenge.id) }}><RotateCcw size={15} /> {text('解除封印', 'Restore')}</button> : cooldown ? <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={15} /> {text('冷却中', 'Cooldown')}</button> : active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> {text('完成', 'Complete')}</button></div> : <button className="row-add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={18} /><span>{text('接取任务', 'Start quest')}</span></button>}
     </article>
   )
 }
@@ -913,7 +944,7 @@ function LockedQuestRow({ challenge }: { challenge: Challenge }) {
   )
 }
 
-function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onFavorite, onStart, onUndo }: {
+function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onFavorite, onSeal, onStart, onUndo, sealed }: {
   active: boolean
   challenge: Challenge
   completions: Completion[]
@@ -922,8 +953,10 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
   onBack: () => void
   onComplete: (challenge: Challenge) => void
   onFavorite: (id: string) => void
+  onSeal: (id: string) => void
   onStart: (id: string) => void
   onUndo: (completion: Completion) => void
+  sealed: boolean
 }) {
   const { category, language, text, title } = useLanguage()
   const meta = categoryMeta[challenge.category]
@@ -931,7 +964,7 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
   const cooldown = getCooldownLabel(challenge, completions, language)
   const history = completions.filter((item) => item.challengeId === challenge.id)
   const levelRestricted = challenge.level > level
-  const locked = levelRestricted && history.length === 0
+  const locked = levelRestricted && history.length === 0 && !sealed
   const repeatable = challenge.cadence !== '终身一次'
 
   return (
@@ -949,8 +982,9 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
           </div>
         </div>
         <div className="detail-actions">
-          {!locked && <button className={`detail-favorite ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /> {favorite ? text('已收藏', 'Saved') : text('收藏', 'Save')}</button>}
-          {locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
+          {!locked && !sealed && <button className={`detail-favorite ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /> {favorite ? text('已收藏', 'Saved') : text('收藏', 'Save')}</button>}
+          {!locked && !sealed && <button className="detail-secondary detail-seal" onClick={() => onSeal(challenge.id)}><LockKeyhole size={16} /> {text('封印任务', 'Seal quest')}</button>}
+          {sealed ? <button className="primary-button" onClick={() => onSeal(challenge.id)}><RotateCcw size={16} /> {text('解除封印', 'Restore quest')}</button> : locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
         </div>
       </section>
 
