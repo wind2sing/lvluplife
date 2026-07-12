@@ -1118,8 +1118,12 @@ function CompletionModal({ challenge, energy, note, onClose, onNote, onSubmit }:
 
   async function submitCompletion() {
     if (energy <= 0 || uploading) return
-    setUploading(true)
     setFileError('')
+    if (files.length === 0) {
+      onSubmit([])
+      return
+    }
+    setUploading(true)
     const attachments: Attachment[] = []
     try {
       for (let index = 0; index < files.length; index += 1) {
