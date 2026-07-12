@@ -23,6 +23,9 @@
 :root[data-font='pixel'] { --body-font: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; --display-font: 'ZCOOL QingKe HuangYou', monospace; }
 :root[data-font='system'] { --body-font: system-ui, -apple-system, 'Segoe UI', sans-serif; --display-font: system-ui, -apple-system, 'Segoe UI', sans-serif; }
 :root[data-font='noto'] { --body-font: 'Noto Sans SC', system-ui, sans-serif; --display-font: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif; }
+:root[data-theme='theme-forest'] { --bg: #0d1714; --panel: #14241e; --panel-2: #193029; --line: rgba(185, 241, 219, .13); --muted: #87a89b; --green: #70e1b1; --green-deep: #3fa882; --cream: #edf7ed; }
+:root[data-theme='theme-archive'] { --bg: #11121b; --panel: #191b29; --panel-2: #20243a; --line: rgba(207, 210, 255, .14); --muted: #999fbd; --green: #9ea7ff; --green-deep: #6d73c9; --cream: #f1f0ff; }
+:root[data-theme='theme-social'] { --bg: #19120f; --panel: #241a16; --panel-2: #30231d; --line: rgba(255, 220, 188, .13); --muted: #b29a8b; --green: #f0b36d; --green-deep: #c77c42; --cream: #fff2df; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }

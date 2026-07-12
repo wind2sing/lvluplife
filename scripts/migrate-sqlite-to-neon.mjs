@@ -22,7 +22,7 @@ const customChallenges = hasCustomJson ? db.prepare("SELECT custom_json FROM cha
 }) : []
 let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
 try { dailyBoard = { ...dailyBoard, ...JSON.parse(db.prepare("SELECT value FROM app_meta WHERE key = 'daily_board'").get()?.value ?? '{}') } } catch {}
-let gameplayState = { plans: [], specialization: null }
+let gameplayState = { plans: [], specialization: null, cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' } }
 try { gameplayState = { ...gameplayState, ...JSON.parse(db.prepare("SELECT value FROM app_meta WHERE key = 'gameplay_state'").get()?.value ?? '{}') } } catch {}
 
 const save = {
@@ -33,6 +33,7 @@ const save = {
   dailyBoard,
   plans: gameplayState.plans,
   specialization: gameplayState.specialization,
+  cosmetics: gameplayState.cosmetics,
   completions: completionRows.map((item) => { let reward; try { reward = item.reward_json ? JSON.parse(item.reward_json) : undefined } catch {}; return { id: item.id, challengeId: item.challenge_id, note: item.note, completedAt: item.completed_at, attachments: [], reward } }),
 }
 const settings = { language: settingsRow.language, font: settingsRow.font, customFeatures: Boolean(settingsRow.custom_features), hidePersonalContentWhenDisabled: Boolean(settingsRow.hide_personal_content) }
@@ -41,7 +42,7 @@ const sql = neon(databaseUrl)
 await sql`
   CREATE TABLE IF NOT EXISTS app_state (
     id SMALLINT PRIMARY KEY CHECK (id = 1),
-    save JSONB NOT NULL DEFAULT '{"activeIds":[],"favoriteIds":[],"hiddenIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"plans":[],"specialization":null,"completions":[]}'::jsonb,
+    save JSONB NOT NULL DEFAULT '{"activeIds":[],"favoriteIds":[],"hiddenIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"plans":[],"specialization":null,"cosmetics":{"titleId":"title-solo","frameId":"frame-basic","themeId":"theme-camp"},"completions":[]}'::jsonb,
     settings JSONB NOT NULL DEFAULT '{"language":"zh","font":"noto","customFeatures":true,"hidePersonalContentWhenDisabled":true}'::jsonb,
     initialized BOOLEAN NOT NULL DEFAULT FALSE,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

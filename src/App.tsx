@@ -9,6 +9,7 @@ import {
   BarChart3,
   BriefcaseBusiness,
   Camera,
+  Crown,
   Check,
   ChevronDown,
   Clock3,
@@ -20,6 +21,7 @@ import {
   Flame,
   Footprints,
   Globe2,
+  Gem,
   GraduationCap,
   Hammer,
   Heart,
@@ -33,6 +35,7 @@ import {
   Menu,
   MessageCircle,
   Music2,
+  Moon,
   Palette,
   Pencil,
   Plus,
@@ -45,6 +48,7 @@ import {
   Sparkles,
   Star,
   Target,
+  TreePine,
   Trophy,
   UploadCloud,
   UserRound,
@@ -55,7 +59,7 @@ import {
 import './App.css'
 
 type StatKey = 'STR' | 'CUL' | 'ENV' | 'CHA' | 'TAL' | 'INT'
-type View = 'home' | 'character' | 'explore' | 'plans' | 'goals' | 'chronicle' | 'statistics' | 'settings'
+type View = 'home' | 'character' | 'collection' | 'explore' | 'plans' | 'goals' | 'chronicle' | 'statistics' | 'settings'
 type Language = 'zh' | 'en'
 type FontChoice = 'noto' | 'zcool' | 'pixel' | 'system'
 type DailyEnergy = 'low' | 'normal' | 'high'
@@ -75,6 +79,7 @@ type DailyRecommendation = {
 const viewPaths: Record<View, string> = {
   home: '/',
   character: '/character',
+  collection: '/collection',
   explore: '/quests',
   plans: '/plans',
   goals: '/my-quests',
@@ -87,6 +92,7 @@ function readBrowserRoute(): { view: View; challengeId: string | null } {
   const path = window.location.pathname.replace(/\/+$/, '') || '/'
   if (path.startsWith('/quests/')) return { view: 'explore', challengeId: decodeURIComponent(path.slice('/quests/'.length)) }
   if (path === '/character') return { view: 'character', challengeId: null }
+  if (path === '/collection') return { view: 'collection', challengeId: null }
   if (path === '/quests') return { view: 'explore', challengeId: null }
   if (path === '/plans') return { view: 'plans', challengeId: null }
   if (path === '/my-quests') return { view: 'goals', challengeId: null }
@@ -129,6 +135,25 @@ type QuestPlan = {
   stepIds: string[]
 }
 
+type CosmeticState = {
+  titleId: string
+  frameId: string
+  themeId: string
+}
+
+type CollectionKind = 'title' | 'badge' | 'frame' | 'theme' | 'keepsake'
+type CollectionItem = {
+  id: string
+  kind: CollectionKind
+  title: string
+  description: string
+  unlocked: boolean
+  progress: number
+  target: number
+  icon: LucideIcon
+  flavor: string
+}
+
 type Completion = {
   id: string
   challengeId: string
@@ -153,6 +178,7 @@ type SaveState = {
   dailyBoard: DailyBoardState
   plans: QuestPlan[]
   specialization: StatKey | null
+  cosmetics: CosmeticState
   completions: Completion[]
 }
 
@@ -180,6 +206,7 @@ const emptySave: SaveState = {
   dailyBoard: { date: '', energy: 'normal', reroll: 0 },
   plans: [],
   specialization: null,
+  cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' },
   completions: [],
 }
 const defaultSettings: AppSettings = { language: 'zh', font: 'noto', customFeatures: true, hidePersonalContentWhenDisabled: true }
@@ -352,6 +379,52 @@ function getStreak(completions: Completion[]) {
   return streak
 }
 
+function buildCollection(items: { completion: Completion; challenge: Challenge }[], plans: QuestPlan[], stats: Record<StatKey, number>, streak: number, totalXp: number): CollectionItem[] {
+  const dates = new Set(items.map((item) => item.completion.completedAt.slice(0, 10))).size
+  const categories = new Set(items.map((item) => item.challenge.category)).size
+  const imageCount = items.filter((item) => item.completion.attachments?.some((attachment) => attachment.contentType.startsWith('image/'))).length
+  const epicCount = items.filter((item) => item.challenge.tier === 4).length
+  const lifetimeCount = items.filter((item) => item.challenge.cadence === '终身一次').length
+  const repeatCount = items.filter((item) => item.challenge.cadence !== '终身一次').length
+  const customCount = items.filter((item) => item.challenge.custom).length
+  const nightCount = items.filter((item) => new Date(item.completion.completedAt).getHours() < 6).length
+  const planCompletionCount = plans.filter((plan) => plan.stepIds.length > 0 && plan.stepIds.every((id) => items.some((item) => item.challenge.id === id && item.completion.completedAt >= plan.createdAt))).length
+  const sortedTimes = items.map((item) => new Date(item.completion.completedAt).getTime()).sort((a, b) => a - b)
+  const comeback = sortedTimes.some((time, index) => index > 0 && time - sortedTimes[index - 1] >= 30 * 86400000)
+  const minimumStat = Math.min(...Object.values(stats))
+  const archiveScore = stats.INT + stats.CUL
+  const craftScore = stats.ENV + stats.TAL
+  const socialScore = stats.CHA + stats.CUL
+  const item = (id: string, kind: CollectionKind, title: string, description: string, progress: number, target: number, icon: LucideIcon, flavor: string): CollectionItem => ({ id, kind, title, description, progress: Math.min(progress, target), target, unlocked: progress >= target, icon, flavor })
+  return [
+    item('title-solo', 'title', '独行冒险者', '默认私人称号', 1, 1, UserRound, '不等待掌声，也认真记录自己的道路。'),
+    item('title-first-step', 'title', '初次启程', '完成第一个任务', items.length, 1, Footprints, '所有漫长旅程，都从一次真实行动开始。'),
+    item('title-seven-days', 'title', '七日足迹', '在七个不同日期留下记录', dates, 7, Flame, '你没有追逐完美，只是一次又一次回来。'),
+    item('title-hexagon', 'title', '六边形冒险者', '六项属性全部达到 10', minimumStat, 10, Sparkles, '成长没有唯一方向，你选择让生活保持完整。'),
+    item('title-long-road', 'title', '长路行者', '累计获得 5000 经验', totalXp, 5000, Trophy, '真正的改变，往往安静地发生在漫长时间里。'),
+    item('title-returned', 'title', '归来仍是冒险者', '间隔至少 30 天后再次完成任务', comeback ? 1 : 0, 1, RotateCcw, '离开不是失败，愿意回来本身就是勇气。'),
+    item('title-chainkeeper', 'title', '长线主义者', '完整完成一个任务链或项目', planCompletionCount, 1, ListChecks, '你把遥远目标拆成脚下的每一步。'),
+    item('title-explorer', 'title', '生活探索家', '在 8 个不同分类留下完成记录', categories, 8, Compass, '世界不是一张清单，而是不断展开的生活。'),
+    item('badge-photo', 'badge', '现实见证者', '3 条完成记录包含图片', imageCount, 3, Camera, '照片不是证明给别人看，而是留给未来的自己。'),
+    item('badge-epic', 'badge', '史诗见证', '完成一个史诗任务', epicCount, 1, Crown, '有些胜利值得被郑重地记住。'),
+    item('badge-lifetime', 'badge', '人生清单印记', '完成一个终身一次成就', lifetimeCount, 1, Medal, '这一格被填满后，人生已经和从前不同。'),
+    item('badge-rhythm', 'badge', '节奏守护者', '完成 10 次可循环任务', repeatCount, 10, Repeat2, '重复的小事，最终塑造了生活的形状。'),
+    item('badge-night', 'badge', '月下行动者', '在凌晨完成 5 次任务', nightCount, 5, Moon, '当世界安静下来，你仍在认真生活。'),
+    item('badge-creator', 'badge', '自己的任务设计师', '完成 5 次个人任务', customCount, 5, Hammer, '你开始为自己的生活定义真正重要的任务。'),
+    item('frame-basic', 'frame', '营地木纹头像框', '默认头像框', 1, 1, ShieldCheck, '来自最初营地的朴素边框。'),
+    item('frame-verdant', 'frame', '青芽头像框', '累计完成 10 次任务', items.length, 10, Leaf, '每一次行动，都让新芽向光生长。'),
+    item('frame-ember', 'frame', '余烬头像框', '连续记录达到 7 天', streak, 7, Flame, '火焰不必猛烈，只要没有熄灭。'),
+    item('frame-prism', 'frame', '六维棱镜头像框', '六项属性全部达到 10', minimumStat, 10, Gem, '六种成长在同一束光中汇合。'),
+    item('theme-camp', 'theme', '深林营地', '默认营地主题', 1, 1, House, '安静、清醒，适合长久停留。'),
+    item('theme-forest', 'theme', '苔原秘境', '环境与才能合计达到 50', craftScore, 50, TreePine, '生活空间与亲手创造共同长出森林。'),
+    item('theme-archive', 'theme', '星夜藏书馆', '智慧与文化合计达到 50', archiveScore, 50, LibraryBig, '知识像星光一样，在长夜里彼此连接。'),
+    item('theme-social', 'theme', '暖灯会客厅', '魅力与文化合计达到 50', socialScore, 50, MessageCircle, '人与人的连接，为营地点亮温暖灯火。'),
+    item('keepsake-first-photo', 'keepsake', '第一份影像证据', '完成记录中留下第一张图片', imageCount, 1, Camera, '一个真实瞬间，被你认真地保存了下来。'),
+    item('keepsake-plan', 'keepsake', '完整旅程卷轴', '完整完成一个任务链或项目', planCompletionCount, 1, ScrollText, '这不是一个勾选框，而是一段完整走过的路。'),
+    item('keepsake-century', 'keepsake', '百次行动纪念章', '累计完成 100 次任务', items.length, 100, Trophy, '一百次真实行动，足以让生活发生可见的改变。'),
+  ]
+}
+
 function getTodayKey() {
   const now = new Date()
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
@@ -507,6 +580,11 @@ function App() {
     })
     return locked
   }, [completedPlanStepIds, save.plans])
+  const collectionItems = useMemo(() => buildCollection(completedChallenges, save.plans, stats, streak, totalXp), [completedChallenges, save.plans, stats, streak, totalXp])
+  const equippedTitle = collectionItems.find((item) => item.id === save.cosmetics.titleId && item.unlocked) ?? collectionItems.find((item) => item.id === 'title-solo')!
+  const equippedFrame = collectionItems.find((item) => item.id === save.cosmetics.frameId && item.unlocked) ?? collectionItems.find((item) => item.id === 'frame-basic')!
+  const equippedTheme = collectionItems.find((item) => item.id === save.cosmetics.themeId && item.unlocked) ?? collectionItems.find((item) => item.id === 'theme-camp')!
+  useEffect(() => { document.documentElement.dataset.theme = equippedTheme.id }, [equippedTheme.id])
 
   const unlockedChallenges = allChallenges.filter((item) => item.level <= level.level && !lockedPlanStepIds.has(item.id))
   const recommendationPool = unlockedChallenges.filter((item) => !save.hiddenIds.includes(item.id))
@@ -675,6 +753,12 @@ function App() {
     setSave((current) => ({ ...current, dailyBoard: { date: todayKey, energy: current.dailyBoard.energy, reroll: (current.dailyBoard.date === todayKey ? current.dailyBoard.reroll : 0) + 1 } }))
   }
 
+  function equipCollectionItem(item: CollectionItem) {
+    if (!item.unlocked || !['title', 'frame', 'theme'].includes(item.kind)) return
+    const key = item.kind === 'title' ? 'titleId' : item.kind === 'frame' ? 'frameId' : 'themeId'
+    setSave((current) => ({ ...current, cosmetics: { ...current.cosmetics, [key]: item.id } }))
+  }
+
   function completeQuest(attachments: Attachment[] = []) {
     if (!selected) return
     if (energy <= 0 || selected.level > level.level || lockedPlanStepIds.has(selected.id) || getCooldownLabel(selected, save.completions, settings.language)) return
@@ -801,8 +885,10 @@ function App() {
     }
 
     if (view === 'character') {
-      return <CharacterView completedCount={completedChallenges.length} energy={energy} levelInfo={level} maxEnergy={maxEnergy} onSpecialization={(specialization) => setSave((current) => ({ ...current, specialization }))} specialization={save.specialization} stats={stats} streak={streak} totalXp={totalXp} />
+      return <CharacterView completedCount={completedChallenges.length} energy={energy} equippedFrame={equippedFrame} equippedTitle={equippedTitle} levelInfo={level} maxEnergy={maxEnergy} onCollection={() => navigate('collection')} onSpecialization={(specialization) => setSave((current) => ({ ...current, specialization }))} specialization={save.specialization} stats={stats} streak={streak} totalXp={totalXp} />
     }
+
+    if (view === 'collection') return <CollectionGallery equipped={save.cosmetics} items={collectionItems} onEquip={equipCollectionItem} />
 
     if (view === 'plans' && settings.customFeatures) return <PlansView challengeMap={challengeMap} completedStepIds={completedPlanStepIds} lockedStepIds={lockedPlanStepIds} onComplete={setSelected} onCreate={() => setPlanEditor(true)} onOpen={openChallenge} plans={save.plans} />
 
@@ -899,6 +985,7 @@ function App() {
         <nav className="main-nav" aria-label={text('主导航', 'Main navigation')}>
           <NavButton active={view === 'home'} icon={House} label={text('营地', 'Camp')} onClick={() => navigate('home')} />
           <NavButton active={view === 'character'} icon={UserRound} label={text('角色面板', 'Character')} onClick={() => navigate('character')} />
+          <NavButton active={view === 'collection'} icon={Gem} label={text('私人收藏馆', 'Collection')} onClick={() => navigate('collection')} badge={collectionItems.filter((item) => item.unlocked).length} />
           <NavButton active={view === 'explore'} icon={Compass} label={text('任务公会', 'Quest Guild')} onClick={() => navigate('explore')} />
           {settings.customFeatures && <NavButton active={view === 'plans'} icon={ListChecks} label={text('任务链与项目', 'Plans')} onClick={() => navigate('plans')} badge={save.plans.length} />}
           <NavButton active={view === 'goals'} icon={Target} label={text('我的任务', 'My Quests')} onClick={() => navigate('goals')} badge={activeChallenges.length} />
@@ -908,8 +995,8 @@ function App() {
         </nav>
         <div className="sidebar-spacer" />
         <button className="mini-profile" onClick={showCharacterPanel} title={text('查看角色面板', 'View character sheet')}>
-          <div className="avatar"><UserRound size={22} /></div>
-          <div><strong>{text('独行冒险者', 'Solo Adventurer')}</strong><span>{text('等级', 'Level')} {level.level}</span></div>
+          <div className={`avatar cosmetic-frame ${equippedFrame.id}`}><UserRound size={22} /></div>
+          <div><strong>{equippedTitle.title}</strong><span>{text('等级', 'Level')} {level.level}</span></div>
           <ArrowRight className="profile-arrow" size={15} />
         </button>
         <button className="local-note" onClick={() => navigate('settings')}><ShieldCheck size={14} /> {cloud ? text('进度已同步至云端', 'Progress synced to cloud') : text('进度仅保存在本机', 'Progress stays on this device')}<Settings size={12} /></button>
@@ -1052,11 +1139,14 @@ function getStatStage(value: number) {
   return { ...current, level: index + 1, next, percent: next ? Math.min(100, Math.round(((value - current.min) / (next.min - current.min)) * 100)) : 100 }
 }
 
-function CharacterView({ completedCount, energy, levelInfo, maxEnergy, onSpecialization, specialization, stats, streak, totalXp }: {
+function CharacterView({ completedCount, energy, equippedFrame, equippedTitle, levelInfo, maxEnergy, onCollection, onSpecialization, specialization, stats, streak, totalXp }: {
   completedCount: number
   energy: number
+  equippedFrame: CollectionItem
+  equippedTitle: CollectionItem
   levelInfo: ReturnType<typeof getLevel>
   maxEnergy: number
+  onCollection: () => void
   onSpecialization: (value: StatKey | null) => void
   specialization: StatKey | null
   stats: Record<StatKey, number>
@@ -1072,8 +1162,8 @@ function CharacterView({ completedCount, energy, levelInfo, maxEnergy, onSpecial
       <div className="page-heading"><p className="eyebrow">{text('角色面板', 'Character Sheet')}</p><h1>{text('看见你的', 'See your real')}<em>{text('现实成长。', ' growth.')}</em></h1><p>{text('每一次真实行动都会留下经验、属性与时间线，让成长不再只是模糊的感觉。', 'Every real action leaves XP, attributes, and a timeline behind.')}</p></div>
       <section className="character-summary">
         <button className="character-level-card" onClick={() => setLevelHelp(true)}>
-          <span className="character-level-emblem"><UserRound size={30} /></span>
-          <span className="character-level-copy"><small>{text('独行冒险者', 'Solo Adventurer')}</small><strong>{text('等级', 'Level')} {levelInfo.level}</strong><em>{totalXp} {text('总经验', 'total XP')}</em></span>
+          <span className={`character-level-emblem cosmetic-frame ${equippedFrame.id}`}><UserRound size={30} /></span>
+          <span className="character-level-copy"><small>{equippedTitle.title}</small><strong>{text('等级', 'Level')} {levelInfo.level}</strong><em>{totalXp} {text('总经验', 'total XP')}</em></span>
           <span className="character-level-progress"><span><b>{levelInfo.carriedXp}</b> / {levelInfo.needed} {text('经验', 'XP')}</span><i><b style={{ width: `${levelInfo.percent}%` }} /></i><small>{text('点击查看等级计算规则', 'Click to view level rules')}</small></span>
         </button>
         <div className="character-metrics">
@@ -1096,7 +1186,7 @@ function CharacterView({ completedCount, energy, levelInfo, maxEnergy, onSpecial
         <div className="detail-panel specialization-panel"><div className="detail-panel-heading"><Target size={19} /><div><span>{text('当前专精', 'Current focus')}</span><strong>{specialization ? statLabels[specialization] : text('自由成长', 'Open growth')}</strong></div></div><p>{text('专精只会提高对应属性任务在每日冒险板中的出现倾向，不限制其他任务，也不增加数值奖励。', 'A focus only influences recommendations. It never blocks other quests or adds numeric rewards.')}</p><div className="specialization-picker"><button className={!specialization ? 'active' : ''} onClick={() => onSpecialization(null)}>{text('自由', 'Open')}</button>{(Object.keys(statLabels) as StatKey[]).map((key) => <button key={key} className={specialization === key ? 'active' : ''} onClick={() => onSpecialization(key)}>{statLabels[key]}</button>)}</div></div>
         <div className="detail-panel radar-panel"><div className="detail-panel-heading"><Sparkles size={19} /><div><span>{text('六维成长图', 'Growth radar')}</span><strong>{text('现实属性分布', 'Real-life profile')}</strong></div></div><StatRadar stats={stats} /></div>
       </section>
-      <section className="section-block collectible-panel"><div className="section-heading"><div><p className="eyebrow">{text('称号与收藏品', 'Titles & collectibles')}</p><h2>{text('真实行动留下的纪念', 'Keepsakes from real action')}</h2></div></div><div className="collectible-grid"><Collectible unlocked={completedCount >= 1} icon={Footprints} title="初次启程" description="完成第一个任务" /><Collectible unlocked={streak >= 7} icon={Flame} title="七日足迹" description="连续留下七天记录" /><Collectible unlocked={Object.values(stats).every((value) => value >= 10)} icon={Sparkles} title="六边形冒险者" description="六项属性都达到见习阶段" /><Collectible unlocked={totalXp >= 5000} icon={Trophy} title="长路行者" description="累计获得 5000 经验" /></div></section>
+      <section className="section-block collection-preview"><div><p className="eyebrow">{text('当前装扮', 'Current collection')}</p><h2>{equippedTitle.title}</h2><p>{equippedTitle.flavor}</p></div><div className={`collection-preview-frame cosmetic-frame ${equippedFrame.id}`}><UserRound size={30} /></div><button className="primary-button" onClick={onCollection}><Gem size={17} /> {text('进入私人收藏馆', 'Open private collection')}</button></section>
       {selectedStat && <StatHelpModal stat={selectedStat} value={stats[selectedStat]} onClose={() => setSelectedStat(null)} />}
       {levelHelp && <LevelHelpModal levelInfo={levelInfo} totalXp={totalXp} onClose={() => setLevelHelp(false)} />}
     </>
@@ -1113,8 +1203,26 @@ function StatRadar({ stats }: { stats: Record<StatKey, number> }) {
   return <svg className="stat-radar" viewBox="0 0 200 200" role="img" aria-label="六维属性雷达图"><polygon className="radar-grid" points={keys.map((_, index) => point(index, 1)).join(' ')} /><polygon className="radar-grid radar-grid--inner" points={keys.map((_, index) => point(index, .5)).join(' ')} />{keys.map((key, index) => <line key={key} x1="100" y1="100" x2={point(index, 1).split(',')[0]} y2={point(index, 1).split(',')[1]} />)}<polygon className="radar-value" points={keys.map((key, index) => point(index, stats[key] / max)).join(' ')} />{keys.map((key, index) => { const [x, y] = point(index, 1.18).split(','); return <text key={key} x={x} y={y}>{statLabels[key]}</text> })}</svg>
 }
 
-function Collectible({ description, icon: Icon, title, unlocked }: { description: string; icon: LucideIcon; title: string; unlocked: boolean }) {
-  return <div className={`collectible ${unlocked ? 'unlocked' : ''}`}><span><Icon size={22} /></span><div><strong>{unlocked ? title : '尚未解锁'}</strong><small>{description}</small></div>{unlocked ? <Check size={16} /> : <LockKeyhole size={15} />}</div>
+function CollectionGallery({ equipped, items, onEquip }: { equipped: CosmeticState; items: CollectionItem[]; onEquip: (item: CollectionItem) => void }) {
+  const { text } = useLanguage()
+  const [filter, setFilter] = useState<'all' | CollectionKind>('all')
+  const visible = filter === 'all' ? items : items.filter((item) => item.kind === filter)
+  const unlocked = items.filter((item) => item.unlocked).length
+  const kindLabels: Record<CollectionKind, string> = { title: '称号', badge: '徽章', frame: '头像框', theme: '营地主题', keepsake: '纪念物' }
+  function isEquipped(item: CollectionItem) { return item.id === equipped.titleId || item.id === equipped.frameId || item.id === equipped.themeId }
+  function downloadCard(item: CollectionItem) {
+    const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 720
+    const context = canvas.getContext('2d'); if (!context) return
+    const gradient = context.createLinearGradient(0, 0, 1200, 720); gradient.addColorStop(0, '#213326'); gradient.addColorStop(1, '#0c130f'); context.fillStyle = gradient; context.fillRect(0, 0, 1200, 720)
+    context.strokeStyle = '#90e36d'; context.lineWidth = 4; context.strokeRect(52, 52, 1096, 616)
+    context.fillStyle = '#90e36d'; context.font = '30px sans-serif'; context.fillText(`升级人生 · ${kindLabels[item.kind]}`, 90, 130)
+    context.fillStyle = '#f4f0de'; context.font = 'bold 68px sans-serif'; context.fillText(item.title, 90, 270)
+    context.fillStyle = '#a0afa5'; context.font = '30px sans-serif'; context.fillText(item.description, 90, 350)
+    context.fillStyle = '#7f9185'; context.font = '26px sans-serif'; const lines = item.flavor.match(/.{1,28}/g) ?? [item.flavor]; lines.slice(0, 2).forEach((line, index) => context.fillText(line, 90, 455 + index * 42))
+    context.fillStyle = '#90e36d'; context.font = '24px sans-serif'; context.fillText(`私人纪念 · ${new Date().toLocaleDateString('zh-CN')}`, 90, 610)
+    const anchor = document.createElement('a'); anchor.href = canvas.toDataURL('image/png'); anchor.download = `升级人生-${item.title}.png`; anchor.click()
+  }
+  return <><div className="page-heading collection-heading"><p className="eyebrow">{text('私人收藏馆', 'Private collection')}</p><h1>{text('把真实成长变成', 'Turn real growth into')}<em>{text('可以珍藏的东西。', ' something worth keeping.')}</em></h1><p>{text('称号、徽章、头像框、营地主题和纪念物只记录你的真实行动，不提供数值优势，也不会公开分享。', 'Titles, badges, frames, themes, and keepsakes record real actions without numeric advantages or public sharing.')}</p></div><section className="collection-overview"><div><Gem size={28} /><span>{text('已解锁收藏', 'Unlocked')}</span><strong>{unlocked} / {items.length}</strong></div><div className="collection-overview-progress"><i><b style={{ width: `${unlocked / items.length * 100}%` }} /></i><span>{Math.round(unlocked / items.length * 100)}%</span></div><p>{text('所有进度都来自私人存档中的完成记录、属性、任务链与附件。', 'All progress comes from your private completions, stats, plans, and attachments.')}</p></section><div className="collection-filters">{(['all', 'title', 'badge', 'frame', 'theme', 'keepsake'] as const).map((value) => <button key={value} className={filter === value ? 'active' : ''} onClick={() => setFilter(value)}>{value === 'all' ? text('全部收藏', 'All') : kindLabels[value]}</button>)}</div><div className="collection-gallery-grid">{visible.map((item) => { const Icon = item.icon; const equippedNow = isEquipped(item); const equippable = ['title', 'frame', 'theme'].includes(item.kind); return <article className={`collection-card ${item.unlocked ? 'unlocked' : 'locked'} ${equippedNow ? 'equipped' : ''}`} key={item.id}><div className={`collection-card-icon ${item.kind === 'frame' ? `cosmetic-frame ${item.id}` : ''}`}><Icon size={27} /></div><div className="collection-card-kind">{kindLabels[item.kind]}{equippedNow && <b>{text('使用中', 'Equipped')}</b>}</div><h2>{item.title}</h2><p>{item.description}</p><blockquote>{item.flavor}</blockquote><div className="collection-progress"><div><span>{item.unlocked ? text('已解锁', 'Unlocked') : text('解锁进度', 'Progress')}</span><strong>{item.progress} / {item.target}</strong></div><i><b style={{ width: `${item.progress / item.target * 100}%` }} /></i></div><div className="collection-card-actions">{equippable && <button disabled={!item.unlocked || equippedNow} onClick={() => onEquip(item)}>{equippedNow ? text('正在使用', 'Equipped') : item.unlocked ? text('装备收藏', 'Equip') : text('尚未解锁', 'Locked')}</button>}{item.unlocked && <button className="download-keepsake" onClick={() => downloadCard(item)}><Download size={14} /> {text('纪念卡', 'Card')}</button>}</div></article>})}</div></>
 }
 
 function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onCreate, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {

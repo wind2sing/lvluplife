@@ -140,7 +140,7 @@ function getBootstrap() {
   })
   let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
   try { dailyBoard = { ...dailyBoard, ...JSON.parse(selectDailyBoard.get()?.value ?? '{}') } } catch {}
-  let gameplayState = { plans: [], specialization: null }
+  let gameplayState = { plans: [], specialization: null, cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' } }
   try { gameplayState = { ...gameplayState, ...JSON.parse(selectGameplayState.get()?.value ?? '{}') } } catch {}
   return {
     initialized: Boolean(selectInitialized.get()),
@@ -166,6 +166,7 @@ function getBootstrap() {
       dailyBoard,
       plans: gameplayState.plans,
       specialization: gameplayState.specialization,
+      cosmetics: gameplayState.cosmetics,
       completions,
     },
     settings: { language: settings.language, font: settings.font, customFeatures: Boolean(settings.custom_features), hidePersonalContentWhenDisabled: Boolean(settings.hide_personal_content) },
@@ -182,6 +183,7 @@ function replaceSave(save) {
   const dailyBoard = save.dailyBoard && typeof save.dailyBoard === 'object' ? save.dailyBoard : { date: '', energy: 'normal', reroll: 0 }
   const plans = Array.isArray(save.plans) ? save.plans : []
   const specialization = ['STR', 'CUL', 'ENV', 'CHA', 'TAL', 'INT'].includes(save.specialization) ? save.specialization : null
+  const cosmetics = save.cosmetics && typeof save.cosmetics === 'object' ? save.cosmetics : { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' }
 
   db.exec('BEGIN')
   try {
@@ -198,7 +200,7 @@ function replaceSave(save) {
     for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)
     for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt, item.reward ? JSON.stringify(item.reward) : null)
     upsertDailyBoard.run(JSON.stringify(dailyBoard))
-    upsertGameplayState.run(JSON.stringify({ plans, specialization }))
+    upsertGameplayState.run(JSON.stringify({ plans, specialization, cosmetics }))
     markInitialized.run()
     db.exec('COMMIT')
   } catch (error) {

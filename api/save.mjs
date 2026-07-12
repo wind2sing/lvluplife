@@ -78,6 +78,11 @@ function normalizeSave(value) {
     },
     plans: Array.isArray(value.plans) ? value.plans.map(normalizePlan).filter(Boolean).slice(0, 100) : [],
     specialization: statKeys.has(value.specialization) ? value.specialization : null,
+    cosmetics: {
+      titleId: typeof value.cosmetics?.titleId === 'string' ? value.cosmetics.titleId.slice(0, 80) : 'title-solo',
+      frameId: typeof value.cosmetics?.frameId === 'string' ? value.cosmetics.frameId.slice(0, 80) : 'frame-basic',
+      themeId: typeof value.cosmetics?.themeId === 'string' ? value.cosmetics.themeId.slice(0, 80) : 'theme-camp',
+    },
     completions: Array.isArray(value.completions) ? value.completions.filter((item) => item && typeof item.id === 'string' && typeof item.challengeId === 'string' && typeof item.completedAt === 'string').map((item) => ({
       id: item.id,
       challengeId: item.challengeId,
