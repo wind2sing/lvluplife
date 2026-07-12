@@ -49,12 +49,13 @@ import {
 import './App.css'
 
 type StatKey = 'STR' | 'CUL' | 'ENV' | 'CHA' | 'TAL' | 'INT'
-type View = 'home' | 'explore' | 'goals' | 'chronicle' | 'settings'
+type View = 'home' | 'character' | 'explore' | 'goals' | 'chronicle' | 'settings'
 type Language = 'zh' | 'en'
 type FontChoice = 'noto' | 'zcool' | 'pixel' | 'system'
 
 const viewPaths: Record<View, string> = {
   home: '/',
+  character: '/character',
   explore: '/quests',
   goals: '/my-quests',
   chronicle: '/chronicle',
@@ -64,6 +65,7 @@ const viewPaths: Record<View, string> = {
 function readBrowserRoute(): { view: View; challengeId: string | null } {
   const path = window.location.pathname.replace(/\/+$/, '') || '/'
   if (path.startsWith('/quests/')) return { view: 'explore', challengeId: decodeURIComponent(path.slice('/quests/'.length)) }
+  if (path === '/character') return { view: 'character', challengeId: null }
   if (path === '/quests') return { view: 'explore', challengeId: null }
   if (path === '/my-quests') return { view: 'goals', challengeId: null }
   if (path === '/chronicle') return { view: 'chronicle', challengeId: null }
@@ -541,8 +543,7 @@ function App() {
   }
 
   function showCharacterPanel() {
-    navigate('home')
-    window.setTimeout(() => document.querySelector('#character-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0)
+    navigate('character')
   }
 
   function unlockCloudSave() {
@@ -583,6 +584,10 @@ function App() {
           onUndo={(completion) => setUndoTarget({ completion, challenge: detailChallenge })}
         />
       )
+    }
+
+    if (view === 'character') {
+      return <CharacterView completedCount={save.completions.length} energy={energy} levelInfo={level} maxEnergy={maxEnergy} stats={stats} streak={streak} totalXp={totalXp} />
     }
 
     if (view === 'explore') {
@@ -652,8 +657,6 @@ function App() {
         onNavigate={navigate}
         onOpen={openChallenge}
         onStart={toggleActive}
-        stats={stats}
-        totalXp={totalXp}
         unlockedCount={unlockedChallenges.length}
       />
     )
@@ -673,6 +676,7 @@ function App() {
         </div>
         <nav className="main-nav" aria-label={text('主导航', 'Main navigation')}>
           <NavButton active={view === 'home'} icon={House} label={text('营地', 'Camp')} onClick={() => navigate('home')} />
+          <NavButton active={view === 'character'} icon={UserRound} label={text('角色面板', 'Character')} onClick={() => navigate('character')} />
           <NavButton active={view === 'explore'} icon={Compass} label={text('任务公会', 'Quest Guild')} onClick={() => navigate('explore')} />
           <NavButton active={view === 'goals'} icon={Target} label={text('我的任务', 'My Quests')} onClick={() => navigate('goals')} badge={save.activeIds.length} />
           <NavButton active={view === 'chronicle'} icon={ScrollText} label={text('冒险日志', 'Chronicle')} onClick={() => navigate('chronicle')} />
@@ -764,19 +768,14 @@ type QuestActions = {
   onStart: (id: string) => void
 }
 
-function HomeView({ activeIds, completed, completions, favoriteIds, featured, levelInfo, onComplete, onFavorite, onNavigate, onOpen, onStart, stats, totalXp, unlockedCount }: QuestActions & {
+function HomeView({ activeIds, completed, completions, favoriteIds, featured, levelInfo, onComplete, onFavorite, onNavigate, onOpen, onStart, unlockedCount }: QuestActions & {
   completed: { completion: Completion; challenge: Challenge }[]
   featured: Challenge[]
   levelInfo: ReturnType<typeof getLevel>
   onNavigate: (view: View) => void
-  stats: Record<StatKey, number>
-  totalXp: number
   unlockedCount: number
 }) {
-  const { language, text } = useLanguage()
-  const [selectedStat, setSelectedStat] = useState<StatKey | null>(null)
-  const [levelHelp, setLevelHelp] = useState(false)
-  const topStat = (Object.entries(stats) as [StatKey, number][]).sort((a, b) => b[1] - a[1])[0]
+  const { text } = useLanguage()
   return (
     <>
       <section className="hero-panel">
@@ -784,7 +783,7 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
           <p className="eyebrow"><span /> {text('下一步行动', 'Your next move')}</p>
           <h1><span>{text('让今天', 'Make today')}</span><em>{text('算数。', 'count.')}</em></h1>
           <p className="hero-copy">{text('完成一件真实的小事，把现实生活变成看得见的角色成长。', 'Do one real thing and turn everyday life into visible character growth.')}</p>
-          <div className="hero-actions"><button className="primary-button" onClick={() => onNavigate('explore')}>{text('领取任务', 'Find a quest')} <ArrowRight size={18} /></button><button className="hero-character-button" onClick={() => document.querySelector('#character-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}><UserRound size={16} /> {text('查看角色', 'Character')}</button></div>
+          <div className="hero-actions"><button className="primary-button" onClick={() => onNavigate('explore')}>{text('领取任务', 'Find a quest')} <ArrowRight size={18} /></button><button className="hero-character-button" onClick={() => onNavigate('character')}><UserRound size={16} /> {text('查看角色', 'Character')}</button></div>
           <div className="hero-badges"><span><Target size={13} /> {text('538 项挑战', '538 challenges')}</span><span><ShieldCheck size={13} /> {text('本地存档', 'Local save')}</span><span><Sparkles size={13} /> {text('真实成长', 'Real growth')}</span></div>
         </div>
         <div className="hero-visual">
@@ -793,7 +792,7 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
             <div className="pixel-sword"><span>✦</span></div>
             <span className="float-rune rune-one">+{text('经验', 'XP')}</span><span className="float-rune rune-two">{text('升级', 'LEVEL UP')}</span>
           </div>
-          <button className="hero-level-card" onClick={() => document.querySelector('#character-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}><span>{text('冒险者状态', 'Adventurer status')}</span><strong>{text('等级', 'Level')} {levelInfo.level}</strong><div><i style={{ width: `${levelInfo.percent}%` }} /></div><small>{levelInfo.carriedXp} / {levelInfo.needed} {text('经验', 'XP')}</small></button>
+          <button className="hero-level-card" onClick={() => onNavigate('character')}><span>{text('冒险者状态', 'Adventurer status')}</span><strong>{text('等级', 'Level')} {levelInfo.level}</strong><div><i style={{ width: `${levelInfo.percent}%` }} /></div><small>{levelInfo.carriedXp} / {levelInfo.needed} {text('经验', 'XP')}</small></button>
         </div>
       </section>
 
@@ -804,26 +803,52 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
         </div>
       </section>
 
-      <div className="dashboard-grid">
-        <section className="section-block stat-panel" id="character-panel">
-          <div className="section-heading"><div><p className="eyebrow">{text('角色面板', 'Character sheet')}</p><h2>{text('你的现实属性', 'Your real-life stats')}</h2></div><button className="level-chip" onClick={() => setLevelHelp(true)}>{text('等级', 'Level')} {levelInfo.level}</button></div>
-          <button className="level-progress-card" onClick={() => setLevelHelp(true)}>
-            <div><span>{text('升级进度', 'Level progress')}</span><strong>{levelInfo.carriedXp} / {levelInfo.needed} {text('经验', 'XP')}</strong></div>
-            <div className="level-progress-track"><i style={{ width: `${levelInfo.percent}%` }} /></div>
-            <small>{text(`总计获得 ${totalXp} 经验 · 点击查看计算规则`, `${totalXp} total XP · Click for calculation rules`)}</small>
-          </button>
-          <div className="stat-list">
-            {(Object.entries(stats) as [StatKey, number][]).map(([key, value]) => (
-              (() => { const Icon = statMeta[key].icon; return <button className="stat-row" key={key} onClick={() => setSelectedStat(key)} style={{ '--stat-color': statMeta[key].color } as React.CSSProperties}><span><Icon size={15} /></span><div><strong>{language === 'zh' ? statLabels[key] : statLabelsEn[key]} <small>{text('点击了解', 'Learn more')}</small></strong><i><b style={{ width: `${Math.min(100, topStat[1] ? (value / topStat[1]) * 100 : 0)}%` }} /></i></div><em>{value}</em></button> })()
-            ))}
-          </div>
-        </section>
+      <section className="section-block recent-panel home-recent-panel">
+        <div className="section-heading"><div><p className="eyebrow">{text('最近战绩', 'Recent victories')}</p><h2>{text('你的冒险日志', 'Your chronicle')}</h2></div><button className="icon-button" aria-label={text('查看冒险日志', 'View chronicle')} onClick={() => onNavigate('chronicle')}><ArrowRight size={18} /></button></div>
+        {completed.length ? completed.slice(0, 3).map((item) => <ActivityItem key={item.completion.id} {...item} onOpen={onOpen} />) : <EmptyState compact icon={Footprints} title={text('故事要从现实开始', 'Your story starts in real life')} text={text('完成一个任务，你的第一条战绩就会出现在这里。', 'Complete a quest and your first victory will appear here.')} />}
+      </section>
+    </>
+  )
+}
 
-        <section className="section-block recent-panel">
-          <div className="section-heading"><div><p className="eyebrow">{text('最近战绩', 'Recent victories')}</p><h2>{text('你的冒险日志', 'Your chronicle')}</h2></div><button className="icon-button" aria-label={text('查看冒险日志', 'View chronicle')} onClick={() => onNavigate('chronicle')}><ArrowRight size={18} /></button></div>
-          {completed.length ? completed.slice(0, 3).map((item) => <ActivityItem key={item.completion.id} {...item} onOpen={onOpen} />) : <EmptyState compact icon={Footprints} title={text('故事要从现实开始', 'Your story starts in real life')} text={text('完成一个任务，你的第一条战绩就会出现在这里。', 'Complete a quest and your first victory will appear here.')} />}
-        </section>
-      </div>
+function CharacterView({ completedCount, energy, levelInfo, maxEnergy, stats, streak, totalXp }: {
+  completedCount: number
+  energy: number
+  levelInfo: ReturnType<typeof getLevel>
+  maxEnergy: number
+  stats: Record<StatKey, number>
+  streak: number
+  totalXp: number
+}) {
+  const { language, text } = useLanguage()
+  const [selectedStat, setSelectedStat] = useState<StatKey | null>(null)
+  const [levelHelp, setLevelHelp] = useState(false)
+  const maxStat = Math.max(1, ...Object.values(stats))
+  return (
+    <>
+      <div className="page-heading"><p className="eyebrow">{text('角色面板', 'Character Sheet')}</p><h1>{text('看见你的', 'See your real')}<em>{text('现实成长。', ' growth.')}</em></h1><p>{text('每一次真实行动都会留下经验、属性与时间线，让成长不再只是模糊的感觉。', 'Every real action leaves XP, attributes, and a timeline behind.')}</p></div>
+      <section className="character-summary">
+        <button className="character-level-card" onClick={() => setLevelHelp(true)}>
+          <span className="character-level-emblem"><UserRound size={30} /></span>
+          <span className="character-level-copy"><small>{text('独行冒险者', 'Solo Adventurer')}</small><strong>{text('等级', 'Level')} {levelInfo.level}</strong><em>{totalXp} {text('总经验', 'total XP')}</em></span>
+          <span className="character-level-progress"><span><b>{levelInfo.carriedXp}</b> / {levelInfo.needed} {text('经验', 'XP')}</span><i><b style={{ width: `${levelInfo.percent}%` }} /></i><small>{text('点击查看等级计算规则', 'Click to view level rules')}</small></span>
+        </button>
+        <div className="character-metrics">
+          <div><Trophy size={18} /><span>{text('完成记录', 'Completions')}</span><strong>{completedCount}</strong></div>
+          <div><Flame size={18} /><span>{text('连续天数', 'Streak')}</span><strong>{streak}</strong></div>
+          <div><Heart size={18} /><span>{text('当前行动力', 'Energy')}</span><strong>{energy}/{maxEnergy}</strong></div>
+          <div><Sparkles size={18} /><span>{text('最高属性', 'Top attribute')}</span><strong>{maxStat}</strong></div>
+        </div>
+      </section>
+      <section className="section-block stat-panel character-stat-panel">
+        <div className="section-heading"><div><p className="eyebrow">{text('六项现实属性', 'Six real-life attributes')}</p><h2>{text('你的成长分布', 'Your growth profile')}</h2></div><button className="level-chip" onClick={() => setLevelHelp(true)}>{text('等级', 'Level')} {levelInfo.level}</button></div>
+        <p className="character-stat-intro">{text('属性条以你当前最高属性为基准展示相对分布。点击任意属性可查看含义与对应任务类型。', 'Bars are relative to your current highest attribute. Select one to see what it means and which quests improve it.')}</p>
+        <div className="stat-list character-stat-list">
+          {(Object.entries(stats) as [StatKey, number][]).map(([key, value]) => (
+            (() => { const Icon = statMeta[key].icon; return <button className="stat-row" key={key} onClick={() => setSelectedStat(key)} style={{ '--stat-color': statMeta[key].color } as React.CSSProperties}><span><Icon size={17} /></span><div><strong>{language === 'zh' ? statLabels[key] : statLabelsEn[key]} <small>{text('点击了解', 'Learn more')}</small></strong><i><b style={{ width: `${(value / maxStat) * 100}%` }} /></i></div><em>{value}</em></button> })()
+          ))}
+        </div>
+      </section>
       {selectedStat && <StatHelpModal stat={selectedStat} value={stats[selectedStat]} onClose={() => setSelectedStat(null)} />}
       {levelHelp && <LevelHelpModal levelInfo={levelInfo} totalXp={totalXp} onClose={() => setLevelHelp(false)} />}
     </>
