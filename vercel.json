@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/quests", "destination": "/index.html" },
+    { "source": "/quests/:id", "destination": "/index.html" },
+    { "source": "/my-quests", "destination": "/index.html" },
+    { "source": "/chronicle", "destination": "/index.html" },
+    { "source": "/settings", "destination": "/index.html" }
+  ]
+}

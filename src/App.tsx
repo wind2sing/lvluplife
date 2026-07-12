@@ -53,6 +53,24 @@ type View = 'home' | 'explore' | 'goals' | 'chronicle' | 'settings'
 type Language = 'zh' | 'en'
 type FontChoice = 'noto' | 'zcool' | 'pixel' | 'system'
 
+const viewPaths: Record<View, string> = {
+  home: '/',
+  explore: '/quests',
+  goals: '/my-quests',
+  chronicle: '/chronicle',
+  settings: '/settings',
+}
+
+function readBrowserRoute(): { view: View; challengeId: string | null } {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/'
+  if (path.startsWith('/quests/')) return { view: 'explore', challengeId: decodeURIComponent(path.slice('/quests/'.length)) }
+  if (path === '/quests') return { view: 'explore', challengeId: null }
+  if (path === '/my-quests') return { view: 'goals', challengeId: null }
+  if (path === '/chronicle') return { view: 'chronicle', challengeId: null }
+  if (path === '/settings') return { view: 'settings', challengeId: null }
+  return { view: 'home', challengeId: null }
+}
+
 type Challenge = {
   id: string
   title: string
@@ -269,11 +287,11 @@ function App() {
   const [accessKey, setAccessKey] = useState(() => localStorage.getItem(ACCESS_KEY_STORAGE) ?? '')
   const [accessKeyDraft, setAccessKeyDraft] = useState('')
   const [accessError, setAccessError] = useState('')
-  const [view, setView] = useState<View>('home')
+  const [view, setView] = useState<View>(() => readBrowserRoute().view)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('全部任务')
   const [selected, setSelected] = useState<Challenge | null>(null)
-  const [detailChallenge, setDetailChallenge] = useState<Challenge | null>(null)
+  const [detailChallengeId, setDetailChallengeId] = useState<string | null>(() => readBrowserRoute().challengeId)
   const [undoTarget, setUndoTarget] = useState<{ completion: Completion; challenge: Challenge } | null>(null)
   const [note, setNote] = useState('')
   const [reward, setReward] = useState<{ challenge: Challenge; levelUp: boolean; unlockedCount: number } | null>(null)
@@ -340,7 +358,23 @@ function App() {
     })
   }, [accessKey, ready, settings])
 
+  useEffect(() => {
+    function syncBrowserRoute() {
+      const route = readBrowserRoute()
+      setView(route.view)
+      setDetailChallengeId(route.challengeId)
+      setSelected(null)
+      setUndoTarget(null)
+      setEnergyHelp(false)
+      setMobileNav(false)
+      window.scrollTo({ top: 0 })
+    }
+    window.addEventListener('popstate', syncBrowserRoute)
+    return () => window.removeEventListener('popstate', syncBrowserRoute)
+  }, [])
+
   const challengeMap = useMemo(() => new Map(challenges.map((item) => [item.id, item])), [challenges])
+  const detailChallenge = detailChallengeId ? challengeMap.get(detailChallengeId) ?? null : null
   const completedChallenges = save.completions
     .map((completion) => ({ completion, challenge: challengeMap.get(completion.challengeId) }))
     .filter((item): item is { completion: Completion; challenge: Challenge } => Boolean(item.challenge))
@@ -388,6 +422,12 @@ function App() {
   const activeChallenges = save.activeIds.map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
   const favoriteChallenges = save.favoriteIds.map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
 
+  useEffect(() => {
+    if (!ready || !detailChallengeId || detailChallenge) return
+    setDetailChallengeId(null)
+    window.history.replaceState({ lvluplife: true }, '', viewPaths[view])
+  }, [detailChallenge, detailChallengeId, ready, view])
+
   function toggleActive(id: string) {
     setSave((current) => ({
       ...current,
@@ -431,7 +471,19 @@ function App() {
   }
 
   function openChallenge(challenge: Challenge) {
-    setDetailChallenge(challenge)
+    const path = `/quests/${encodeURIComponent(challenge.id)}`
+    setDetailChallengeId(challenge.id)
+    if (window.location.pathname !== path) window.history.pushState({ lvluplife: true, lvluplifeDetail: true }, '', path)
+    window.scrollTo({ top: 0 })
+  }
+
+  function closeChallenge() {
+    if (window.history.state?.lvluplifeDetail) {
+      window.history.back()
+      return
+    }
+    setDetailChallengeId(null)
+    window.history.replaceState({ lvluplife: true }, '', viewPaths[view])
     window.scrollTo({ top: 0 })
   }
 
@@ -460,8 +512,12 @@ function App() {
 
   function navigate(next: View) {
     setView(next)
-    setDetailChallenge(null)
+    setDetailChallengeId(null)
+    setSelected(null)
+    setUndoTarget(null)
+    setEnergyHelp(false)
     setMobileNav(false)
+    if (window.location.pathname !== viewPaths[next]) window.history.pushState({ lvluplife: true }, '', viewPaths[next])
     window.scrollTo({ top: 0 })
   }
 
@@ -499,7 +555,7 @@ function App() {
           completions={save.completions}
           favorite={save.favoriteIds.includes(detailChallenge.id)}
           level={level.level}
-          onBack={() => setDetailChallenge(null)}
+          onBack={closeChallenge}
           onComplete={setSelected}
           onFavorite={toggleFavorite}
           onStart={toggleActive}
