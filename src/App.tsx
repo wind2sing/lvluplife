@@ -776,7 +776,7 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLock
       <div className="result-meta"><strong>{visibleChallenges.filter((item) => item.level <= level).length}</strong> {text('项可领取任务', 'available quests')} <span>•</span> {category === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? category : categoryMeta[category].labelEn}</div>
       <div className="quest-list">
         {visibleChallenges.slice(0, 80).map((challenge) => challenge.level > level
-          ? <LockedQuestRow key={challenge.id} challenge={challenge} onOpen={onOpen} />
+          ? <LockedQuestRow key={challenge.id} challenge={challenge} />
           : <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}
       </div>
       {hiddenLockedCount > 0 && !search && <div className="hidden-quests"><LockKeyhole size={17} /><strong>{text(`还有 ${hiddenLockedCount} 项成就隐藏在迷雾中`, `${hiddenLockedCount} achievements remain hidden in the fog`)}</strong><span>{text('继续获得经验并提升等级后，它们才会显露名称。', 'Earn XP and level up to reveal their names.')}</span></div>}
@@ -845,14 +845,14 @@ function QuestRow({ active, challenge, completions, favorite, onComplete, onFavo
   )
 }
 
-function LockedQuestRow({ challenge, onOpen }: { challenge: Challenge; onOpen: (challenge: Challenge) => void }) {
+function LockedQuestRow({ challenge }: { challenge: Challenge }) {
   const { text } = useLanguage()
   return (
-    <article className="quest-row quest-row--locked" onClick={() => onOpen(challenge)} onKeyDown={(event) => { if (event.key === 'Enter') onOpen(challenge) }} role="button" tabIndex={0}>
+    <article className="quest-row quest-row--locked" aria-disabled="true">
       <div className="category-icon"><LockKeyhole size={20} /></div>
       <div className="quest-row-copy"><span>{text('未知成就 · 尚未发现', 'Unknown achievement · Undiscovered')}</span><h3>{text('被迷雾遮蔽的任务', 'A quest hidden by the fog')}</h3><div className="quest-rewards"><em>{text(`达到等级 ${challenge.level} 后显露名称与奖励`, `Reach level ${challenge.level} to reveal its name and rewards`)}</em></div></div>
       <div className="lock-runes" aria-hidden="true">???</div>
-      <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={15} /> {text('查看条件', 'View requirement')}</button>
+      <button className="cooldown-button" disabled><LockKeyhole size={15} /> {text('尚未解锁', 'Locked')}</button>
     </article>
   )
 }
