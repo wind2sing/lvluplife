@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=ZCOOL+KuaiLe&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=ZCOOL+KuaiLe&family=ZCOOL+QingKe+HuangYou&display=swap');
 
 :root {
   --body-font: 'Noto Sans SC', system-ui, sans-serif;
@@ -20,6 +20,7 @@
 }
 
 :root[data-font='zcool'] { --body-font: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif; --display-font: 'ZCOOL KuaiLe', sans-serif; }
+:root[data-font='pixel'] { --body-font: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; --display-font: 'ZCOOL QingKe HuangYou', monospace; }
 :root[data-font='system'] { --body-font: system-ui, -apple-system, 'Segoe UI', sans-serif; --display-font: system-ui, -apple-system, 'Segoe UI', sans-serif; }
 :root[data-font='noto'] { --body-font: 'Noto Sans SC', system-ui, sans-serif; --display-font: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif; }
 

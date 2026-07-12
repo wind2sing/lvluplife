@@ -47,7 +47,7 @@ import './App.css'
 type StatKey = 'STR' | 'CUL' | 'ENV' | 'CHA' | 'TAL' | 'INT'
 type View = 'home' | 'explore' | 'goals' | 'chronicle' | 'settings'
 type Language = 'zh' | 'en'
-type FontChoice = 'noto' | 'zcool' | 'system'
+type FontChoice = 'noto' | 'zcool' | 'pixel' | 'system'
 
 type Challenge = {
   id: string
@@ -220,6 +220,7 @@ function App() {
   const [note, setNote] = useState('')
   const [reward, setReward] = useState<{ challenge: Challenge; levelUp: boolean; unlockedCount: number } | null>(null)
   const [mobileNav, setMobileNav] = useState(false)
+  const [energyHelp, setEnergyHelp] = useState(false)
 
   useEffect(() => {
     if (bootstrapStarted.current) return
@@ -389,6 +390,11 @@ function App() {
     window.scrollTo({ top: 0 })
   }
 
+  function showCharacterPanel() {
+    navigate('home')
+    window.setTimeout(() => document.querySelector('#character-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0)
+  }
+
   if (bootstrapError) {
     return <div className="boot-state"><div className="boot-icon"><X /></div><h1>无法连接 SQLite</h1><p>{bootstrapError}</p><code>npm run dev</code></div>
   }
@@ -513,15 +519,15 @@ function App() {
       <main>
         <header className="topbar">
           <button className="mobile-menu" onClick={() => setMobileNav(true)} aria-label={text('打开菜单', 'Open menu')}><Menu /></button>
-          <div className="topbar-level">
+          <button className="topbar-level topbar-action" onClick={showCharacterPanel} title={text('查看角色属性', 'View character stats')}>
             <span>{text('等级', 'Level')} {level.level}</span>
             <div className="xp-track"><i style={{ width: `${level.percent}%` }} /></div>
             <small>{level.carriedXp} / {level.needed} {text('经验', 'XP')}</small>
-          </div>
+          </button>
           <div className="top-stats">
-            <span className="energy-hearts" title="每小时恢复 1 点行动力">{Array.from({ length: maxEnergy }, (_, index) => <Heart key={index} size={16} fill={index < energy ? 'currentColor' : 'none'} />)} <strong>{energy}/{maxEnergy}</strong></span>
-            <span><Flame size={17} /> {text('连续', 'Streak')} <strong>{streak}</strong> {text('天', 'days')}</span>
-            <span><Trophy size={17} /> {text('完成', 'Done')} <strong>{save.completions.length}</strong> {text('次', 'times')}</span>
+            <button className="topbar-action energy-hearts" onClick={() => setEnergyHelp(true)} title={text('查看行动力规则', 'View energy rules')}><span className="topbar-stat-label">{text('行动力', 'Energy')}</span>{Array.from({ length: maxEnergy }, (_, index) => <Heart key={index} size={16} fill={index < energy ? 'currentColor' : 'none'} />)} <strong>{energy}/{maxEnergy}</strong></button>
+            <button className="topbar-action" onClick={() => navigate('chronicle')} title={text('查看连续记录', 'View streak history')}><Flame size={17} /> {text('连续', 'Streak')} <strong>{streak}</strong> {text('天', 'days')}</button>
+            <button className="topbar-action" onClick={() => navigate('chronicle')} title={text('查看全部完成记录', 'View all completions')}><Trophy size={17} /> {text('完成', 'Done')} <strong>{save.completions.length}</strong> {text('次', 'times')}</button>
           </div>
         </header>
         <div className="page-content">{mainContent}</div>
@@ -534,6 +540,8 @@ function App() {
       {undoTarget && (
         <UndoModal challenge={undoTarget.challenge} onCancel={() => setUndoTarget(null)} onConfirm={undoCompletion} />
       )}
+
+      {energyHelp && <EnergyHelpModal current={energy} max={maxEnergy} onClose={() => setEnergyHelp(false)} />}
 
       {reward && (
         <div className="reward-toast" role="status">
@@ -597,7 +605,7 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
       </section>
 
       <div className="dashboard-grid">
-        <section className="section-block stat-panel">
+        <section className="section-block stat-panel" id="character-panel">
           <div className="section-heading"><div><p className="eyebrow">{text('角色面板', 'Character sheet')}</p><h2>{text('你的现实属性', 'Your real-life stats')}</h2></div><span className="level-chip">{text('等级', 'Level')} {level}</span></div>
           <div className="stat-list">
             {(Object.entries(stats) as [StatKey, number][]).map(([key, value]) => (
@@ -817,6 +825,23 @@ function UndoModal({ challenge, onCancel, onConfirm }: { challenge: Challenge; o
   )
 }
 
+function EnergyHelpModal({ current, max, onClose }: { current: number; max: number; onClose: () => void }) {
+  const { text } = useLanguage()
+  return (
+    <div className="modal-backdrop" role="presentation" onClick={onClose}>
+      <section className="energy-help-modal" role="dialog" aria-modal="true" aria-labelledby="energy-help-title" onClick={(event) => event.stopPropagation()}>
+        <button className="modal-close" onClick={onClose} aria-label={text('关闭', 'Close')}><X /></button>
+        <div className="energy-help-icon"><Heart size={27} fill="currentColor" /></div>
+        <p className="eyebrow">{text('行动力', 'Energy')}</p>
+        <h2 id="energy-help-title">{text('这不是生命值', 'This is not health')}</h2>
+        <p>{text('每记录一次任务完成，会消耗 1 点行动力，用来限制短时间内连续刷奖励。每小时会自动恢复 1 点。', 'Recording a completion costs 1 energy, preventing rapid reward farming. You recover 1 energy every hour.')}</p>
+        <div className="energy-help-status"><span>{text('当前行动力', 'Current energy')}</span><strong>{current} / {max}</strong></div>
+        <small>{text('提升等级后，行动力上限也会逐步增加。撤销最近一小时内的完成记录，会立即返还行动力。', 'Your maximum energy grows as you level up. Undoing a completion from the last hour restores its energy immediately.')}</small>
+      </section>
+    </div>
+  )
+}
+
 function SettingsView({ settings, onChange }: { settings: AppSettings; onChange: (settings: AppSettings) => void }) {
   const { text } = useLanguage()
   return (
@@ -834,6 +859,7 @@ function SettingsView({ settings, onChange }: { settings: AppSettings; onChange:
         <div className="setting-options font-options">
           <button className={`font-preview font-preview--noto ${settings.font === 'noto' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'noto' })}><strong>{text('思源黑体', 'Noto Sans')}</strong><span>{text('清晰、现代、耐读', 'Clear, modern, readable')}</span></button>
           <button className={`font-preview font-preview--zcool ${settings.font === 'zcool' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'zcool' })}><strong>{text('站酷快乐体', 'ZCOOL KuaiLe')}</strong><span>{text('复古、活泼、游戏感', 'Playful, retro, game-like')}</span></button>
+          <button className={`font-preview font-preview--pixel ${settings.font === 'pixel' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'pixel' })}><strong>{text('像素街机体', 'Pixel Arcade')}</strong><span>{text('方块笔画、复古像素感', 'Blocky, retro pixel style')}</span></button>
           <button className={`font-preview font-preview--system ${settings.font === 'system' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'system' })}><strong>{text('系统字体', 'System font')}</strong><span>{text('跟随当前设备', 'Follow this device')}</span></button>
         </div>
       </section>

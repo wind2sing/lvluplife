@@ -14,6 +14,22 @@ mkdirSync(dataDir, { recursive: true })
 const db = new DatabaseSync(join(dataDir, 'lvluplife.sqlite'))
 db.exec(readFileSync(join(root, 'server/schema.sql'), 'utf8'))
 
+const settingsTableSql = db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'settings'").get()?.sql ?? ''
+if (!settingsTableSql.includes("'pixel'")) {
+  db.exec(`
+    BEGIN;
+    ALTER TABLE settings RENAME TO settings_legacy;
+    CREATE TABLE settings (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      language TEXT NOT NULL DEFAULT 'zh' CHECK (language IN ('zh', 'en')),
+      font TEXT NOT NULL DEFAULT 'noto' CHECK (font IN ('noto', 'zcool', 'pixel', 'system'))
+    );
+    INSERT INTO settings (id, language, font) SELECT id, language, font FROM settings_legacy;
+    DROP TABLE settings_legacy;
+    COMMIT;
+  `)
+}
+
 const challengeSeed = JSON.parse(readFileSync(join(root, 'src/data/challenges.json'), 'utf8'))
 const upsertChallenge = db.prepare(`
   INSERT INTO challenges (
@@ -170,7 +186,7 @@ const server = createServer(async (request, response) => {
     }
     if (request.method === 'PUT' && request.url === '/api/settings') {
       const settings = await readJson(request)
-      if (!['zh', 'en'].includes(settings.language) || !['noto', 'zcool', 'system'].includes(settings.font)) return json(response, 400, { error: 'Invalid settings' })
+      if (!['zh', 'en'].includes(settings.language) || !['noto', 'zcool', 'pixel', 'system'].includes(settings.font)) return json(response, 400, { error: 'Invalid settings' })
       updateSettings.run(settings.language, settings.font)
       return json(response, 200, { ok: true })
     }
