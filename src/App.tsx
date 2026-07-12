@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import {
+  ArrowLeft,
   ArrowRight,
   BookOpen,
   BriefcaseBusiness,
@@ -15,6 +16,7 @@ import {
   GraduationCap,
   Hammer,
   Heart,
+  History,
   House,
   Leaf,
   LibraryBig,
@@ -25,6 +27,8 @@ import {
   Music2,
   Palette,
   Plus,
+  Repeat2,
+  RotateCcw,
   ScrollText,
   Search,
   ShieldCheck,
@@ -120,6 +124,14 @@ function getCooldownLabel(challenge: Challenge, completions: Completion[]) {
   return hours < 24 ? `${hours} 小时后可再次完成` : `${Math.ceil(hours / 24)} 天后可再次完成`
 }
 
+const cadenceDescriptions: Record<string, string> = {
+  每日: '完成后等待 1 天，即可再次领取奖励。',
+  每周: '完成后等待 7 天，即可再次领取奖励。',
+  每月: '完成后等待 30 天，即可再次领取奖励。',
+  每年: '完成后等待 365 天，即可再次领取奖励。',
+  终身一次: '这是人生清单成就，只能领取一次奖励。',
+}
+
 function loadSave(): SaveState {
   try {
     const value = localStorage.getItem(STORAGE_KEY)
@@ -159,6 +171,8 @@ function App() {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('全部任务')
   const [selected, setSelected] = useState<Challenge | null>(null)
+  const [detailChallenge, setDetailChallenge] = useState<Challenge | null>(null)
+  const [undoTarget, setUndoTarget] = useState<{ completion: Completion; challenge: Challenge } | null>(null)
   const [note, setNote] = useState('')
   const [reward, setReward] = useState<{ challenge: Challenge; levelUp: boolean; unlockedCount: number } | null>(null)
   const [mobileNav, setMobileNav] = useState(false)
@@ -256,13 +270,52 @@ function App() {
     window.setTimeout(() => setReward(null), 4600)
   }
 
+  function openChallenge(challenge: Challenge) {
+    if (challenge.level > level.level) return
+    setDetailChallenge(challenge)
+    window.scrollTo({ top: 0 })
+  }
+
+  function undoCompletion() {
+    if (!undoTarget) return
+    setSave((current) => {
+      const completions = current.completions.filter((item) => item.id !== undoTarget.completion.id)
+      const remainingXp = completions.reduce((sum, item) => sum + (challengeMap.get(item.challengeId)?.xp ?? 0), 0)
+      const remainingLevel = getLevel(remainingXp).level
+      return {
+        ...current,
+        activeIds: current.activeIds.filter((id) => (challengeMap.get(id)?.level ?? 1) <= remainingLevel),
+        completions,
+      }
+    })
+    setUndoTarget(null)
+  }
+
   function navigate(next: View) {
     setView(next)
+    setDetailChallenge(null)
     setMobileNav(false)
     window.scrollTo({ top: 0 })
   }
 
   const mainContent = (() => {
+    if (detailChallenge) {
+      return (
+        <QuestDetailView
+          active={save.activeIds.includes(detailChallenge.id)}
+          challenge={detailChallenge}
+          completions={save.completions}
+          favorite={save.favoriteIds.includes(detailChallenge.id)}
+          level={level.level}
+          onBack={() => setDetailChallenge(null)}
+          onComplete={setSelected}
+          onFavorite={toggleFavorite}
+          onStart={toggleActive}
+          onUndo={(completion) => setUndoTarget({ completion, challenge: detailChallenge })}
+        />
+      )
+    }
+
     if (view === 'explore') {
       return (
         <ExploreView
@@ -275,6 +328,7 @@ function App() {
           onCategory={setCategory}
           onComplete={setSelected}
           onFavorite={toggleFavorite}
+          onOpen={openChallenge}
           onStart={toggleActive}
           search={search}
           setSearch={setSearch}
@@ -293,6 +347,7 @@ function App() {
           favoriteIds={save.favoriteIds}
           onComplete={setSelected}
           onFavorite={toggleFavorite}
+          onOpen={openChallenge}
           onStart={toggleActive}
           onExplore={() => navigate('explore')}
         />
@@ -300,7 +355,7 @@ function App() {
     }
 
     if (view === 'chronicle') {
-      return <ChronicleView items={completedChallenges} />
+      return <ChronicleView items={completedChallenges} onOpen={openChallenge} onUndo={(item) => setUndoTarget(item)} />
     }
 
     return (
@@ -314,6 +369,7 @@ function App() {
         onComplete={setSelected}
         onFavorite={toggleFavorite}
         onNavigate={navigate}
+        onOpen={openChallenge}
         onStart={toggleActive}
         stats={stats}
         unlockedCount={unlockedChallenges.length}
@@ -365,6 +421,10 @@ function App() {
         <CompletionModal challenge={selected} energy={energy} note={note} onClose={() => setSelected(null)} onNote={setNote} onSubmit={completeQuest} />
       )}
 
+      {undoTarget && (
+        <UndoModal challenge={undoTarget.challenge} onCancel={() => setUndoTarget(null)} onConfirm={undoCompletion} />
+      )}
+
       {reward && (
         <div className="reward-toast" role="status">
           <div className="reward-icon"><Sparkles /></div>
@@ -388,10 +448,11 @@ type QuestActions = {
   favoriteIds: string[]
   onComplete: (challenge: Challenge) => void
   onFavorite: (id: string) => void
+  onOpen: (challenge: Challenge) => void
   onStart: (id: string) => void
 }
 
-function HomeView({ activeIds, completed, completions, favoriteIds, featured, level, onComplete, onFavorite, onNavigate, onStart, stats, unlockedCount }: QuestActions & {
+function HomeView({ activeIds, completed, completions, favoriteIds, featured, level, onComplete, onFavorite, onNavigate, onOpen, onStart, stats, unlockedCount }: QuestActions & {
   completed: { completion: Completion; challenge: Challenge }[]
   featured: Challenge[]
   level: number
@@ -419,7 +480,7 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
       <section className="section-block">
         <div className="section-heading"><div><p className="eyebrow">今日委托</p><h2>选择你的冒险</h2></div><button className="text-button" onClick={() => onNavigate('explore')}>查看已解锁的 {unlockedCount} 项 <ArrowRight size={16} /></button></div>
         <div className="quest-grid">
-          {featured.map((challenge, index) => <QuestCard key={challenge.id} challenge={challenge} completions={completions} featured={index === 0} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onStart={onStart} />)}
+          {featured.map((challenge, index) => <QuestCard key={challenge.id} challenge={challenge} completions={completions} featured={index === 0} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}
         </div>
       </section>
 
@@ -435,14 +496,14 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
 
         <section className="section-block recent-panel">
           <div className="section-heading"><div><p className="eyebrow">最近战绩</p><h2>你的冒险日志</h2></div><button className="icon-button" aria-label="查看冒险日志" onClick={() => onNavigate('chronicle')}><ArrowRight size={18} /></button></div>
-          {completed.length ? completed.slice(0, 3).map((item) => <ActivityItem key={item.completion.id} {...item} />) : <EmptyState compact icon={Footprints} title="故事要从现实开始" text="完成一个任务，你的第一条战绩就会出现在这里。" />}
+          {completed.length ? completed.slice(0, 3).map((item) => <ActivityItem key={item.completion.id} {...item} onOpen={onOpen} />) : <EmptyState compact icon={Footprints} title="故事要从现实开始" text="完成一个任务，你的第一条战绩就会出现在这里。" />}
         </section>
       </div>
     </>
   )
 }
 
-function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLockedCount, level, onCategory, onComplete, onFavorite, onStart, search, setSearch, visibleChallenges }: QuestActions & {
+function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLockedCount, level, onCategory, onComplete, onFavorite, onOpen, onStart, search, setSearch, visibleChallenges }: QuestActions & {
   category: string
   hiddenLockedCount: number
   level: number
@@ -469,7 +530,7 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLock
       <div className="quest-list">
         {visibleChallenges.slice(0, 80).map((challenge) => challenge.level > level
           ? <LockedQuestRow key={challenge.id} level={challenge.level} />
-          : <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onStart={onStart} />)}
+          : <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}
       </div>
       {hiddenLockedCount > 0 && !search && <div className="hidden-quests"><LockKeyhole size={17} /><strong>还有 {hiddenLockedCount} 项成就隐藏在迷雾中</strong><span>继续获得经验并提升等级后，它们才会显露名称。</span></div>}
       {visibleChallenges.length > 80 && <p className="result-note">当前显示前 80 项结果，请使用搜索或分类继续缩小范围。</p>}
@@ -477,58 +538,58 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLock
   )
 }
 
-function CollectionView({ active, activeIds, completions, favoriteIds, favorites, onComplete, onExplore, onFavorite, onStart }: QuestActions & { active: Challenge[]; favorites: Challenge[]; onExplore: () => void }) {
+function CollectionView({ active, activeIds, completions, favoriteIds, favorites, onComplete, onExplore, onFavorite, onOpen, onStart }: QuestActions & { active: Challenge[]; favorites: Challenge[]; onExplore: () => void }) {
   return (
     <>
       <div className="page-heading"><p className="eyebrow">我的任务</p><h1>正在进行的<em>冒险。</em></h1><p>把真正想做的事留在眼前，等你在现实中完成它。</p></div>
       <section className="section-block">
         <div className="section-heading"><div><p className="eyebrow">进行中</p><h2>当前任务 <span className="count-pill">{active.length}</span></h2></div></div>
-        {active.length ? <div className="quest-list">{active.map((challenge) => <QuestRow key={challenge.id} challenge={challenge} completions={completions} active favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onStart={onStart} />)}</div> : <EmptyState icon={Target} title="还没有进行中的任务" text="选一件足够小、但确实对你有意义的事。" action="前往任务公会" onAction={onExplore} />}
+        {active.length ? <div className="quest-list">{active.map((challenge) => <QuestRow key={challenge.id} challenge={challenge} completions={completions} active favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}</div> : <EmptyState icon={Target} title="还没有进行中的任务" text="选一件足够小、但确实对你有意义的事。" action="前往任务公会" onAction={onExplore} />}
       </section>
       <section className="section-block collection-gap">
         <div className="section-heading"><div><p className="eyebrow">任务书签</p><h2>以后再做 <span className="count-pill">{favorites.length}</span></h2></div></div>
-        {favorites.length ? <div className="quest-list">{favorites.map((challenge) => <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite onComplete={onComplete} onFavorite={onFavorite} onStart={onStart} />)}</div> : <EmptyState compact icon={Star} title="书签还是空的" text="点击任务上的星标，就能把它留在这里。" />}
+        {favorites.length ? <div className="quest-list">{favorites.map((challenge) => <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}</div> : <EmptyState compact icon={Star} title="书签还是空的" text="点击任务上的星标，就能把它留在这里。" />}
       </section>
     </>
   )
 }
 
-function ChronicleView({ items }: { items: { completion: Completion; challenge: Challenge }[] }) {
+function ChronicleView({ items, onOpen, onUndo }: { items: { completion: Completion; challenge: Challenge }[]; onOpen: (challenge: Challenge) => void; onUndo: (item: { completion: Completion; challenge: Challenge }) => void }) {
   return (
     <>
       <div className="page-heading"><p className="eyebrow">冒险日志</p><h1>你认真生活过的<em>证据。</em></h1><p>只属于你的真实行动、诚实记录与成长轨迹。</p></div>
       <section className="timeline-panel">
-        {items.length ? items.map((item) => <ActivityItem key={item.completion.id} {...item} large />) : <EmptyState icon={ScrollText} title="冒险日志还是空白" text="完成一个任务，写下属于你的第一行记录。" />}
+        {items.length ? items.map((item) => <ActivityItem key={item.completion.id} {...item} large onOpen={onOpen} onUndo={() => onUndo(item)} />) : <EmptyState icon={ScrollText} title="冒险日志还是空白" text="完成一个任务，写下属于你的第一行记录。" />}
       </section>
     </>
   )
 }
 
-function QuestCard({ active, challenge, completions, favorite, featured, onComplete, onFavorite, onStart }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; featured?: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onStart: (id: string) => void }) {
+function QuestCard({ active, challenge, completions, favorite, featured, onComplete, onFavorite, onOpen, onStart }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; featured?: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onOpen: (challenge: Challenge) => void; onStart: (id: string) => void }) {
   const meta = categoryMeta[challenge.category]
   const Icon = meta.icon
   const cooldown = getCooldownLabel(challenge, completions)
   return (
-    <article className={`quest-card ${featured ? 'featured' : ''}`} style={{ '--category-color': meta.color } as React.CSSProperties}>
-      <div className="quest-card-top"><div className="category-icon"><Icon size={22} /></div><button className={`star-button ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)} aria-label="收藏任务"><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button></div>
+    <article className={`quest-card ${featured ? 'featured' : ''}`} onClick={() => onOpen(challenge)} onKeyDown={(event) => { if (event.key === 'Enter') onOpen(challenge) }} role="button" tabIndex={0} style={{ '--category-color': meta.color } as React.CSSProperties}>
+      <div className="quest-card-top"><div className="category-icon"><Icon size={22} /></div><button className={`star-button ${favorite ? 'active' : ''}`} onClick={(event) => { event.stopPropagation(); onFavorite(challenge.id) }} aria-label="收藏任务"><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button></div>
       <span className="quest-kind">{featured ? '今日主线' : meta.short}</span>
       <h3>{challenge.title}</h3>
       <div className="quest-rewards"><span><Zap size={14} /> {challenge.xp} 经验</span>{challenge.stats.map((stat) => <span key={stat.key}>{statLabels[stat.key]} +{stat.points}</span>)}</div>
-      <div className="quest-card-footer"><span>{cooldown || `${challenge.tierName} · 等级 ${challenge.level}`}</span>{cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={14} /> 冷却中</button> : active ? <button className="complete-button" onClick={() => onComplete(challenge)}><Check size={16} /> 完成</button> : <button className="add-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> 接取</button>}</div>
+      <div className="quest-card-footer"><span>{cooldown || `${challenge.tierName} · 等级 ${challenge.level}`}</span>{cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={14} /> 冷却中</button> : active ? <button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> 完成</button> : <button className="add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={17} /> 接取</button>}</div>
     </article>
   )
 }
 
-function QuestRow({ active, challenge, completions, favorite, onComplete, onFavorite, onStart }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onStart: (id: string) => void }) {
+function QuestRow({ active, challenge, completions, favorite, onComplete, onFavorite, onOpen, onStart }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onOpen: (challenge: Challenge) => void; onStart: (id: string) => void }) {
   const meta = categoryMeta[challenge.category]
   const Icon = meta.icon
   const cooldown = getCooldownLabel(challenge, completions)
   return (
-    <article className={`quest-row ${active ? 'quest-row--active' : ''}`} style={{ '--category-color': meta.color } as React.CSSProperties}>
+    <article className={`quest-row ${active ? 'quest-row--active' : ''}`} onClick={() => onOpen(challenge)} onKeyDown={(event) => { if (event.key === 'Enter') onOpen(challenge) }} role="button" tabIndex={0} style={{ '--category-color': meta.color } as React.CSSProperties}>
       <div className="category-icon"><Icon size={21} /></div>
       <div className="quest-row-copy"><span>{challenge.category} · {challenge.tierName}</span><h3>{challenge.title}</h3><div className="quest-rewards"><span><Zap size={13} /> {challenge.xp} 经验</span>{challenge.stats.map((stat) => <span key={stat.key}>{statLabels[stat.key]} +{stat.points}</span>)}<em>等级 {challenge.level}</em>{cooldown && <em className="cooldown-label">{cooldown}</em>}</div></div>
-      <button className={`star-button ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)} aria-label="收藏任务"><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button>
-      {cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={15} /> 冷却中</button> : active ? <button className="complete-button" onClick={() => onComplete(challenge)}><Check size={16} /> 完成</button> : <button className="row-add-button" onClick={() => onStart(challenge.id)}><Plus size={18} /><span>接取任务</span></button>}
+      <button className={`star-button ${favorite ? 'active' : ''}`} onClick={(event) => { event.stopPropagation(); onFavorite(challenge.id) }} aria-label="收藏任务"><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button>
+      {cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={15} /> 冷却中</button> : active ? <button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> 完成</button> : <button className="row-add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={18} /><span>接取任务</span></button>}
     </article>
   )
 }
@@ -544,16 +605,93 @@ function LockedQuestRow({ level }: { level: number }) {
   )
 }
 
-function ActivityItem({ challenge, completion, large }: { challenge: Challenge; completion: Completion; large?: boolean }) {
+function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onFavorite, onStart, onUndo }: {
+  active: boolean
+  challenge: Challenge
+  completions: Completion[]
+  favorite: boolean
+  level: number
+  onBack: () => void
+  onComplete: (challenge: Challenge) => void
+  onFavorite: (id: string) => void
+  onStart: (id: string) => void
+  onUndo: (completion: Completion) => void
+}) {
+  const meta = categoryMeta[challenge.category]
+  const Icon = meta.icon
+  const cooldown = getCooldownLabel(challenge, completions)
+  const history = completions.filter((item) => item.challengeId === challenge.id)
+  const locked = challenge.level > level
+  const repeatable = challenge.cadence !== '终身一次'
+
+  return (
+    <>
+      <button className="detail-back" onClick={onBack}><ArrowLeft size={17} /> 返回</button>
+      <section className="quest-detail-hero" style={{ '--category-color': meta.color } as React.CSSProperties}>
+        <div className="detail-category-icon"><Icon size={34} /></div>
+        <div className="detail-hero-copy">
+          <p className="eyebrow">{challenge.category} · {challenge.tierName}</p>
+          <h1>{challenge.title}</h1>
+          <div className="detail-tags">
+            <span><Zap size={15} /> {challenge.xp} 经验</span>
+            {challenge.stats.map((stat) => <span key={stat.key}>{statLabels[stat.key]} +{stat.points}</span>)}
+            <span>等级 {challenge.level}</span>
+          </div>
+        </div>
+        <div className="detail-actions">
+          <button className={`detail-favorite ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /> {favorite ? '已收藏' : '收藏'}</button>
+          {locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> 等级不足</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>取消接取</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> 记录完成</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> 接取任务</button>}
+        </div>
+      </section>
+
+      <div className="quest-detail-grid">
+        <section className="detail-panel">
+          <div className="detail-panel-heading"><Repeat2 size={19} /><div><span>重复规则</span><strong>{challenge.cadence}</strong></div></div>
+          <p>{cadenceDescriptions[challenge.cadence]}</p>
+          <div className={`repeat-status ${repeatable ? 'repeat-status--yes' : ''}`}><Repeat2 size={15} /> {repeatable ? '这是可循环任务' : '这是终身成就'}</div>
+          {cooldown && <div className="detail-cooldown"><History size={16} /> {cooldown}</div>}
+        </section>
+        <section className="detail-panel">
+          <div className="detail-panel-heading"><ShieldCheck size={19} /><div><span>完成标准</span><strong>由你诚实判断</strong></div></div>
+          <p>任务只在现实中真正发生后才应记录。你可以在完成时写下过程、结果或这件事对你的意义。</p>
+          <div className="detail-rule-row"><span>行动力消耗</span><strong>1 点</strong></div>
+          <div className="detail-rule-row"><span>历史完成</span><strong>{history.length} 次</strong></div>
+        </section>
+      </div>
+
+      <section className="detail-history">
+        <div className="section-heading"><div><p className="eyebrow">完成记录</p><h2>这项任务的历史</h2></div><span className="count-pill">{history.length}</span></div>
+        {history.length ? history.map((completion) => <ActivityItem key={completion.id} challenge={challenge} completion={completion} large onUndo={() => onUndo(completion)} />) : <EmptyState compact icon={History} title="还没有完成记录" text="完成后，你的备注和奖励会保存在这里。" />}
+      </section>
+    </>
+  )
+}
+
+function ActivityItem({ challenge, completion, large, onOpen, onUndo }: { challenge: Challenge; completion: Completion; large?: boolean; onOpen?: (challenge: Challenge) => void; onUndo?: () => void }) {
   const meta = categoryMeta[challenge.category]
   const Icon = meta.icon
   const date = new Date(completion.completedAt)
   return (
-    <article className={`activity-item ${large ? 'activity-item--large' : ''}`}>
+    <article className={`activity-item ${large ? 'activity-item--large' : ''} ${onOpen ? 'activity-item--clickable' : ''}`} onClick={() => onOpen?.(challenge)}>
       <div className="activity-icon" style={{ color: meta.color }}><Icon size={20} /></div>
       <div className="activity-copy"><span>{date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric', year: large ? 'numeric' : undefined })}</span><h3>{challenge.title}</h3>{completion.note && <p>“{completion.note}”</p>}<div className="quest-rewards"><span><Zap size={13} /> +{challenge.xp} 经验</span>{challenge.stats.map((stat) => <span key={stat.key}>{statLabels[stat.key]} +{stat.points}</span>)}</div></div>
-      <Check className="activity-check" size={18} />
+      {large && (onOpen || onUndo) ? <div className="activity-actions">{onOpen && <button onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}>查看任务</button>}{onUndo && <button className="undo-link" onClick={(event) => { event.stopPropagation(); onUndo() }}><RotateCcw size={14} /> 撤销</button>}</div> : <Check className="activity-check" size={18} />}
     </article>
+  )
+}
+
+function UndoModal({ challenge, onCancel, onConfirm }: { challenge: Challenge; onCancel: () => void; onConfirm: () => void }) {
+  return (
+    <div className="modal-backdrop" role="presentation">
+      <section className="undo-modal" role="dialog" aria-modal="true" aria-labelledby="undo-title">
+        <div className="undo-icon"><RotateCcw size={25} /></div>
+        <p className="eyebrow">撤销完成记录</p>
+        <h2 id="undo-title">确定要撤销吗？</h2>
+        <h3>{challenge.title}</h3>
+        <p>对应的经验、属性成长和冷却状态会被撤回；如果记录在最近一小时内，消耗的行动力也会立即恢复。</p>
+        <div className="undo-actions"><button className="detail-secondary" onClick={onCancel}>保留记录</button><button className="danger-button" onClick={onConfirm}><RotateCcw size={16} /> 确认撤销</button></div>
+      </section>
+    </div>
   )
 }
 

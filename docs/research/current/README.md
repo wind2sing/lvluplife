@@ -12,5 +12,8 @@
 | `level-up.png` | 等级提升与新成就解锁反馈 |
 | `mobile-home.png` | 390 × 844 中文移动端首页 |
 | `active-quests.png` | 当前任务卡片与弱化后的完成按钮 |
+| `quest-detail.png` | 任务详情、奖励、接取状态与循环规则 |
+| `repeat-task-detail.png` | 已完成循环任务、冷却状态与历史次数 |
+| `undo-completion.png` | 撤销完成记录的二次确认 |
 
 其中完成弹窗和日志截图使用的是验收时创建的临时测试记录。
