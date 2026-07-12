@@ -20,6 +20,8 @@ const customChallenges = hasCustomJson ? db.prepare("SELECT custom_json FROM cha
 }) : []
 let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
 try { dailyBoard = { ...dailyBoard, ...JSON.parse(db.prepare("SELECT value FROM app_meta WHERE key = 'daily_board'").get()?.value ?? '{}') } } catch {}
+let gameplayState = { plans: [], specialization: null }
+try { gameplayState = { ...gameplayState, ...JSON.parse(db.prepare("SELECT value FROM app_meta WHERE key = 'gameplay_state'").get()?.value ?? '{}') } } catch {}
 
 const save = {
   activeIds: stateRows.filter((item) => item.active).map((item) => item.challenge_id),
@@ -27,6 +29,8 @@ const save = {
   hiddenIds: stateRows.filter((item) => item.hidden).map((item) => item.challenge_id),
   customChallenges,
   dailyBoard,
+  plans: gameplayState.plans,
+  specialization: gameplayState.specialization,
   completions: completionRows.map((item) => ({ id: item.id, challengeId: item.challenge_id, note: item.note, completedAt: item.completed_at, attachments: [] })),
 }
 const settings = { language: settingsRow.language, font: settingsRow.font }
@@ -35,7 +39,7 @@ const sql = neon(databaseUrl)
 await sql`
   CREATE TABLE IF NOT EXISTS app_state (
     id SMALLINT PRIMARY KEY CHECK (id = 1),
-    save JSONB NOT NULL DEFAULT '{"activeIds":[],"favoriteIds":[],"hiddenIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"completions":[]}'::jsonb,
+    save JSONB NOT NULL DEFAULT '{"activeIds":[],"favoriteIds":[],"hiddenIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"plans":[],"specialization":null,"completions":[]}'::jsonb,
     settings JSONB NOT NULL DEFAULT '{"language":"zh","font":"noto"}'::jsonb,
     initialized BOOLEAN NOT NULL DEFAULT FALSE,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

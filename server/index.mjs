@@ -98,6 +98,8 @@ const updateSettings = db.prepare('UPDATE settings SET language = ?, font = ? WH
 const markInitialized = db.prepare("INSERT INTO app_meta (key, value) VALUES ('state_initialized', '1') ON CONFLICT(key) DO UPDATE SET value = '1'")
 const selectDailyBoard = db.prepare("SELECT value FROM app_meta WHERE key = 'daily_board'")
 const upsertDailyBoard = db.prepare("INSERT INTO app_meta (key, value) VALUES ('daily_board', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value")
+const selectGameplayState = db.prepare("SELECT value FROM app_meta WHERE key = 'gameplay_state'")
+const upsertGameplayState = db.prepare("INSERT INTO app_meta (key, value) VALUES ('gameplay_state', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value")
 const deleteCustomChallenges = db.prepare("DELETE FROM challenges WHERE source = 'custom'")
 const insertCustomChallenge = db.prepare(`
   INSERT INTO challenges (
@@ -132,6 +134,8 @@ function getBootstrap() {
   })
   let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
   try { dailyBoard = { ...dailyBoard, ...JSON.parse(selectDailyBoard.get()?.value ?? '{}') } } catch {}
+  let gameplayState = { plans: [], specialization: null }
+  try { gameplayState = { ...gameplayState, ...JSON.parse(selectGameplayState.get()?.value ?? '{}') } } catch {}
   return {
     initialized: Boolean(selectInitialized.get()),
     challenges: selectChallenges.all().map((item) => ({
@@ -154,6 +158,8 @@ function getBootstrap() {
       hiddenIds: stateRows.filter((item) => item.hidden).map((item) => item.challenge_id),
       customChallenges,
       dailyBoard,
+      plans: gameplayState.plans,
+      specialization: gameplayState.specialization,
       completions,
     },
     settings: { language: settings.language, font: settings.font },
@@ -168,6 +174,8 @@ function replaceSave(save) {
   const completions = Array.isArray(save.completions) ? save.completions : []
   const customChallenges = Array.isArray(save.customChallenges) ? save.customChallenges.filter((item) => item?.id?.startsWith('custom-')).slice(0, 500) : []
   const dailyBoard = save.dailyBoard && typeof save.dailyBoard === 'object' ? save.dailyBoard : { date: '', energy: 'normal', reroll: 0 }
+  const plans = Array.isArray(save.plans) ? save.plans : []
+  const specialization = ['STR', 'CUL', 'ENV', 'CHA', 'TAL', 'INT'].includes(save.specialization) ? save.specialization : null
 
   db.exec('BEGIN')
   try {
@@ -184,6 +192,7 @@ function replaceSave(save) {
     for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)
     for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt)
     upsertDailyBoard.run(JSON.stringify(dailyBoard))
+    upsertGameplayState.run(JSON.stringify({ plans, specialization }))
     markInitialized.run()
     db.exec('COMMIT')
   } catch (error) {

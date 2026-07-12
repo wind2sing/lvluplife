@@ -33,6 +33,22 @@ function normalizeCustomChallenge(item) {
     estimatedMinutes: Math.min(1440, Math.max(5, Math.round(Number(item.estimatedMinutes) || 30))),
     energyDemand: energyLevels.has(item.energyDemand) ? item.energyDemand : 'normal',
     contexts: Array.isArray(item.contexts) ? item.contexts.filter((context) => typeof context === 'string').slice(0, 8).map((context) => context.slice(0, 30)) : [],
+    planId: typeof item.planId === 'string' && item.planId.startsWith('plan-') ? item.planId.slice(0, 120) : undefined,
+    planOrder: Number.isFinite(item.planOrder) ? Math.max(0, Math.round(item.planOrder)) : undefined,
+  }
+}
+
+function normalizePlan(item) {
+  if (!item || typeof item.id !== 'string' || !item.id.startsWith('plan-')) return null
+  const title = String(item.title ?? '').trim().slice(0, 120)
+  if (!title) return null
+  return {
+    id: item.id.slice(0, 120),
+    title,
+    description: String(item.description ?? '').slice(0, 600),
+    kind: item.kind === 'project' ? 'project' : 'chain',
+    createdAt: typeof item.createdAt === 'string' ? item.createdAt : new Date().toISOString(),
+    stepIds: Array.isArray(item.stepIds) ? item.stepIds.filter((id) => typeof id === 'string' && id.startsWith('custom-')).slice(0, 30) : [],
   }
 }
 
@@ -48,6 +64,8 @@ function normalizeSave(value) {
       energy: energyLevels.has(dailyBoard.energy) ? dailyBoard.energy : 'normal',
       reroll: Math.min(1000, Math.max(0, Math.round(Number(dailyBoard.reroll) || 0))),
     },
+    plans: Array.isArray(value.plans) ? value.plans.map(normalizePlan).filter(Boolean).slice(0, 100) : [],
+    specialization: statKeys.has(value.specialization) ? value.specialization : null,
     completions: Array.isArray(value.completions) ? value.completions.filter((item) => item && typeof item.id === 'string' && typeof item.challengeId === 'string' && typeof item.completedAt === 'string').map((item) => ({
       id: item.id,
       challengeId: item.challengeId,

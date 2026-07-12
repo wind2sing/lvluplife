@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
+  BarChart3,
   BriefcaseBusiness,
   Camera,
   Check,
@@ -25,6 +26,7 @@ import {
   House,
   Leaf,
   LibraryBig,
+  ListChecks,
   LockKeyhole,
   Medal,
   Menu,
@@ -52,7 +54,7 @@ import {
 import './App.css'
 
 type StatKey = 'STR' | 'CUL' | 'ENV' | 'CHA' | 'TAL' | 'INT'
-type View = 'home' | 'character' | 'explore' | 'goals' | 'chronicle' | 'settings'
+type View = 'home' | 'character' | 'explore' | 'plans' | 'goals' | 'chronicle' | 'statistics' | 'settings'
 type Language = 'zh' | 'en'
 type FontChoice = 'noto' | 'zcool' | 'pixel' | 'system'
 type DailyEnergy = 'low' | 'normal' | 'high'
@@ -73,8 +75,10 @@ const viewPaths: Record<View, string> = {
   home: '/',
   character: '/character',
   explore: '/quests',
+  plans: '/plans',
   goals: '/my-quests',
   chronicle: '/chronicle',
+  statistics: '/statistics',
   settings: '/settings',
 }
 
@@ -83,8 +87,10 @@ function readBrowserRoute(): { view: View; challengeId: string | null } {
   if (path.startsWith('/quests/')) return { view: 'explore', challengeId: decodeURIComponent(path.slice('/quests/'.length)) }
   if (path === '/character') return { view: 'character', challengeId: null }
   if (path === '/quests') return { view: 'explore', challengeId: null }
+  if (path === '/plans') return { view: 'plans', challengeId: null }
   if (path === '/my-quests') return { view: 'goals', challengeId: null }
   if (path === '/chronicle') return { view: 'chronicle', challengeId: null }
+  if (path === '/statistics') return { view: 'statistics', challengeId: null }
   if (path === '/settings') return { view: 'settings', challengeId: null }
   return { view: 'home', challengeId: null }
 }
@@ -108,6 +114,17 @@ type Challenge = {
   estimatedMinutes?: number
   energyDemand?: DailyEnergy
   contexts?: string[]
+  planId?: string
+  planOrder?: number
+}
+
+type QuestPlan = {
+  id: string
+  title: string
+  description: string
+  kind: 'chain' | 'project'
+  createdAt: string
+  stepIds: string[]
 }
 
 type Completion = {
@@ -131,6 +148,8 @@ type SaveState = {
   hiddenIds: string[]
   customChallenges: Challenge[]
   dailyBoard: DailyBoardState
+  plans: QuestPlan[]
+  specialization: StatKey | null
   completions: Completion[]
 }
 
@@ -154,6 +173,8 @@ const emptySave: SaveState = {
   hiddenIds: [],
   customChallenges: [],
   dailyBoard: { date: '', energy: 'normal', reroll: 0 },
+  plans: [],
+  specialization: null,
   completions: [],
 }
 const defaultSettings: AppSettings = { language: 'zh', font: 'noto' }
@@ -352,6 +373,7 @@ function App() {
   const [mobileNav, setMobileNav] = useState(false)
   const [energyHelp, setEnergyHelp] = useState(false)
   const [customEditor, setCustomEditor] = useState<Challenge | 'new' | null>(null)
+  const [planEditor, setPlanEditor] = useState(false)
 
   useEffect(() => {
     if (!accessKey || bootstrapStarted.current === accessKey) return
@@ -453,7 +475,17 @@ function App() {
     { STR: 0, CUL: 0, ENV: 0, CHA: 0, TAL: 0, INT: 0 } as Record<StatKey, number>,
   )
 
-  const unlockedChallenges = allChallenges.filter((item) => item.level <= level.level)
+  const completedPlanStepIds = useMemo(() => new Set(save.plans.flatMap((plan) => plan.stepIds.filter((stepId) => save.completions.some((completion) => completion.challengeId === stepId && completion.completedAt >= plan.createdAt)))), [save.completions, save.plans])
+  const lockedPlanStepIds = useMemo(() => {
+    const locked = new Set<string>()
+    save.plans.filter((plan) => plan.kind === 'chain').forEach((plan) => {
+      const nextIndex = plan.stepIds.findIndex((id) => !completedPlanStepIds.has(id))
+      if (nextIndex >= 0) plan.stepIds.slice(nextIndex + 1).forEach((id) => locked.add(id))
+    })
+    return locked
+  }, [completedPlanStepIds, save.plans])
+
+  const unlockedChallenges = allChallenges.filter((item) => item.level <= level.level && !lockedPlanStepIds.has(item.id))
   const recommendationPool = unlockedChallenges.filter((item) => !save.hiddenIds.includes(item.id))
   const availableChallenges = recommendationPool.filter((item) => !getCooldownLabel(item, save.completions, settings.language))
   const dailyPool = availableChallenges.length ? availableChallenges : recommendationPool
@@ -474,6 +506,7 @@ function App() {
         if (save.activeIds.includes(challenge.id)) score += 42
         if (save.favoriteIds.includes(challenge.id)) score += 25
         if (challenge.custom) score += 12
+        if (save.specialization && challenge.stats.some((stat) => stat.key === save.specialization)) score += 18
         if (challenge.stats.some((stat) => lowestStats.has(stat.key))) score += role === 'growth' ? 45 : 14
         score -= recentCategories.filter((category) => category === challenge.category).length * 9
         score -= Math.abs(energyRank[demand] - energyRank[dailyBoard.energy]) * 30
@@ -494,11 +527,11 @@ function App() {
       else if (picked.challenge.custom) reason = settings.language === 'zh' ? `你的个人任务 · 预计 ${picked.estimate} 分钟` : `Your personal quest · about ${picked.estimate} min`
       return [{ challenge: picked.challenge, role, reason }]
     })
-  }, [challengeMap, dailyBoard.date, dailyBoard.energy, dailyBoard.reroll, dailyPool, save.activeIds, save.completions, save.favoriteIds, settings.language, stats])
+  }, [challengeMap, dailyBoard.date, dailyBoard.energy, dailyBoard.reroll, dailyPool, save.activeIds, save.completions, save.favoriteIds, save.specialization, settings.language, stats])
 
   const visibleChallenges = useMemo(() => {
     const query = search.trim().toLowerCase()
-    const categoryPool = allChallenges.filter((item) => category === '全部任务' || item.category === category)
+    const categoryPool = allChallenges.filter((item) => !lockedPlanStepIds.has(item.id) && (category === '全部任务' || item.category === category))
     const visibilityPool = categoryPool.filter((item) => showSealed ? save.hiddenIds.includes(item.id) : !save.hiddenIds.includes(item.id))
     if (query) {
       return visibilityPool.filter(
@@ -510,7 +543,7 @@ function App() {
     if (category === '全部任务') return unlocked
     const nextLocked = visibilityPool.filter((item) => item.level > level.level).sort((a, b) => a.level - b.level).slice(0, 5)
     return [...unlocked, ...nextLocked]
-  }, [allChallenges, category, level.level, save.hiddenIds, search, showSealed])
+  }, [allChallenges, category, level.level, lockedPlanStepIds, save.hiddenIds, search, showSealed])
 
   const selectedCategoryPool = allChallenges.filter((item) => (category === '全部任务' || item.category === category) && !save.hiddenIds.includes(item.id))
   const selectedLockedCount = selectedCategoryPool.filter((item) => item.level > level.level).length
@@ -531,6 +564,7 @@ function App() {
   }, [ready, save.dailyBoard.date, todayKey])
 
   function toggleActive(id: string) {
+    if (lockedPlanStepIds.has(id)) return
     setSave((current) => ({
       ...current,
       activeIds: current.activeIds.includes(id)
@@ -571,8 +605,27 @@ function App() {
     openChallenge(challenge)
   }
 
+  function createPlan(input: { title: string; description: string; kind: QuestPlan['kind']; category: string; stat: StatKey; steps: string[] }) {
+    const planId = `plan-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+    const createdAt = new Date().toISOString()
+    const stepChallenges = input.steps.map((stepTitle, index): Challenge => ({
+      id: `custom-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 7)}`,
+      title: stepTitle, titleOriginal: stepTitle,
+      category: input.category, categoryOriginal: categoryMeta[input.category].labelEn,
+      level: Math.min(30, level.level), tier: index === input.steps.length - 1 ? 2 : 1,
+      tierName: index === input.steps.length - 1 ? '支线任务' : '轻松一胜', xp: index === input.steps.length - 1 ? 120 : 70,
+      cadence: '终身一次', stats: [{ key: input.stat, points: index === input.steps.length - 1 ? 4 : 2 }],
+      source: 'custom', custom: true, description: `${input.title} · ${input.kind === 'chain' ? `第 ${index + 1} 步` : '项目子任务'}`,
+      completionPrompt: '记录这一步的成果或下一步行动。', estimatedMinutes: 30, energyDemand: 'normal', contexts: [], planId, planOrder: index,
+    }))
+    const plan: QuestPlan = { id: planId, title: input.title, description: input.description, kind: input.kind, createdAt, stepIds: stepChallenges.map((item) => item.id) }
+    setSave((current) => ({ ...current, plans: [plan, ...current.plans], customChallenges: [...stepChallenges, ...current.customChallenges] }))
+    setPlanEditor(false)
+    navigate('plans')
+  }
+
   function duplicateCustomChallenge(challenge: Challenge) {
-    const copy: Challenge = { ...challenge, id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, title: `${challenge.title}（副本）`, titleOriginal: `${challenge.titleOriginal} (Copy)`, custom: true, source: 'custom' }
+    const copy: Challenge = { ...challenge, id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, title: `${challenge.title}（副本）`, titleOriginal: `${challenge.titleOriginal} (Copy)`, custom: true, source: 'custom', planId: undefined, planOrder: undefined }
     setSave((current) => ({ ...current, customChallenges: [copy, ...current.customChallenges] }))
     openChallenge(copy)
   }
@@ -587,7 +640,7 @@ function App() {
 
   function completeQuest(attachments: Attachment[] = []) {
     if (!selected) return
-    if (energy <= 0 || selected.level > level.level || getCooldownLabel(selected, save.completions, settings.language)) return
+    if (energy <= 0 || selected.level > level.level || lockedPlanStepIds.has(selected.id) || getCooldownLabel(selected, save.completions, settings.language)) return
     const oldLevel = level.level
     const completion: Completion = {
       id: `${selected.id}-${Date.now()}`,
@@ -695,6 +748,7 @@ function App() {
           favorite={save.favoriteIds.includes(detailChallenge.id)}
           sealed={save.hiddenIds.includes(detailChallenge.id)}
           level={level.level}
+          planLocked={lockedPlanStepIds.has(detailChallenge.id)}
           onBack={closeChallenge}
           onComplete={setSelected}
           onDuplicate={duplicateCustomChallenge}
@@ -708,8 +762,10 @@ function App() {
     }
 
     if (view === 'character') {
-      return <CharacterView completedCount={save.completions.length} energy={energy} levelInfo={level} maxEnergy={maxEnergy} stats={stats} streak={streak} totalXp={totalXp} />
+      return <CharacterView completedCount={save.completions.length} energy={energy} levelInfo={level} maxEnergy={maxEnergy} onSpecialization={(specialization) => setSave((current) => ({ ...current, specialization }))} specialization={save.specialization} stats={stats} streak={streak} totalXp={totalXp} />
     }
+
+    if (view === 'plans') return <PlansView challengeMap={challengeMap} completedStepIds={completedPlanStepIds} lockedStepIds={lockedPlanStepIds} onComplete={setSelected} onCreate={() => setPlanEditor(true)} onOpen={openChallenge} plans={save.plans} />
 
     if (view === 'explore') {
       return (
@@ -762,6 +818,8 @@ function App() {
       return <ChronicleView items={completedChallenges} onOpen={openChallenge} onUndo={(item) => setUndoTarget(item)} />
     }
 
+    if (view === 'statistics') return <StatisticsView items={completedChallenges} stats={stats} />
+
     if (view === 'settings') {
       return <SettingsView settings={settings} onChange={setSettings} />
     }
@@ -803,8 +861,10 @@ function App() {
           <NavButton active={view === 'home'} icon={House} label={text('营地', 'Camp')} onClick={() => navigate('home')} />
           <NavButton active={view === 'character'} icon={UserRound} label={text('角色面板', 'Character')} onClick={() => navigate('character')} />
           <NavButton active={view === 'explore'} icon={Compass} label={text('任务公会', 'Quest Guild')} onClick={() => navigate('explore')} />
+          <NavButton active={view === 'plans'} icon={ListChecks} label={text('任务链与项目', 'Plans')} onClick={() => navigate('plans')} badge={save.plans.length} />
           <NavButton active={view === 'goals'} icon={Target} label={text('我的任务', 'My Quests')} onClick={() => navigate('goals')} badge={save.activeIds.length} />
           <NavButton active={view === 'chronicle'} icon={ScrollText} label={text('冒险日志', 'Chronicle')} onClick={() => navigate('chronicle')} />
+          <NavButton active={view === 'statistics'} icon={BarChart3} label={text('成长统计', 'Statistics')} onClick={() => navigate('statistics')} />
           <NavButton active={view === 'settings'} icon={Settings} label={text('设置', 'Settings')} onClick={() => navigate('settings')} />
         </nav>
         <div className="sidebar-spacer" />
@@ -840,6 +900,7 @@ function App() {
       )}
 
       {customEditor && <CustomQuestModal challenge={customEditor === 'new' ? null : customEditor} currentLevel={level.level} onClose={() => setCustomEditor(null)} onSave={saveCustomChallenge} />}
+      {planEditor && <PlanModal onClose={() => setPlanEditor(false)} onSave={createPlan} />}
 
       {undoTarget && (
         <UndoModal challenge={undoTarget.challenge} onCancel={() => setUndoTarget(null)} onConfirm={undoCompletion} />
@@ -941,11 +1002,24 @@ function HomeView({ activeIds, completed, completions, dailyBoard, favoriteIds, 
   )
 }
 
-function CharacterView({ completedCount, energy, levelInfo, maxEnergy, stats, streak, totalXp }: {
+const statStages = [
+  { min: 0, name: '初识' }, { min: 10, name: '见习' }, { min: 25, name: '熟练' }, { min: 50, name: '精通' }, { min: 100, name: '大师' },
+]
+
+function getStatStage(value: number) {
+  const index = statStages.findLastIndex((stage) => value >= stage.min)
+  const current = statStages[Math.max(0, index)]
+  const next = statStages[index + 1]
+  return { ...current, level: index + 1, next, percent: next ? Math.min(100, Math.round(((value - current.min) / (next.min - current.min)) * 100)) : 100 }
+}
+
+function CharacterView({ completedCount, energy, levelInfo, maxEnergy, onSpecialization, specialization, stats, streak, totalXp }: {
   completedCount: number
   energy: number
   levelInfo: ReturnType<typeof getLevel>
   maxEnergy: number
+  onSpecialization: (value: StatKey | null) => void
+  specialization: StatKey | null
   stats: Record<StatKey, number>
   streak: number
   totalXp: number
@@ -975,14 +1049,33 @@ function CharacterView({ completedCount, energy, levelInfo, maxEnergy, stats, st
         <p className="character-stat-intro">{text('属性条以你当前最高属性为基准展示相对分布。点击任意属性可查看含义与对应任务类型。', 'Bars are relative to your current highest attribute. Select one to see what it means and which quests improve it.')}</p>
         <div className="stat-list character-stat-list">
           {(Object.entries(stats) as [StatKey, number][]).map(([key, value]) => (
-            (() => { const Icon = statMeta[key].icon; return <button className="stat-row" key={key} onClick={() => setSelectedStat(key)} style={{ '--stat-color': statMeta[key].color } as React.CSSProperties}><span><Icon size={17} /></span><div><strong>{language === 'zh' ? statLabels[key] : statLabelsEn[key]} <small>{text('点击了解', 'Learn more')}</small></strong><i><b style={{ width: `${(value / maxStat) * 100}%` }} /></i></div><em>{value}</em></button> })()
+            (() => { const Icon = statMeta[key].icon; const stage = getStatStage(value); return <button className="stat-row" key={key} onClick={() => setSelectedStat(key)} style={{ '--stat-color': statMeta[key].color } as React.CSSProperties}><span><Icon size={17} /></span><div><strong>{language === 'zh' ? statLabels[key] : statLabelsEn[key]} <small>{stage.name} · 阶段 {stage.level}</small></strong><i><b style={{ width: `${stage.percent}%` }} /></i></div><em>{value}</em></button> })()
           ))}
         </div>
       </section>
+      <section className="character-growth-grid">
+        <div className="detail-panel specialization-panel"><div className="detail-panel-heading"><Target size={19} /><div><span>{text('当前专精', 'Current focus')}</span><strong>{specialization ? statLabels[specialization] : text('自由成长', 'Open growth')}</strong></div></div><p>{text('专精只会提高对应属性任务在每日冒险板中的出现倾向，不限制其他任务，也不增加数值奖励。', 'A focus only influences recommendations. It never blocks other quests or adds numeric rewards.')}</p><div className="specialization-picker"><button className={!specialization ? 'active' : ''} onClick={() => onSpecialization(null)}>{text('自由', 'Open')}</button>{(Object.keys(statLabels) as StatKey[]).map((key) => <button key={key} className={specialization === key ? 'active' : ''} onClick={() => onSpecialization(key)}>{statLabels[key]}</button>)}</div></div>
+        <div className="detail-panel radar-panel"><div className="detail-panel-heading"><Sparkles size={19} /><div><span>{text('六维成长图', 'Growth radar')}</span><strong>{text('现实属性分布', 'Real-life profile')}</strong></div></div><StatRadar stats={stats} /></div>
+      </section>
+      <section className="section-block collectible-panel"><div className="section-heading"><div><p className="eyebrow">{text('称号与收藏品', 'Titles & collectibles')}</p><h2>{text('真实行动留下的纪念', 'Keepsakes from real action')}</h2></div></div><div className="collectible-grid"><Collectible unlocked={completedCount >= 1} icon={Footprints} title="初次启程" description="完成第一个任务" /><Collectible unlocked={streak >= 7} icon={Flame} title="七日足迹" description="连续留下七天记录" /><Collectible unlocked={Object.values(stats).every((value) => value >= 10)} icon={Sparkles} title="六边形冒险者" description="六项属性都达到见习阶段" /><Collectible unlocked={totalXp >= 5000} icon={Trophy} title="长路行者" description="累计获得 5000 经验" /></div></section>
       {selectedStat && <StatHelpModal stat={selectedStat} value={stats[selectedStat]} onClose={() => setSelectedStat(null)} />}
       {levelHelp && <LevelHelpModal levelInfo={levelInfo} totalXp={totalXp} onClose={() => setLevelHelp(false)} />}
     </>
   )
+}
+
+function StatRadar({ stats }: { stats: Record<StatKey, number> }) {
+  const keys = Object.keys(statLabels) as StatKey[]
+  const max = Math.max(10, ...Object.values(stats))
+  const point = (index: number, ratio: number) => {
+    const angle = (Math.PI * 2 * index) / keys.length - Math.PI / 2
+    return `${100 + Math.cos(angle) * 72 * ratio},${100 + Math.sin(angle) * 72 * ratio}`
+  }
+  return <svg className="stat-radar" viewBox="0 0 200 200" role="img" aria-label="六维属性雷达图"><polygon className="radar-grid" points={keys.map((_, index) => point(index, 1)).join(' ')} /><polygon className="radar-grid radar-grid--inner" points={keys.map((_, index) => point(index, .5)).join(' ')} />{keys.map((key, index) => <line key={key} x1="100" y1="100" x2={point(index, 1).split(',')[0]} y2={point(index, 1).split(',')[1]} />)}<polygon className="radar-value" points={keys.map((key, index) => point(index, stats[key] / max)).join(' ')} />{keys.map((key, index) => { const [x, y] = point(index, 1.18).split(','); return <text key={key} x={x} y={y}>{statLabels[key]}</text> })}</svg>
+}
+
+function Collectible({ description, icon: Icon, title, unlocked }: { description: string; icon: LucideIcon; title: string; unlocked: boolean }) {
+  return <div className={`collectible ${unlocked ? 'unlocked' : ''}`}><span><Icon size={22} /></span><div><strong>{unlocked ? title : '尚未解锁'}</strong><small>{description}</small></div>{unlocked ? <Check size={16} /> : <LockKeyhole size={15} />}</div>
 }
 
 function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onCreate, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
@@ -1028,6 +1121,24 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds,
   )
 }
 
+function PlansView({ challengeMap, completedStepIds, lockedStepIds, onComplete, onCreate, onOpen, plans }: { challengeMap: Map<string, Challenge>; completedStepIds: Set<string>; lockedStepIds: Set<string>; onComplete: (challenge: Challenge) => void; onCreate: () => void; onOpen: (challenge: Challenge) => void; plans: QuestPlan[] }) {
+  const { text } = useLanguage()
+  return <><div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('任务链与项目', 'Chains & projects')}</p><h1>{text('把大目标拆成', 'Turn big goals into')}<em>{text('可走的路。', ' a path.')}</em></h1><p>{text('任务链按顺序解锁下一步；项目允许并行推进。每个步骤都是可完成、可记录、可撤销的个人任务。', 'Chains unlock one step at a time; projects can progress in parallel.')}</p></div><button className="primary-button" onClick={onCreate}><Plus size={17} /> {text('新建计划', 'New plan')}</button></div>{plans.length ? <div className="plan-list">{plans.map((plan) => { const completed = plan.stepIds.filter((id) => completedStepIds.has(id)).length; const done = completed === plan.stepIds.length; return <section className={`plan-card ${done ? 'plan-card--done' : ''}`} key={plan.id}><div className="plan-card-heading"><span className="plan-kind">{plan.kind === 'chain' ? text('任务链', 'Quest chain') : text('项目', 'Project')}</span><h2>{plan.title}</h2><p>{plan.description || text('一步一步，把目标变成现实。', 'Make the goal real one step at a time.')}</p><div className="plan-progress"><i><b style={{ width: `${plan.stepIds.length ? completed / plan.stepIds.length * 100 : 0}%` }} /></i><strong>{completed} / {plan.stepIds.length}</strong></div></div><div className="plan-steps">{plan.stepIds.map((id, index) => { const challenge = challengeMap.get(id); if (!challenge) return null; const complete = completedStepIds.has(id); const locked = lockedStepIds.has(id); return <article className={`plan-step ${complete ? 'complete' : ''} ${locked ? 'locked' : ''}`} key={id} onClick={() => !locked && onOpen(challenge)}><span className="plan-step-index">{complete ? <Check size={15} /> : locked ? <LockKeyhole size={14} /> : index + 1}</span><div><small>{plan.kind === 'chain' ? text(`第 ${index + 1} 步`, `Step ${index + 1}`) : text('并行子任务', 'Parallel task')}</small><strong>{challenge.title}</strong><em>+{challenge.xp} XP</em></div>{!complete && !locked && <button onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}>{text('记录完成', 'Complete')}</button>}</article>})}</div>{done && <div className="plan-summary"><Trophy size={22} /><div><strong>{text('计划完成', 'Plan complete')}</strong><span>{text(`完成 ${plan.stepIds.length} 个阶段，获得 ${plan.stepIds.reduce((sum, id) => sum + (challengeMap.get(id)?.xp ?? 0), 0)} 经验。`, `${plan.stepIds.length} stages completed.`)}</span></div></div>}</section>})}</div> : <EmptyState icon={ListChecks} title={text('还没有任务链或项目', 'No plans yet')} text={text('选择一个真正重要的目标，把它拆成 2–12 个可以行动的步骤。', 'Break a meaningful goal into 2–12 actionable steps.')} action={text('创建第一个计划', 'Create your first plan')} onAction={onCreate} />}</>
+}
+
+function PlanModal({ onClose, onSave }: { onClose: () => void; onSave: (input: { title: string; description: string; kind: QuestPlan['kind']; category: string; stat: StatKey; steps: string[] }) => void }) {
+  const { text } = useLanguage()
+  const [titleValue, setTitleValue] = useState('')
+  const [description, setDescription] = useState('')
+  const [kind, setKind] = useState<QuestPlan['kind']>('chain')
+  const [categoryValue, setCategoryValue] = useState('学习与成长')
+  const [stat, setStat] = useState<StatKey>('INT')
+  const [stepsText, setStepsText] = useState('明确目标和完成标准\n完成第一个可交付成果\n复盘并完成最终成果')
+  const [error, setError] = useState('')
+  function submit(event: React.FormEvent) { event.preventDefault(); const steps = stepsText.split('\n').map((item) => item.trim()).filter(Boolean).slice(0, 12); if (!titleValue.trim()) return setError(text('请填写计划名称。', 'Enter a plan title.')); if (steps.length < 2) return setError(text('至少需要两个步骤。', 'Add at least two steps.')); onSave({ title: titleValue.trim(), description: description.trim(), kind, category: categoryValue, stat, steps }) }
+  return <div className="modal-backdrop" role="presentation" onClick={onClose}><form className="custom-quest-modal plan-modal" role="dialog" aria-modal="true" aria-labelledby="plan-modal-title" onClick={(event) => event.stopPropagation()} onSubmit={submit}><button type="button" className="modal-close" onClick={onClose}><X /></button><p className="eyebrow">{text('新建长期计划', 'New long-term plan')}</p><h2 id="plan-modal-title">{text('把大目标拆成可完成的步骤', 'Break a goal into doable steps')}</h2><div className="custom-form-grid"><label className="field-wide"><span>{text('计划名称', 'Plan title')}</span><input autoFocus value={titleValue} onChange={(event) => setTitleValue(event.target.value)} placeholder={text('例如：完成个人网站', 'e.g. Finish my personal website')} /></label><label className="field-wide"><span>{text('计划说明', 'Description')}</span><input value={description} onChange={(event) => setDescription(event.target.value)} placeholder={text('为什么这件事值得完成？', 'Why does this matter?')} /></label><fieldset className="field-wide"><legend>{text('组织方式', 'Plan type')}</legend><div className="form-segmented"><button type="button" className={kind === 'chain' ? 'active' : ''} onClick={() => setKind('chain')}>{text('任务链 · 依次解锁', 'Chain · sequential')}</button><button type="button" className={kind === 'project' ? 'active' : ''} onClick={() => setKind('project')}>{text('项目 · 并行推进', 'Project · parallel')}</button></div></fieldset><label><span>{text('分类', 'Category')}</span><select value={categoryValue} onChange={(event) => setCategoryValue(event.target.value)}>{Object.keys(categoryMeta).map((item) => <option key={item}>{item}</option>)}</select></label><label><span>{text('主要属性', 'Primary stat')}</span><select value={stat} onChange={(event) => setStat(event.target.value as StatKey)}>{(Object.keys(statLabels) as StatKey[]).map((key) => <option key={key} value={key}>{statLabels[key]}</option>)}</select></label><label className="field-wide"><span>{text('步骤（每行一个，2–12 个）', 'Steps, one per line')}</span><textarea className="plan-steps-input" value={stepsText} onChange={(event) => setStepsText(event.target.value)} /></label></div>{error && <p className="form-error">{error}</p>}<div className="custom-modal-actions"><button type="button" className="detail-secondary" onClick={onClose}>{text('取消', 'Cancel')}</button><button className="primary-button"><ListChecks size={16} /> {text('创建计划', 'Create plan')}</button></div></form></div>
+}
+
 function CollectionView({ active, activeIds, completions, favoriteIds, favorites, onComplete, onExplore, onFavorite, onOpen, onStart }: QuestActions & { active: Challenge[]; favorites: Challenge[]; onExplore: () => void }) {
   const { text } = useLanguage()
   return (
@@ -1047,11 +1158,21 @@ function CollectionView({ active, activeIds, completions, favoriteIds, favorites
 
 function ChronicleView({ items, onOpen, onUndo }: { items: { completion: Completion; challenge: Challenge }[]; onOpen: (challenge: Challenge) => void; onUndo: (item: { completion: Completion; challenge: Challenge }) => void }) {
   const { text } = useLanguage()
+  const [query, setQuery] = useState('')
+  const normalized = query.trim().toLowerCase()
+  const filtered = normalized ? items.filter(({ challenge, completion }) => [challenge.title, challenge.titleOriginal, challenge.category, completion.note, ...(completion.attachments?.map((item) => item.name) ?? [])].some((value) => value.toLowerCase().includes(normalized))) : items
+  const weekStart = new Date(); weekStart.setHours(0, 0, 0, 0); weekStart.setDate(weekStart.getDate() - 6)
+  const weekly = items.filter((item) => new Date(item.completion.completedAt) >= weekStart)
+  const weeklyXp = weekly.reduce((sum, item) => sum + item.challenge.xp, 0)
+  const weeklyStats = weekly.reduce((result, item) => { item.challenge.stats.forEach((stat) => { result[stat.key] += stat.points }); return result }, { STR: 0, CUL: 0, ENV: 0, CHA: 0, TAL: 0, INT: 0 } as Record<StatKey, number>)
+  const topWeeklyStat = (Object.entries(weeklyStats) as [StatKey, number][]).sort((a, b) => b[1] - a[1])[0]
   return (
     <>
       <div className="page-heading"><p className="eyebrow">{text('冒险日志', 'Chronicle')}</p><h1>{text('你认真生活过的', 'Proof that you')}<em>{text('证据。', ' showed up.')}</em></h1><p>{text('只属于你的真实行动、诚实记录与成长轨迹。', 'Your real actions, honest notes, and visible growth.')}</p></div>
+      <section className="weekly-review"><div className="weekly-review-copy"><p className="eyebrow">{text('每周营火复盘', 'Weekly campfire review')}</p><h2>{weekly.length ? text('这七天，你确实向前走了。', 'You moved forward this week.') : text('这周还在等待第一步。', 'This week is waiting for its first step.')}</h2><p>{weekly.length ? text(`完成 ${weekly.length} 次行动，获得 ${weeklyXp} 经验。主要成长在${topWeeklyStat ? statLabels[topWeeklyStat[0]] : '自由探索'}，其中 ${weekly.filter((item) => item.completion.attachments?.some((attachment) => attachment.contentType.startsWith('image/'))).length} 条记录留下了图片。`, `${weekly.length} actions and ${weeklyXp} XP this week.`) : text('休息也是冒险的一部分。准备好时，从一件足够小的事重新开始。', 'Rest is part of the adventure. Begin with something small when ready.')}</p></div><div className="weekly-metrics"><div><strong>{weekly.length}</strong><span>{text('完成次数', 'Completions')}</span></div><div><strong>{weeklyXp}</strong><span>{text('获得经验', 'XP earned')}</span></div><div><strong>{topWeeklyStat?.[1] ?? 0}</strong><span>{topWeeklyStat ? statLabels[topWeeklyStat[0]] : text('属性成长', 'Stat growth')}</span></div></div></section>
+      <label className="chronicle-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={text('搜索任务名称、记录文字或附件名称……', 'Search quests, notes, or attachment names…')} />{query && <button onClick={() => setQuery('')}><X size={14} /></button>}</label>
       <section className="timeline-panel">
-        {items.length ? items.map((item) => <ActivityItem key={item.completion.id} {...item} large onOpen={onOpen} onUndo={() => onUndo(item)} />) : <EmptyState icon={ScrollText} title={text('冒险日志还是空白', 'Your chronicle is blank')} text={text('完成一个任务，写下属于你的第一行记录。', 'Complete a quest and write your first entry.')} />}
+        {filtered.length ? filtered.map((item) => <ActivityItem key={item.completion.id} {...item} large onOpen={onOpen} onUndo={() => onUndo(item)} />) : <EmptyState icon={Search} title={query ? text('没有找到相关记录', 'No matching records') : text('冒险日志还是空白', 'Your chronicle is blank')} text={query ? text('试试任务名称、备注内容或附件文件名。', 'Try a quest title, note, or attachment name.') : text('完成一个任务，写下属于你的第一行记录。', 'Complete a quest and write your first entry.')} />}
       </section>
     </>
   )
@@ -1101,7 +1222,7 @@ function LockedQuestRow({ challenge }: { challenge: Challenge }) {
   )
 }
 
-function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onDuplicate, onEdit, onFavorite, onSeal, onStart, onUndo, sealed }: {
+function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onDuplicate, onEdit, onFavorite, onSeal, onStart, onUndo, planLocked, sealed }: {
   active: boolean
   challenge: Challenge
   completions: Completion[]
@@ -1115,6 +1236,7 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
   onSeal: (id: string) => void
   onStart: (id: string) => void
   onUndo: (completion: Completion) => void
+  planLocked: boolean
   sealed: boolean
 }) {
   const { category, language, text, title } = useLanguage()
@@ -1139,6 +1261,7 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
             {!locked && challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}
             <span>{text('等级', 'Level')} {challenge.level}</span>
             {challenge.custom && <span><UserRound size={14} /> {text('个人任务', 'Personal quest')}</span>}
+            {challenge.planId && <span><ListChecks size={14} /> {text('计划步骤', 'Plan step')}</span>}
             {!locked && <span><Clock3 size={14} /> {getQuestEstimate(challenge)} {text('分钟', 'min')}</span>}
           </div>
         </div>
@@ -1147,7 +1270,7 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
           {challenge.custom && !sealed && <button className="detail-secondary" onClick={() => onDuplicate(challenge)}><Copy size={15} /> {text('复制', 'Copy')}</button>}
           {!locked && !sealed && <button className={`detail-favorite ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /> {favorite ? text('已收藏', 'Saved') : text('收藏', 'Save')}</button>}
           {!locked && !sealed && <button className="detail-secondary detail-seal" onClick={() => onSeal(challenge.id)}><LockKeyhole size={16} /> {text('封印任务', 'Seal quest')}</button>}
-          {sealed ? <button className="primary-button" onClick={() => onSeal(challenge.id)}><RotateCcw size={16} /> {text('解除封印', 'Restore quest')}</button> : locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
+          {sealed ? <button className="primary-button" onClick={() => onSeal(challenge.id)}><RotateCcw size={16} /> {text('解除封印', 'Restore quest')}</button> : planLocked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text('完成前一步后解锁', 'Complete the previous step')}</button> : locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
         </div>
       </section>
 
@@ -1327,6 +1450,36 @@ function LevelHelpModal({ levelInfo, onClose, totalXp }: { levelInfo: ReturnType
   )
 }
 
+function StatisticsView({ items, stats }: { items: { completion: Completion; challenge: Challenge }[]; stats: Record<StatKey, number> }) {
+  const { text } = useLanguage()
+  const [range, setRange] = useState<'week' | 'month' | 'year'>('month')
+  const days = range === 'week' ? 7 : range === 'month' ? 30 : 365
+  const since = new Date(); since.setHours(0, 0, 0, 0); since.setDate(since.getDate() - days + 1)
+  const scoped = items.filter((item) => new Date(item.completion.completedAt) >= since)
+  const xp = scoped.reduce((sum, item) => sum + item.challenge.xp, 0)
+  const minutes = scoped.reduce((sum, item) => sum + getQuestEstimate(item.challenge), 0)
+  const categories = Object.entries(scoped.reduce((result, item) => { result[item.challenge.category] = (result[item.challenge.category] ?? 0) + 1; return result }, {} as Record<string, number>)).sort((a, b) => b[1] - a[1]).slice(0, 8)
+  const maxCategory = Math.max(1, ...categories.map(([, count]) => count))
+  const hourGroups = [0, 0, 0, 0]
+  scoped.forEach((item) => { const hour = new Date(item.completion.completedAt).getHours(); hourGroups[hour < 6 ? 0 : hour < 12 ? 1 : hour < 18 ? 2 : 3] += 1 })
+  const monthlyItems = items.filter((item) => { const date = new Date(item.completion.completedAt); const now = new Date(); return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() })
+  const representative = [...monthlyItems].sort((a, b) => b.challenge.xp - a.challenge.xp)[0]
+  function downloadCover() {
+    const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 1600
+    const context = canvas.getContext('2d'); if (!context) return
+    const gradient = context.createLinearGradient(0, 0, 1200, 1600); gradient.addColorStop(0, '#1f3225'); gradient.addColorStop(1, '#0d1410'); context.fillStyle = gradient; context.fillRect(0, 0, 1200, 1600)
+    context.strokeStyle = '#90e36d'; context.lineWidth = 4; context.strokeRect(70, 70, 1060, 1460)
+    context.fillStyle = '#90e36d'; context.font = '36px sans-serif'; context.fillText('升级人生 · 月度冒险封面', 110, 170)
+    context.fillStyle = '#f2ead8'; context.font = 'bold 88px sans-serif'; const now = new Date(); context.fillText(`${now.getFullYear()} 年 ${now.getMonth() + 1} 月`, 110, 310)
+    context.fillStyle = '#9aaba0'; context.font = '34px sans-serif'; context.fillText(`完成 ${monthlyItems.length} 次现实行动`, 110, 385); context.fillText(`获得 ${monthlyItems.reduce((sum, item) => sum + item.challenge.xp, 0)} 经验`, 110, 440)
+    context.fillStyle = '#90e36d'; context.font = '28px sans-serif'; context.fillText('本月代表成就', 110, 650)
+    context.fillStyle = '#f2ead8'; context.font = 'bold 54px sans-serif'; const title = representative?.challenge.title ?? '本月仍在蓄力'; const lines = title.match(/.{1,16}/g) ?? [title]; lines.slice(0, 3).forEach((line, index) => context.fillText(line, 110, 740 + index * 72))
+    context.fillStyle = '#7f9185'; context.font = '28px sans-serif'; context.fillText('真实行动，真实成长。', 110, 1430)
+    const anchor = document.createElement('a'); anchor.href = canvas.toDataURL('image/png'); anchor.download = `升级人生-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}.png`; anchor.click()
+  }
+  return <><div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('个人统计', 'Personal statistics')}</p><h1>{text('看见长期积累的', 'See the shape of')}<em>{text('形状。', ' your growth.')}</em></h1><p>{text('全部计算只发生在你的私人存档中，不上传公共分析平台。', 'All calculations stay inside your private save.')}</p></div><div className="range-selector">{(['week', 'month', 'year'] as const).map((value) => <button key={value} className={range === value ? 'active' : ''} onClick={() => setRange(value)}>{text(value === 'week' ? '7 天' : value === 'month' ? '30 天' : '一年', value)}</button>)}</div></div><section className="statistics-summary"><div><Zap size={19} /><span>{text('经验', 'XP')}</span><strong>{xp}</strong></div><div><Check size={19} /><span>{text('完成', 'Done')}</span><strong>{scoped.length}</strong></div><div><Clock3 size={19} /><span>{text('预计投入', 'Estimated time')}</span><strong>{Math.round(minutes / 60)}h</strong></div><div><Flame size={19} /><span>{text('活跃日期', 'Active days')}</span><strong>{new Set(scoped.map((item) => item.completion.completedAt.slice(0, 10))).size}</strong></div></section><div className="statistics-grid"><section className="detail-panel"><div className="detail-panel-heading"><BarChart3 size={19} /><div><span>{text('分类热力图', 'Category map')}</span><strong>{text('时间投入方向', 'Where effort went')}</strong></div></div><div className="category-bars">{categories.length ? categories.map(([name, count]) => <div key={name}><span>{name}</span><i><b style={{ width: `${count / maxCategory * 100}%` }} /></i><strong>{count}</strong></div>) : <p>{text('这个周期还没有完成记录。', 'No completions in this period.')}</p>}</div></section><section className="detail-panel"><div className="detail-panel-heading"><Clock3 size={19} /><div><span>{text('行动时段', 'Time of day')}</span><strong>{text('你的现实节奏', 'Your real-life rhythm')}</strong></div></div><div className="hour-grid">{['深夜 0–6', '上午 6–12', '下午 12–18', '晚上 18–24'].map((label, index) => <div key={label}><i style={{ height: `${Math.max(8, hourGroups[index] / Math.max(1, ...hourGroups) * 100)}%` }} /><strong>{hourGroups[index]}</strong><span>{label}</span></div>)}</div></section></div><section className="monthly-cover-panel"><div><p className="eyebrow">{text('月度冒险封面', 'Monthly adventure cover')}</p><h2>{representative ? representative.challenge.title : text('本月仍在蓄力', 'Gathering strength this month')}</h2><p>{text(`本月完成 ${monthlyItems.length} 次行动。封面会选取经验最高的一项作为代表成就，并生成仅保存在本机的 PNG。`, `${monthlyItems.length} actions this month. Generate a private PNG keepsake.`)}</p><button className="primary-button" onClick={downloadCover}><Download size={17} /> {text('下载本月封面', 'Download monthly cover')}</button></div><StatRadar stats={stats} /></section></>
+}
+
 function SettingsView({ settings, onChange }: { settings: AppSettings; onChange: (settings: AppSettings) => void }) {
   const { text } = useLanguage()
   const cloud = !import.meta.env.DEV
@@ -1404,6 +1557,8 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
       estimatedMinutes: Math.min(1440, Math.max(5, Math.round(estimatedMinutes))),
       energyDemand,
       contexts,
+      planId: challenge?.planId,
+      planOrder: challenge?.planOrder,
     })
   }
 

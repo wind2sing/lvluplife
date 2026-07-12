@@ -17,7 +17,7 @@ export async function ensureSchema() {
       await sql`
         CREATE TABLE IF NOT EXISTS app_state (
           id SMALLINT PRIMARY KEY CHECK (id = 1),
-          save JSONB NOT NULL DEFAULT '{"activeIds":[],"favoriteIds":[],"hiddenIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"completions":[]}'::jsonb,
+          save JSONB NOT NULL DEFAULT '{"activeIds":[],"favoriteIds":[],"hiddenIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"plans":[],"specialization":null,"completions":[]}'::jsonb,
           settings JSONB NOT NULL DEFAULT '{"language":"zh","font":"noto"}'::jsonb,
           initialized BOOLEAN NOT NULL DEFAULT FALSE,
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
