@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS challenges (
   xp INTEGER NOT NULL,
   cadence_zh TEXT NOT NULL,
   stats_json TEXT NOT NULL,
-  source TEXT NOT NULL
+  source TEXT NOT NULL,
+  custom_json TEXT
 );
 
 CREATE TABLE IF NOT EXISTS quest_state (

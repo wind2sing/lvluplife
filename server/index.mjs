@@ -16,6 +16,8 @@ db.exec(readFileSync(join(root, 'server/schema.sql'), 'utf8'))
 
 const questStateColumns = db.prepare('PRAGMA table_info(quest_state)').all().map((item) => item.name)
 if (!questStateColumns.includes('hidden')) db.exec('ALTER TABLE quest_state ADD COLUMN hidden INTEGER NOT NULL DEFAULT 0 CHECK (hidden IN (0, 1))')
+const challengeColumns = db.prepare('PRAGMA table_info(challenges)').all().map((item) => item.name)
+if (!challengeColumns.includes('custom_json')) db.exec('ALTER TABLE challenges ADD COLUMN custom_json TEXT')
 
 const settingsTableSql = db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'settings'").get()?.sql ?? ''
 if (!settingsTableSql.includes("'pixel'")) {
@@ -80,8 +82,9 @@ try {
 const selectChallenges = db.prepare(`
   SELECT id, title_zh, title_en, category_zh, category_en, level, tier,
     tier_name_zh, xp, cadence_zh, stats_json, source
-  FROM challenges ORDER BY rowid
+  FROM challenges WHERE source != 'custom' ORDER BY rowid
 `)
+const selectCustomChallenges = db.prepare("SELECT custom_json FROM challenges WHERE source = 'custom' AND custom_json IS NOT NULL ORDER BY rowid")
 const selectQuestState = db.prepare('SELECT challenge_id, active, favorite, hidden FROM quest_state')
 const selectCompletions = db.prepare('SELECT id, challenge_id, note, completed_at FROM completions ORDER BY completed_at DESC')
 const selectSettings = db.prepare('SELECT language, font FROM settings WHERE id = 1')
@@ -93,6 +96,15 @@ const upsertQuestState = db.prepare(`
 const insertCompletion = db.prepare('INSERT INTO completions (id, challenge_id, note, completed_at) VALUES (?, ?, ?, ?)')
 const updateSettings = db.prepare('UPDATE settings SET language = ?, font = ? WHERE id = 1')
 const markInitialized = db.prepare("INSERT INTO app_meta (key, value) VALUES ('state_initialized', '1') ON CONFLICT(key) DO UPDATE SET value = '1'")
+const selectDailyBoard = db.prepare("SELECT value FROM app_meta WHERE key = 'daily_board'")
+const upsertDailyBoard = db.prepare("INSERT INTO app_meta (key, value) VALUES ('daily_board', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value")
+const deleteCustomChallenges = db.prepare("DELETE FROM challenges WHERE source = 'custom'")
+const insertCustomChallenge = db.prepare(`
+  INSERT INTO challenges (
+    id, title_zh, title_en, category_zh, category_en, level, tier,
+    tier_name_zh, xp, cadence_zh, stats_json, source, custom_json
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'custom', ?)
+`)
 
 function json(response, status, body) {
   response.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' })
@@ -115,6 +127,11 @@ function getBootstrap() {
     completedAt: item.completed_at,
   }))
   const settings = selectSettings.get()
+  const customChallenges = selectCustomChallenges.all().flatMap((item) => {
+    try { return [JSON.parse(item.custom_json)] } catch { return [] }
+  })
+  let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
+  try { dailyBoard = { ...dailyBoard, ...JSON.parse(selectDailyBoard.get()?.value ?? '{}') } } catch {}
   return {
     initialized: Boolean(selectInitialized.get()),
     challenges: selectChallenges.all().map((item) => ({
@@ -135,6 +152,8 @@ function getBootstrap() {
       activeIds: stateRows.filter((item) => item.active).map((item) => item.challenge_id),
       favoriteIds: stateRows.filter((item) => item.favorite).map((item) => item.challenge_id),
       hiddenIds: stateRows.filter((item) => item.hidden).map((item) => item.challenge_id),
+      customChallenges,
+      dailyBoard,
       completions,
     },
     settings: { language: settings.language, font: settings.font },
@@ -147,12 +166,24 @@ function replaceSave(save) {
   const hiddenIds = new Set(Array.isArray(save.hiddenIds) ? save.hiddenIds : [])
   const challengeIds = new Set([...activeIds, ...favoriteIds, ...hiddenIds])
   const completions = Array.isArray(save.completions) ? save.completions : []
+  const customChallenges = Array.isArray(save.customChallenges) ? save.customChallenges.filter((item) => item?.id?.startsWith('custom-')).slice(0, 500) : []
+  const dailyBoard = save.dailyBoard && typeof save.dailyBoard === 'object' ? save.dailyBoard : { date: '', energy: 'normal', reroll: 0 }
 
   db.exec('BEGIN')
   try {
     db.exec('DELETE FROM quest_state; DELETE FROM completions;')
+    deleteCustomChallenges.run()
+    for (const item of customChallenges) {
+      insertCustomChallenge.run(
+        item.id, String(item.title ?? ''), String(item.titleOriginal ?? item.title ?? ''),
+        String(item.category ?? '学习与成长'), String(item.categoryOriginal ?? 'Custom'),
+        Number(item.level) || 1, Number(item.tier) || 1, String(item.tierName ?? '支线任务'),
+        Number(item.xp) || 70, String(item.cadence ?? '终身一次'), JSON.stringify(item.stats ?? []), JSON.stringify(item),
+      )
+    }
     for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)
     for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt)
+    upsertDailyBoard.run(JSON.stringify(dailyBoard))
     markInitialized.run()
     db.exec('COMMIT')
   } catch (error) {

@@ -9,7 +9,9 @@ import {
   Camera,
   Check,
   ChevronDown,
+  Clock3,
   Compass,
+  Copy,
   Dumbbell,
   Download,
   FileText,
@@ -29,6 +31,7 @@ import {
   MessageCircle,
   Music2,
   Palette,
+  Pencil,
   Plus,
   Repeat2,
   RotateCcw,
@@ -52,6 +55,19 @@ type StatKey = 'STR' | 'CUL' | 'ENV' | 'CHA' | 'TAL' | 'INT'
 type View = 'home' | 'character' | 'explore' | 'goals' | 'chronicle' | 'settings'
 type Language = 'zh' | 'en'
 type FontChoice = 'noto' | 'zcool' | 'pixel' | 'system'
+type DailyEnergy = 'low' | 'normal' | 'high'
+
+type DailyBoardState = {
+  date: string
+  energy: DailyEnergy
+  reroll: number
+}
+
+type DailyRecommendation = {
+  challenge: Challenge
+  role: 'quick' | 'growth' | 'free'
+  reason: string
+}
 
 const viewPaths: Record<View, string> = {
   home: '/',
@@ -86,6 +102,12 @@ type Challenge = {
   cadence: string
   stats: { key: StatKey; points: number }[]
   source: string
+  custom?: boolean
+  description?: string
+  completionPrompt?: string
+  estimatedMinutes?: number
+  energyDemand?: DailyEnergy
+  contexts?: string[]
 }
 
 type Completion = {
@@ -107,6 +129,8 @@ type SaveState = {
   activeIds: string[]
   favoriteIds: string[]
   hiddenIds: string[]
+  customChallenges: Challenge[]
+  dailyBoard: DailyBoardState
   completions: Completion[]
 }
 
@@ -124,7 +148,14 @@ type BootstrapData = {
 
 const STORAGE_KEY = 'lvluplife-save-v1'
 const ACCESS_KEY_STORAGE = 'lvluplife-access-key-v1'
-const emptySave: SaveState = { activeIds: [], favoriteIds: [], hiddenIds: [], completions: [] }
+const emptySave: SaveState = {
+  activeIds: [],
+  favoriteIds: [],
+  hiddenIds: [],
+  customChallenges: [],
+  dailyBoard: { date: '', energy: 'normal', reroll: 0 },
+  completions: [],
+}
 const defaultSettings: AppSettings = { language: 'zh', font: 'noto' }
 
 const LanguageContext = createContext<Language>('zh')
@@ -280,6 +311,25 @@ function getStreak(completions: Completion[]) {
   return streak
 }
 
+function getTodayKey() {
+  const now = new Date()
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+}
+
+function stableHash(value: string) {
+  let hash = 2166136261
+  for (let index = 0; index < value.length; index += 1) hash = Math.imul(hash ^ value.charCodeAt(index), 16777619)
+  return hash >>> 0
+}
+
+function getQuestEstimate(challenge: Challenge) {
+  return challenge.estimatedMinutes ?? [0, 20, 45, 90, 150][challenge.tier] ?? 45
+}
+
+function getQuestEnergy(challenge: Challenge): DailyEnergy {
+  return challenge.energyDemand ?? (challenge.tier <= 1 ? 'low' : challenge.tier >= 4 ? 'high' : 'normal')
+}
+
 function App() {
   const [challenges, setChallenges] = useState<Challenge[]>([])
   const [save, setSave] = useState<SaveState>(emptySave)
@@ -301,6 +351,7 @@ function App() {
   const [reward, setReward] = useState<{ challenge: Challenge; levelUp: boolean; unlockedCount: number } | null>(null)
   const [mobileNav, setMobileNav] = useState(false)
   const [energyHelp, setEnergyHelp] = useState(false)
+  const [customEditor, setCustomEditor] = useState<Challenge | 'new' | null>(null)
 
   useEffect(() => {
     if (!accessKey || bootstrapStarted.current === accessKey) return
@@ -378,7 +429,11 @@ function App() {
     return () => window.removeEventListener('popstate', syncBrowserRoute)
   }, [])
 
-  const challengeMap = useMemo(() => new Map(challenges.map((item) => [item.id, item])), [challenges])
+  const allChallenges = useMemo(() => {
+    const originalIds = new Set(challenges.map((item) => item.id))
+    return [...challenges, ...save.customChallenges.filter((item) => !originalIds.has(item.id))]
+  }, [challenges, save.customChallenges])
+  const challengeMap = useMemo(() => new Map(allChallenges.map((item) => [item.id, item])), [allChallenges])
   const detailChallenge = detailChallengeId ? challengeMap.get(detailChallengeId) ?? null : null
   const completedChallenges = save.completions
     .map((completion) => ({ completion, challenge: challengeMap.get(completion.challengeId) }))
@@ -398,18 +453,52 @@ function App() {
     { STR: 0, CUL: 0, ENV: 0, CHA: 0, TAL: 0, INT: 0 } as Record<StatKey, number>,
   )
 
-  const unlockedChallenges = challenges.filter((item) => item.level <= level.level)
+  const unlockedChallenges = allChallenges.filter((item) => item.level <= level.level)
   const recommendationPool = unlockedChallenges.filter((item) => !save.hiddenIds.includes(item.id))
   const availableChallenges = recommendationPool.filter((item) => !getCooldownLabel(item, save.completions, settings.language))
   const dailyPool = availableChallenges.length ? availableChallenges : recommendationPool
-  const dayIndex = dailyPool.length ? Math.floor(Date.now() / 86400000) % dailyPool.length : 0
-  const featuredQuests = dailyPool.length ? [dailyPool[dayIndex], dailyPool[(dayIndex + 17) % dailyPool.length], dailyPool[(dayIndex + 41) % dailyPool.length]].filter(
-    (item, index, items) => item && items.findIndex((candidate) => candidate.id === item.id) === index,
-  ) : []
+  const todayKey = getTodayKey()
+  const dailyBoard = save.dailyBoard.date === todayKey ? save.dailyBoard : { date: todayKey, energy: save.dailyBoard.energy, reroll: 0 }
+  const featuredQuests = useMemo<DailyRecommendation[]>(() => {
+    const recentCategories = save.completions.slice(0, 8).map((item) => challengeMap.get(item.challengeId)?.category).filter(Boolean)
+    const lowestValue = Math.min(...Object.values(stats))
+    const lowestStats = new Set((Object.entries(stats) as [StatKey, number][]).filter(([, value]) => value === lowestValue).map(([key]) => key))
+    const energyRank: Record<DailyEnergy, number> = { low: 1, normal: 2, high: 3 }
+    const roles: DailyRecommendation['role'][] = ['quick', 'growth', 'free']
+    const selectedIds = new Set<string>()
+    return roles.flatMap((role) => {
+      const ranked = dailyPool.filter((item) => !selectedIds.has(item.id)).map((challenge) => {
+        const estimate = getQuestEstimate(challenge)
+        const demand = getQuestEnergy(challenge)
+        let score = stableHash(`${dailyBoard.date}:${dailyBoard.reroll}:${role}:${challenge.id}`) % 31
+        if (save.activeIds.includes(challenge.id)) score += 42
+        if (save.favoriteIds.includes(challenge.id)) score += 25
+        if (challenge.custom) score += 12
+        if (challenge.stats.some((stat) => lowestStats.has(stat.key))) score += role === 'growth' ? 45 : 14
+        score -= recentCategories.filter((category) => category === challenge.category).length * 9
+        score -= Math.abs(energyRank[demand] - energyRank[dailyBoard.energy]) * 30
+        if (role === 'quick') score += estimate <= (dailyBoard.energy === 'low' ? 30 : 45) ? 55 : -Math.min(50, estimate / 2)
+        if (role === 'growth') score += challenge.tier >= 2 && challenge.tier <= (dailyBoard.energy === 'high' ? 4 : 3) ? 34 : 0
+        if (role === 'free') score += save.favoriteIds.includes(challenge.id) ? 24 : challenge.custom ? 18 : 0
+        return { challenge, score, estimate, demand }
+      }).sort((a, b) => b.score - a.score)
+      const picked = ranked[0]
+      if (!picked) return []
+      selectedIds.add(picked.challenge.id)
+      const stat = picked.challenge.stats.find((item) => lowestStats.has(item.key))
+      let reason = settings.language === 'zh'
+        ? `适合${dailyBoard.energy === 'low' ? '低' : dailyBoard.energy === 'high' ? '充沛' : '普通'}精力状态 · 预计 ${picked.estimate} 分钟`
+        : `Fits ${dailyBoard.energy} energy · about ${picked.estimate} min`
+      if (role === 'growth' && stat) reason = settings.language === 'zh' ? `补足最近较少提升的${statLabels[stat.key]}属性 · 预计 ${picked.estimate} 分钟` : `Builds your lower ${statLabelsEn[stat.key]} stat · about ${picked.estimate} min`
+      else if (save.favoriteIds.includes(picked.challenge.id)) reason = settings.language === 'zh' ? `你收藏的任务 · 预计 ${picked.estimate} 分钟` : `A saved quest · about ${picked.estimate} min`
+      else if (picked.challenge.custom) reason = settings.language === 'zh' ? `你的个人任务 · 预计 ${picked.estimate} 分钟` : `Your personal quest · about ${picked.estimate} min`
+      return [{ challenge: picked.challenge, role, reason }]
+    })
+  }, [challengeMap, dailyBoard.date, dailyBoard.energy, dailyBoard.reroll, dailyPool, save.activeIds, save.completions, save.favoriteIds, settings.language, stats])
 
   const visibleChallenges = useMemo(() => {
     const query = search.trim().toLowerCase()
-    const categoryPool = challenges.filter((item) => category === '全部任务' || item.category === category)
+    const categoryPool = allChallenges.filter((item) => category === '全部任务' || item.category === category)
     const visibilityPool = categoryPool.filter((item) => showSealed ? save.hiddenIds.includes(item.id) : !save.hiddenIds.includes(item.id))
     if (query) {
       return visibilityPool.filter(
@@ -421,9 +510,9 @@ function App() {
     if (category === '全部任务') return unlocked
     const nextLocked = visibilityPool.filter((item) => item.level > level.level).sort((a, b) => a.level - b.level).slice(0, 5)
     return [...unlocked, ...nextLocked]
-  }, [category, challenges, level.level, save.hiddenIds, search, showSealed])
+  }, [allChallenges, category, level.level, save.hiddenIds, search, showSealed])
 
-  const selectedCategoryPool = challenges.filter((item) => (category === '全部任务' || item.category === category) && !save.hiddenIds.includes(item.id))
+  const selectedCategoryPool = allChallenges.filter((item) => (category === '全部任务' || item.category === category) && !save.hiddenIds.includes(item.id))
   const selectedLockedCount = selectedCategoryPool.filter((item) => item.level > level.level).length
   const hiddenLockedCount = category === '全部任务' ? selectedLockedCount : Math.max(0, selectedLockedCount - 5)
 
@@ -435,6 +524,11 @@ function App() {
     setDetailChallengeId(null)
     window.history.replaceState({ lvluplife: true }, '', viewPaths[view])
   }, [detailChallenge, detailChallengeId, ready, view])
+
+  useEffect(() => {
+    if (!ready || save.dailyBoard.date === todayKey) return
+    setSave((current) => ({ ...current, dailyBoard: { date: todayKey, energy: current.dailyBoard.energy, reroll: 0 } }))
+  }, [ready, save.dailyBoard.date, todayKey])
 
   function toggleActive(id: string) {
     setSave((current) => ({
@@ -466,6 +560,31 @@ function App() {
     })
   }
 
+  function saveCustomChallenge(challenge: Challenge) {
+    setSave((current) => ({
+      ...current,
+      customChallenges: current.customChallenges.some((item) => item.id === challenge.id)
+        ? current.customChallenges.map((item) => item.id === challenge.id ? challenge : item)
+        : [challenge, ...current.customChallenges],
+    }))
+    setCustomEditor(null)
+    openChallenge(challenge)
+  }
+
+  function duplicateCustomChallenge(challenge: Challenge) {
+    const copy: Challenge = { ...challenge, id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, title: `${challenge.title}（副本）`, titleOriginal: `${challenge.titleOriginal} (Copy)`, custom: true, source: 'custom' }
+    setSave((current) => ({ ...current, customChallenges: [copy, ...current.customChallenges] }))
+    openChallenge(copy)
+  }
+
+  function updateDailyEnergy(value: DailyEnergy) {
+    setSave((current) => ({ ...current, dailyBoard: { date: todayKey, energy: value, reroll: current.dailyBoard.date === todayKey ? current.dailyBoard.reroll : 0 } }))
+  }
+
+  function rerollDailyBoard() {
+    setSave((current) => ({ ...current, dailyBoard: { date: todayKey, energy: current.dailyBoard.energy, reroll: (current.dailyBoard.date === todayKey ? current.dailyBoard.reroll : 0) + 1 } }))
+  }
+
   function completeQuest(attachments: Attachment[] = []) {
     if (!selected) return
     if (energy <= 0 || selected.level > level.level || getCooldownLabel(selected, save.completions, settings.language)) return
@@ -483,7 +602,7 @@ function App() {
       activeIds: current.activeIds.filter((id) => id !== selected.id),
       completions: [completion, ...current.completions],
     }))
-    const unlockedCount = newLevel > oldLevel ? challenges.filter((item) => item.level > oldLevel && item.level <= newLevel).length : 0
+    const unlockedCount = newLevel > oldLevel ? allChallenges.filter((item) => item.level > oldLevel && item.level <= newLevel).length : 0
     setReward({ challenge: selected, levelUp: newLevel > oldLevel, unlockedCount })
     setSelected(null)
     setNote('')
@@ -578,6 +697,8 @@ function App() {
           level={level.level}
           onBack={closeChallenge}
           onComplete={setSelected}
+          onDuplicate={duplicateCustomChallenge}
+          onEdit={setCustomEditor}
           onFavorite={toggleFavorite}
           onSeal={toggleSealed}
           onStart={toggleActive}
@@ -601,10 +722,11 @@ function App() {
           hiddenLockedCount={hiddenLockedCount}
           level={level.level}
           totalChallenges={challenges.length}
-          unlockedTotal={unlockedChallenges.length}
+          unlockedTotal={challenges.filter((item) => item.level <= level.level).length}
           nextLevel={Math.min(...challenges.filter((item) => item.level > level.level).map((item) => item.level))}
           onCategory={setCategory}
           onComplete={setSelected}
+          onCreate={() => setCustomEditor('new')}
           onFavorite={toggleFavorite}
           onSeal={toggleSealed}
           onOpen={openChallenge}
@@ -650,12 +772,15 @@ function App() {
         completed={completedChallenges}
         completions={save.completions}
         favoriteIds={save.favoriteIds}
+        dailyBoard={dailyBoard}
         featured={featuredQuests}
         levelInfo={level}
         onComplete={setSelected}
+        onDailyEnergy={updateDailyEnergy}
         onFavorite={toggleFavorite}
         onNavigate={navigate}
         onOpen={openChallenge}
+        onReroll={rerollDailyBoard}
         onStart={toggleActive}
         unlockedCount={unlockedChallenges.length}
       />
@@ -714,6 +839,8 @@ function App() {
         <CompletionModal challenge={selected} energy={energy} note={note} onClose={() => setSelected(null)} onNote={setNote} onSubmit={completeQuest} />
       )}
 
+      {customEditor && <CustomQuestModal challenge={customEditor === 'new' ? null : customEditor} currentLevel={level.level} onClose={() => setCustomEditor(null)} onSave={saveCustomChallenge} />}
+
       {undoTarget && (
         <UndoModal challenge={undoTarget.challenge} onCancel={() => setUndoTarget(null)} onConfirm={undoCompletion} />
       )}
@@ -768,11 +895,14 @@ type QuestActions = {
   onStart: (id: string) => void
 }
 
-function HomeView({ activeIds, completed, completions, favoriteIds, featured, levelInfo, onComplete, onFavorite, onNavigate, onOpen, onStart, unlockedCount }: QuestActions & {
+function HomeView({ activeIds, completed, completions, dailyBoard, favoriteIds, featured, levelInfo, onComplete, onDailyEnergy, onFavorite, onNavigate, onOpen, onReroll, onStart, unlockedCount }: QuestActions & {
   completed: { completion: Completion; challenge: Challenge }[]
-  featured: Challenge[]
+  dailyBoard: DailyBoardState
+  featured: DailyRecommendation[]
   levelInfo: ReturnType<typeof getLevel>
+  onDailyEnergy: (value: DailyEnergy) => void
   onNavigate: (view: View) => void
+  onReroll: () => void
   unlockedCount: number
 }) {
   const { text } = useLanguage()
@@ -796,10 +926,10 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
         </div>
       </section>
 
-      <section className="section-block">
-        <div className="section-heading"><div><p className="eyebrow">{text('今日委托', "Today's quests")}</p><h2>{text('选择你的冒险', 'Choose your adventure')}</h2></div><button className="text-button" onClick={() => onNavigate('explore')}>{text(`查看已解锁的 ${unlockedCount} 项`, `View ${unlockedCount} unlocked`)} <ArrowRight size={16} /></button></div>
+      <section className="section-block daily-board">
+        <div className="section-heading daily-board-heading"><div><p className="eyebrow">{text('今日冒险板', "Today's adventure board")}</p><h2>{text('按你现在的状态，选一件就好', 'Pick one that fits today')}</h2></div><div className="daily-board-actions"><div className="energy-selector" aria-label={text('今日精力状态', 'Energy today')}>{(['low', 'normal', 'high'] as DailyEnergy[]).map((value) => <button key={value} className={dailyBoard.energy === value ? 'active' : ''} onClick={() => onDailyEnergy(value)}>{text(value === 'low' ? '低精力' : value === 'high' ? '精力充沛' : '普通', value === 'low' ? 'Low' : value === 'high' ? 'High' : 'Normal')}</button>)}</div><button className="reroll-button" onClick={onReroll}><RotateCcw size={14} /> {text('换一批', 'Reroll')}</button><button className="text-button" onClick={() => onNavigate('explore')}>{text(`${unlockedCount} 项已解锁`, `${unlockedCount} unlocked`)} <ArrowRight size={16} /></button></div></div>
         <div className="quest-grid">
-          {featured.map((challenge, index) => <QuestCard key={challenge.id} challenge={challenge} completions={completions} featured={index === 0} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}
+          {featured.map((item) => <QuestCard key={item.challenge.id} challenge={item.challenge} completions={completions} featured={item.role === 'growth'} recommendationRole={item.role} recommendationReason={item.reason} active={activeIds.includes(item.challenge.id)} favorite={favoriteIds.includes(item.challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}
         </div>
       </section>
 
@@ -855,7 +985,7 @@ function CharacterView({ completedCount, energy, levelInfo, maxEnergy, stats, st
   )
 }
 
-function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
+function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onCreate, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
   category: string
   hiddenIds: string[]
   hiddenLockedCount: number
@@ -864,6 +994,7 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds,
   unlockedTotal: number
   nextLevel: number
   onCategory: (value: string) => void
+  onCreate: () => void
   onSeal: (id: string) => void
   onShowSealed: () => void
   search: string
@@ -876,7 +1007,7 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds,
   const categories = ['全部任务', ...Object.keys(categoryMeta)]
   return (
     <>
-      <div className="page-heading"><p className="eyebrow">{text('任务公会', 'Quest Guild')}</p><h1>{text('寻找下一场', 'Find your next')}<em>{text('胜利。', ' victory.')}</em></h1><p>{text(`完整收录 ${totalChallenges} 项原版挑战。提升等级，逐步发现更困难、更稀有的现实成就。`, `All ${totalChallenges} original challenges, revealed as your level grows.`)}</p></div>
+      <div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('任务公会', 'Quest Guild')}</p><h1>{text('寻找下一场', 'Find your next')}<em>{text('胜利。', ' victory.')}</em></h1><p>{text(`完整收录 ${totalChallenges} 项原版挑战，也可以创建只属于你的个人任务。`, `All ${totalChallenges} original challenges, plus personal quests of your own.`)}</p></div><button className="primary-button create-quest-button" onClick={onCreate}><Plus size={17} /> {text('创建任务', 'Create quest')}</button></div>
       <div className="unlock-banner"><div className="unlock-emblem"><LockKeyhole size={22} /></div><div><span>{text('冒险者等级', 'Adventurer level')} {level}</span><strong>{text('已发现', 'Discovered')} {unlockedTotal} / {totalChallenges}</strong></div><div className="unlock-progress"><i style={{ width: `${totalChallenges ? (unlockedTotal / totalChallenges) * 100 : 0}%` }} /></div><small>{text('下一批成就将在等级', 'Next achievements unlock at level')} {Number.isFinite(nextLevel) ? nextLevel : '—'}</small></div>
       <div className="filter-bar">
         <label className="search-field"><Search size={19} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={text('搜索已解锁的任务……', 'Search unlocked quests…')} /></label>
@@ -926,16 +1057,17 @@ function ChronicleView({ items, onOpen, onUndo }: { items: { completion: Complet
   )
 }
 
-function QuestCard({ active, challenge, completions, favorite, featured, onComplete, onFavorite, onOpen, onStart }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; featured?: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onOpen: (challenge: Challenge) => void; onStart: (id: string) => void }) {
+function QuestCard({ active, challenge, completions, favorite, featured, onComplete, onFavorite, onOpen, onStart, recommendationReason, recommendationRole }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; featured?: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onOpen: (challenge: Challenge) => void; onStart: (id: string) => void; recommendationReason?: string; recommendationRole?: DailyRecommendation['role'] }) {
   const { language, text, title } = useLanguage()
-  const meta = categoryMeta[challenge.category]
+  const meta = categoryMeta[challenge.category] ?? categoryMeta['学习与成长']
   const Icon = meta.icon
   const cooldown = getCooldownLabel(challenge, completions, language)
   return (
     <article className={`quest-card ${featured ? 'featured' : ''}`} onClick={() => onOpen(challenge)} onKeyDown={(event) => { if (event.key === 'Enter') onOpen(challenge) }} role="button" tabIndex={0} style={{ '--category-color': meta.color } as React.CSSProperties}>
       <div className="quest-card-top"><div className="category-icon"><Icon size={22} /></div><button className={`star-button ${favorite ? 'active' : ''}`} onClick={(event) => { event.stopPropagation(); onFavorite(challenge.id) }} aria-label={text('收藏任务', 'Save quest')}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button></div>
-      <span className="quest-kind">{featured ? text('今日主线', 'Main quest') : language === 'zh' ? meta.short : challenge.categoryOriginal}</span>
+      <span className="quest-kind">{recommendationRole ? text(recommendationRole === 'quick' ? '轻松一胜' : recommendationRole === 'growth' ? '成长任务' : '自由选择', recommendationRole === 'quick' ? 'Quick win' : recommendationRole === 'growth' ? 'Growth quest' : 'Free choice') : featured ? text('今日主线', 'Main quest') : language === 'zh' ? meta.short : challenge.categoryOriginal}</span>
       <h3>{title(challenge)}</h3>
+      {recommendationReason && <p className="recommendation-reason"><Sparkles size={13} /> {recommendationReason}</p>}
       <div className="quest-rewards"><span><Zap size={14} /> {challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div>
       <div className="quest-card-footer"><span>{cooldown || `${language === 'zh' ? challenge.tierName : tierLabels[challenge.tierName]} · ${text('等级', 'Level')} ${challenge.level}`}</span>{cooldown ? <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={14} /> {text('冷却中', 'Cooling down')}</button> : active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> {text('完成', 'Complete')}</button></div> : <button className="add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={17} /> {text('接取', 'Start')}</button>}</div>
     </article>
@@ -944,7 +1076,7 @@ function QuestCard({ active, challenge, completions, favorite, featured, onCompl
 
 function QuestRow({ active, challenge, completions, favorite, onComplete, onFavorite, onOpen, onSeal, onStart, sealed = false }: { active: boolean; challenge: Challenge; completions: Completion[]; favorite: boolean; onComplete: (challenge: Challenge) => void; onFavorite: (id: string) => void; onOpen: (challenge: Challenge) => void; onSeal?: (id: string) => void; onStart: (id: string) => void; sealed?: boolean }) {
   const { category, language, text, title } = useLanguage()
-  const meta = categoryMeta[challenge.category]
+  const meta = categoryMeta[challenge.category] ?? categoryMeta['学习与成长']
   const Icon = meta.icon
   const cooldown = getCooldownLabel(challenge, completions, language)
   return (
@@ -969,7 +1101,7 @@ function LockedQuestRow({ challenge }: { challenge: Challenge }) {
   )
 }
 
-function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onFavorite, onSeal, onStart, onUndo, sealed }: {
+function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onDuplicate, onEdit, onFavorite, onSeal, onStart, onUndo, sealed }: {
   active: boolean
   challenge: Challenge
   completions: Completion[]
@@ -977,6 +1109,8 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
   level: number
   onBack: () => void
   onComplete: (challenge: Challenge) => void
+  onDuplicate: (challenge: Challenge) => void
+  onEdit: (challenge: Challenge) => void
   onFavorite: (id: string) => void
   onSeal: (id: string) => void
   onStart: (id: string) => void
@@ -984,7 +1118,7 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
   sealed: boolean
 }) {
   const { category, language, text, title } = useLanguage()
-  const meta = categoryMeta[challenge.category]
+  const meta = categoryMeta[challenge.category] ?? categoryMeta['学习与成长']
   const Icon = meta.icon
   const cooldown = getCooldownLabel(challenge, completions, language)
   const history = completions.filter((item) => item.challengeId === challenge.id)
@@ -1004,9 +1138,13 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
             {!locked && <span><Zap size={15} /> {challenge.xp} {text('经验', 'XP')}</span>}
             {!locked && challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}
             <span>{text('等级', 'Level')} {challenge.level}</span>
+            {challenge.custom && <span><UserRound size={14} /> {text('个人任务', 'Personal quest')}</span>}
+            {!locked && <span><Clock3 size={14} /> {getQuestEstimate(challenge)} {text('分钟', 'min')}</span>}
           </div>
         </div>
         <div className="detail-actions">
+          {challenge.custom && !sealed && <button className="detail-secondary" onClick={() => onEdit(challenge)}><Pencil size={15} /> {text('编辑', 'Edit')}</button>}
+          {challenge.custom && !sealed && <button className="detail-secondary" onClick={() => onDuplicate(challenge)}><Copy size={15} /> {text('复制', 'Copy')}</button>}
           {!locked && !sealed && <button className={`detail-favorite ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /> {favorite ? text('已收藏', 'Saved') : text('收藏', 'Save')}</button>}
           {!locked && !sealed && <button className="detail-secondary detail-seal" onClick={() => onSeal(challenge.id)}><LockKeyhole size={16} /> {text('封印任务', 'Seal quest')}</button>}
           {sealed ? <button className="primary-button" onClick={() => onSeal(challenge.id)}><RotateCcw size={16} /> {text('解除封印', 'Restore quest')}</button> : locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
@@ -1016,14 +1154,16 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
       <div className="quest-detail-grid">
         <section className="detail-panel">
           <div className="detail-panel-heading"><Repeat2 size={19} /><div><span>{text('重复规则', 'Repeat rule')}</span><strong>{language === 'zh' ? challenge.cadence : cadenceLabels[challenge.cadence]}</strong></div></div>
-          <p>{locked ? text('达到所需等级后，任务详情与奖励会完整显露。', 'Reach the required level to reveal the full quest and its rewards.') : language === 'zh' ? cadenceDescriptions[challenge.cadence] : cadenceDescriptionsEn[challenge.cadence]}</p>
+          <p>{locked ? text('达到所需等级后，任务详情与奖励会完整显露。', 'Reach the required level to reveal the full quest and its rewards.') : challenge.description || (language === 'zh' ? cadenceDescriptions[challenge.cadence] : cadenceDescriptionsEn[challenge.cadence])}</p>
           {!locked && <div className={`repeat-status ${repeatable ? 'repeat-status--yes' : ''}`}><Repeat2 size={15} /> {repeatable ? text('这是可循环任务', 'This quest is repeatable') : text('这是终身成就', 'This is a lifetime achievement')}</div>}
           {cooldown && <div className="detail-cooldown"><History size={16} /> {cooldown}</div>}
+          {!locked && Boolean(challenge.contexts?.length) && <div className="context-tags">{challenge.contexts?.map((context) => <span key={context}>{context}</span>)}</div>}
         </section>
         <section className="detail-panel">
           <div className="detail-panel-heading"><ShieldCheck size={19} /><div><span>{text('完成标准', 'Completion standard')}</span><strong>{text('由你诚实判断', 'Your honest judgment')}</strong></div></div>
-          <p>{text('任务只在现实中真正发生后才应记录。你可以在完成时写下过程、结果或这件事对你的意义。', 'Record a quest only after it truly happens in real life. Add a note about the process, result, or why it mattered.')}</p>
+          <p>{challenge.completionPrompt || text('任务只在现实中真正发生后才应记录。你可以在完成时写下过程、结果或这件事对你的意义。', 'Record a quest only after it truly happens in real life. Add a note about the process, result, or why it mattered.')}</p>
           <div className="detail-rule-row"><span>{text('行动力消耗', 'Energy cost')}</span><strong>1</strong></div>
+          <div className="detail-rule-row"><span>{text('所需精力', 'Energy demand')}</span><strong>{text(getQuestEnergy(challenge) === 'low' ? '低' : getQuestEnergy(challenge) === 'high' ? '高' : '普通', getQuestEnergy(challenge))}</strong></div>
           <div className="detail-rule-row"><span>{text('历史完成', 'Times completed')}</span><strong>{history.length}</strong></div>
         </section>
       </div>
@@ -1038,7 +1178,7 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
 
 function ActivityItem({ challenge, completion, large, onOpen, onUndo }: { challenge: Challenge; completion: Completion; large?: boolean; onOpen?: (challenge: Challenge) => void; onUndo?: () => void }) {
   const { language, text, title } = useLanguage()
-  const meta = categoryMeta[challenge.category]
+  const meta = categoryMeta[challenge.category] ?? categoryMeta['学习与成长']
   const Icon = meta.icon
   const date = new Date(completion.completedAt)
   return (
@@ -1214,6 +1354,87 @@ function SettingsView({ settings, onChange }: { settings: AppSettings; onChange:
   )
 }
 
+const suggestedContexts = ['在家', '户外', '电脑', '通勤', '跑腿', '社交', '安静环境']
+
+function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challenge: Challenge | null; currentLevel: number; onClose: () => void; onSave: (challenge: Challenge) => void }) {
+  const { text } = useLanguage()
+  const [titleValue, setTitleValue] = useState(challenge?.title ?? '')
+  const [description, setDescription] = useState(challenge?.description ?? '')
+  const [categoryValue, setCategoryValue] = useState(challenge?.category ?? '学习与成长')
+  const [levelValue, setLevelValue] = useState(challenge?.level ?? Math.min(30, currentLevel))
+  const [tierValue, setTierValue] = useState(challenge?.tier ?? 1)
+  const [xp, setXp] = useState(challenge?.xp ?? 70)
+  const [statKey, setStatKey] = useState<StatKey>(challenge?.stats[0]?.key ?? 'INT')
+  const [statPoints, setStatPoints] = useState(challenge?.stats[0]?.points ?? 2)
+  const [cadence, setCadence] = useState(challenge?.cadence ?? '终身一次')
+  const [completionPrompt, setCompletionPrompt] = useState(challenge?.completionPrompt ?? '')
+  const [estimatedMinutes, setEstimatedMinutes] = useState(challenge?.estimatedMinutes ?? 30)
+  const [energyDemand, setEnergyDemand] = useState<DailyEnergy>(challenge?.energyDemand ?? 'normal')
+  const [contexts, setContexts] = useState<string[]>(challenge?.contexts ?? [])
+  const [error, setError] = useState('')
+
+  function toggleContext(value: string) {
+    setContexts((current) => current.includes(value) ? current.filter((item) => item !== value) : current.length < 8 ? [...current, value] : current)
+  }
+
+  function submit(event: React.FormEvent) {
+    event.preventDefault()
+    const cleanTitle = titleValue.trim()
+    if (!cleanTitle) return setError(text('请填写任务名称。', 'Enter a quest title.'))
+    const cleanLevel = Math.min(30, Math.max(1, Math.round(levelValue)))
+    const cleanPoints = Math.min(cleanLevel * 3, Math.max(1, Math.round(statPoints)))
+    const tierNames = ['', '轻松一胜', '支线任务', '进阶挑战', '史诗任务']
+    const meta = categoryMeta[categoryValue]
+    onSave({
+      id: challenge?.id ?? `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      title: cleanTitle.slice(0, 120),
+      titleOriginal: cleanTitle.slice(0, 120),
+      category: categoryValue,
+      categoryOriginal: meta.labelEn,
+      level: cleanLevel,
+      tier: Math.min(4, Math.max(1, Math.round(tierValue))),
+      tierName: tierNames[Math.min(4, Math.max(1, Math.round(tierValue)))],
+      xp: Math.min(1500, Math.max(25, Math.round(xp))),
+      cadence,
+      stats: [{ key: statKey, points: cleanPoints }],
+      source: 'custom',
+      custom: true,
+      description: description.trim().slice(0, 600),
+      completionPrompt: completionPrompt.trim().slice(0, 180),
+      estimatedMinutes: Math.min(1440, Math.max(5, Math.round(estimatedMinutes))),
+      energyDemand,
+      contexts,
+    })
+  }
+
+  return (
+    <div className="modal-backdrop" role="presentation" onClick={onClose}>
+      <form className="custom-quest-modal" role="dialog" aria-modal="true" aria-labelledby="custom-quest-title" onClick={(event) => event.stopPropagation()} onSubmit={submit}>
+        <button type="button" className="modal-close" onClick={onClose} aria-label={text('关闭', 'Close')}><X /></button>
+        <p className="eyebrow">{challenge ? text('编辑个人任务', 'Edit personal quest') : text('创建个人任务', 'Create personal quest')}</p>
+        <h2 id="custom-quest-title">{challenge ? titleValue || text('未命名任务', 'Untitled quest') : text('把现实目标写成任务', 'Turn a real goal into a quest')}</h2>
+        <div className="custom-form-grid">
+          <label className="field-wide"><span>{text('任务名称', 'Quest title')}</span><input autoFocus value={titleValue} maxLength={120} onChange={(event) => setTitleValue(event.target.value)} placeholder={text('例如：整理本周的学习笔记', 'e.g. Organize this week’s study notes')} /></label>
+          <label className="field-wide"><span>{text('任务说明', 'Description')}</span><textarea value={description} maxLength={600} onChange={(event) => setDescription(event.target.value)} placeholder={text('为什么要做、做到什么程度……', 'Why it matters and what done looks like…')} /></label>
+          <label><span>{text('分类', 'Category')}</span><select value={categoryValue} onChange={(event) => setCategoryValue(event.target.value)}>{Object.keys(categoryMeta).map((item) => <option key={item}>{item}</option>)}</select></label>
+          <label><span>{text('重复周期', 'Cadence')}</span><select value={cadence} onChange={(event) => setCadence(event.target.value)}>{Object.keys(cadenceDays).map((item) => <option key={item}>{item}</option>)}</select></label>
+          <label><span>{text('建议等级', 'Level')}</span><input type="number" min="1" max="30" value={levelValue} onChange={(event) => setLevelValue(Number(event.target.value))} /></label>
+          <label><span>{text('任务稀有度', 'Tier')}</span><select value={tierValue} onChange={(event) => setTierValue(Number(event.target.value))}><option value="1">1 · 轻松一胜</option><option value="2">2 · 支线任务</option><option value="3">3 · 进阶挑战</option><option value="4">4 · 史诗任务</option></select></label>
+          <label><span>{text('经验奖励', 'XP reward')}</span><input type="number" min="25" max="1500" step="5" value={xp} onChange={(event) => setXp(Number(event.target.value))} /></label>
+          <label><span>{text('主要属性', 'Primary stat')}</span><select value={statKey} onChange={(event) => setStatKey(event.target.value as StatKey)}>{(Object.keys(statLabels) as StatKey[]).map((key) => <option key={key} value={key}>{statLabels[key]}</option>)}</select></label>
+          <label><span>{text('属性点', 'Stat points')}</span><input type="number" min="1" max={Math.max(3, levelValue * 3)} value={statPoints} onChange={(event) => setStatPoints(Number(event.target.value))} /><small>{text(`当前等级最多 ${Math.max(3, levelValue * 3)} 点`, `Up to ${Math.max(3, levelValue * 3)} at this level`)}</small></label>
+          <label><span>{text('预计时长（分钟）', 'Estimated minutes')}</span><input type="number" min="5" max="1440" step="5" value={estimatedMinutes} onChange={(event) => setEstimatedMinutes(Number(event.target.value))} /></label>
+          <fieldset className="field-wide"><legend>{text('所需精力', 'Energy demand')}</legend><div className="form-segmented">{(['low', 'normal', 'high'] as DailyEnergy[]).map((value) => <button type="button" key={value} className={energyDemand === value ? 'active' : ''} onClick={() => setEnergyDemand(value)}>{text(value === 'low' ? '低精力' : value === 'high' ? '高精力' : '普通', value)}</button>)}</div></fieldset>
+          <fieldset className="field-wide"><legend>{text('适用情境', 'Contexts')}</legend><div className="context-picker">{suggestedContexts.map((item) => <button type="button" key={item} className={contexts.includes(item) ? 'active' : ''} onClick={() => toggleContext(item)}>{item}</button>)}</div></fieldset>
+          <label className="field-wide"><span>{text('完成记录提示', 'Completion prompt')}</span><input value={completionPrompt} maxLength={180} onChange={(event) => setCompletionPrompt(event.target.value)} placeholder={text('例如：上传结果照片，或写下三点复盘', 'e.g. Upload a photo or write three reflections')} /></label>
+        </div>
+        {error && <p className="form-error">{error}</p>}
+        <div className="custom-modal-actions"><button type="button" className="detail-secondary" onClick={onClose}>{text('取消', 'Cancel')}</button><button className="primary-button" type="submit"><Check size={16} /> {challenge ? text('保存修改', 'Save changes') : text('创建任务', 'Create quest')}</button></div>
+      </form>
+    </div>
+  )
+}
+
 function CompletionModal({ challenge, energy, note, onClose, onNote, onSubmit }: { challenge: Challenge; energy: number; note: string; onClose: () => void; onNote: (value: string) => void; onSubmit: (attachments: Attachment[]) => void }) {
   const { language, text, title } = useLanguage()
   const accessKey = useAccessKey()
@@ -1221,7 +1442,7 @@ function CompletionModal({ challenge, energy, note, onClose, onNote, onSubmit }:
   const [uploading, setUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
   const [fileError, setFileError] = useState('')
-  const meta = categoryMeta[challenge.category]
+  const meta = categoryMeta[challenge.category] ?? categoryMeta['学习与成长']
   const Icon = meta.icon
 
   function selectFiles(selected: FileList | null) {
@@ -1277,8 +1498,8 @@ function CompletionModal({ challenge, energy, note, onClose, onNote, onSubmit }:
         <div className="completion-badge" style={{ color: meta.color }}><Icon size={30} /></div>
         <p className="eyebrow">{text('完成任务', 'Complete quest')}</p>
         <h2 id="completion-title">{title(challenge)}</h2>
-        <p className="completion-prompt">{text('你真的完成了吗？记录下这次现实中的胜利。', 'Did you really complete it? Record this real-life victory.')}</p>
-        <label><span>{text('记录现实中的细节', 'Record the real-life details')} <small>{text('选填', 'optional')}</small></span><textarea autoFocus value={note} onChange={(event) => onNote(event.target.value)} placeholder={text('发生了什么？为什么这件事对你有意义？', 'What happened, and why did it matter?')} maxLength={280} /><small>{note.length}/280</small></label>
+        <p className="completion-prompt">{challenge.completionPrompt || text('记录下这次现实中的胜利，给未来的自己留一份证据。', 'Record this real-life victory as proof for your future self.')}</p>
+        <label><span>{text('记录现实中的细节', 'Record the real-life details')} <small>{text('选填', 'optional')}</small></span><textarea autoFocus value={note} onChange={(event) => onNote(event.target.value)} placeholder={challenge.completionPrompt || text('发生了什么？为什么这件事对你有意义？', 'What happened, and why did it matter?')} maxLength={280} /><small>{note.length}/280</small></label>
         <div className="attachment-field">
           <div><span>{text('图片或附件', 'Photos or attachments')} <small>{text('选填，最多 3 个', 'optional, up to 3')}</small></span><em>{text('支持图片、PDF、Office、文本和 ZIP，单个不超过 10MB。', 'Images, PDF, Office, text, and ZIP up to 10MB each.')}</em></div>
           <label className="attachment-picker"><UploadCloud size={18} /><span>{text('选择文件', 'Choose files')}</span><input type="file" multiple accept="image/*,.pdf,.txt,.md,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip" onChange={(event) => selectFiles(event.target.files)} /></label>
