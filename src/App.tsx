@@ -118,6 +118,15 @@ const statDescriptions: Record<StatKey, { zh: string; en: string; examplesZh: st
   INT: { zh: '智慧代表学习、思考、解决问题与理解世界的能力。', en: 'Intelligence represents learning, reasoning, problem solving, and understanding the world.', examplesZh: '学习、研究、心智成长与知识型挑战', examplesEn: 'Learning, research, mental growth, and knowledge quests' },
 }
 
+const statMeta: Record<StatKey, { icon: LucideIcon; color: string }> = {
+  STR: { icon: Dumbbell, color: '#ff837a' },
+  CUL: { icon: BookOpen, color: '#75b7ff' },
+  ENV: { icon: Leaf, color: '#68cf88' },
+  CHA: { icon: MessageCircle, color: '#ed8ecb' },
+  TAL: { icon: Hammer, color: '#f0bd63' },
+  INT: { icon: GraduationCap, color: '#a997ff' },
+}
+
 const categoryMeta: Record<string, { icon: LucideIcon; color: string; short: string }> = {
   艺术与创意: { icon: Palette, color: '#f38bba', short: '艺术' },
   音乐: { icon: Music2, color: '#a997ff', short: '音乐' },
@@ -517,11 +526,12 @@ function App() {
           <NavButton active={view === 'settings'} icon={Settings} label={text('设置', 'Settings')} onClick={() => navigate('settings')} />
         </nav>
         <div className="sidebar-spacer" />
-        <div className="mini-profile">
+        <button className="mini-profile" onClick={showCharacterPanel} title={text('查看角色面板', 'View character sheet')}>
           <div className="avatar"><UserRound size={22} /></div>
           <div><strong>{text('独行冒险者', 'Solo Adventurer')}</strong><span>{text('等级', 'Level')} {level.level}</span></div>
-        </div>
-        <p className="local-note"><ShieldCheck size={14} /> {text('进度仅保存在本机', 'Progress stays on this device')}</p>
+          <ArrowRight className="profile-arrow" size={15} />
+        </button>
+        <button className="local-note" onClick={() => navigate('settings')}><ShieldCheck size={14} /> {text('进度仅保存在本机', 'Progress stays on this device')}<Settings size={12} /></button>
       </aside>
 
       {mobileNav && <button className="nav-scrim" aria-label={text('关闭菜单', 'Close menu')} onClick={() => setMobileNav(false)} />}
@@ -597,16 +607,20 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
   return (
     <>
       <section className="hero-panel">
-        <div>
+        <div className="hero-content">
           <p className="eyebrow"><span /> {text('下一步行动', 'Your next move')}</p>
-          <h1>{text('让今天', 'Make today')}<br /><em>{text('算数。', 'count.')}</em></h1>
+          <h1><span>{text('让今天', 'Make today')}</span><em>{text('算数。', 'count.')}</em></h1>
           <p className="hero-copy">{text('完成一件真实的小事，把现实生活变成看得见的角色成长。', 'Do one real thing and turn everyday life into visible character growth.')}</p>
-          <button className="primary-button" onClick={() => onNavigate('explore')}>{text('领取任务', 'Find a quest')} <ArrowRight size={18} /></button>
+          <div className="hero-actions"><button className="primary-button" onClick={() => onNavigate('explore')}>{text('领取任务', 'Find a quest')} <ArrowRight size={18} /></button><button className="hero-character-button" onClick={() => document.querySelector('#character-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}><UserRound size={16} /> {text('查看角色', 'Character')}</button></div>
+          <div className="hero-badges"><span><Target size={13} /> {text('538 项挑战', '538 challenges')}</span><span><ShieldCheck size={13} /> {text('本地存档', 'Local save')}</span><span><Sparkles size={13} /> {text('真实成长', 'Real growth')}</span></div>
         </div>
-        <div className="hero-orbit" aria-hidden="true">
-          <div className="orbit orbit-one" /><div className="orbit orbit-two" />
-          <div className="pixel-sword"><span>✦</span></div>
-          <span className="float-rune rune-one">+经验</span><span className="float-rune rune-two">升级</span>
+        <div className="hero-visual">
+          <div className="hero-orbit" aria-hidden="true">
+            <div className="orbit orbit-one" /><div className="orbit orbit-two" />
+            <div className="pixel-sword"><span>✦</span></div>
+            <span className="float-rune rune-one">+{text('经验', 'XP')}</span><span className="float-rune rune-two">{text('升级', 'LEVEL UP')}</span>
+          </div>
+          <button className="hero-level-card" onClick={() => document.querySelector('#character-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}><span>{text('冒险者状态', 'Adventurer status')}</span><strong>{text('等级', 'Level')} {levelInfo.level}</strong><div><i style={{ width: `${levelInfo.percent}%` }} /></div><small>{levelInfo.carriedXp} / {levelInfo.needed} {text('经验', 'XP')}</small></button>
         </div>
       </section>
 
@@ -627,7 +641,7 @@ function HomeView({ activeIds, completed, completions, favoriteIds, featured, le
           </button>
           <div className="stat-list">
             {(Object.entries(stats) as [StatKey, number][]).map(([key, value]) => (
-              <button className="stat-row" key={key} onClick={() => setSelectedStat(key)}><span>{key.slice(0, 1)}</span><div><strong>{language === 'zh' ? statLabels[key] : statLabelsEn[key]} <small>{text('点击了解', 'Learn more')}</small></strong><i><b style={{ width: `${Math.min(100, topStat[1] ? (value / topStat[1]) * 100 : 0)}%` }} /></i></div><em>{value}</em></button>
+              (() => { const Icon = statMeta[key].icon; return <button className="stat-row" key={key} onClick={() => setSelectedStat(key)} style={{ '--stat-color': statMeta[key].color } as React.CSSProperties}><span><Icon size={15} /></span><div><strong>{language === 'zh' ? statLabels[key] : statLabelsEn[key]} <small>{text('点击了解', 'Learn more')}</small></strong><i><b style={{ width: `${Math.min(100, topStat[1] ? (value / topStat[1]) * 100 : 0)}%` }} /></i></div><em>{value}</em></button> })()
             ))}
           </div>
         </section>
@@ -865,11 +879,12 @@ function EnergyHelpModal({ current, max, onClose }: { current: number; max: numb
 function StatHelpModal({ onClose, stat, value }: { onClose: () => void; stat: StatKey; value: number }) {
   const { language, text } = useLanguage()
   const description = statDescriptions[stat]
+  const Icon = statMeta[stat].icon
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
       <section className="character-help-modal" role="dialog" aria-modal="true" aria-labelledby="stat-help-title" onClick={(event) => event.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label={text('关闭', 'Close')}><X /></button>
-        <div className="stat-help-badge">{stat}</div>
+        <div className="stat-help-badge" style={{ '--stat-color': statMeta[stat].color } as React.CSSProperties}><Icon size={27} /></div>
         <p className="eyebrow">{text('现实属性', 'Real-life attribute')}</p>
         <h2 id="stat-help-title">{language === 'zh' ? statLabels[stat] : statLabelsEn[stat]}</h2>
         <p>{language === 'zh' ? description.zh : description.en}</p>
