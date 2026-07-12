@@ -13,7 +13,7 @@
 - 完成记录可撤销，并同步返还经验、属性、冷却和行动力
 - 私人冒险日志与荣誉规则
 - 经验、等级、六项现实属性、连续天数与行动力
-- 无需账号，挑战、进度、完成记录与设置保存在本地 SQLite
+- 私人访问密钥保护，云端进度保存在 Neon PostgreSQL
 - 思源黑体、站酷快乐体、中文像素街机体与系统字体切换
 - 桌面端和移动端响应式界面
 
@@ -34,6 +34,14 @@ npm run dev
 - 原站截图：`docs/research/screenshots/`
 - 新版验收截图：`docs/research/current/`
 
-运行时数据保存在 `data/lvluplife.sqlite`。首次启动会自动迁移旧版浏览器本地存储中的 `lvluplife-save-v1` 进度；SQLite 文件不会提交到 Git。
+本地开发默认使用 `data/lvluplife.sqlite`；Vercel 部署使用 Neon PostgreSQL。首次云端启动会自动迁移旧版浏览器本地存储中的 `lvluplife-save-v1` 进度。
+
+使用 Neon 环境运行完整的 Vercel Functions：
+
+```bash
+npm run dev:cloud
+```
+
+需要配置 `DATABASE_URL` 与 `PERSONAL_ACCESS_KEY`。
 
 生产模式先运行 `npm run build`，再运行 `npm start`。

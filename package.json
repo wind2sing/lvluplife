@@ -6,7 +6,9 @@
   "scripts": {
     "data:generate": "node scripts/generate-challenges.mjs",
     "data:translate": "node scripts/translate-challenges.mjs",
+    "data:migrate:neon": "node --disable-warning=ExperimentalWarning scripts/migrate-sqlite-to-neon.mjs",
     "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:server\"",
+    "dev:cloud": "vercel dev",
     "dev:web": "vite",
     "dev:server": "node --disable-warning=ExperimentalWarning --watch server/index.mjs",
     "build": "tsc -b && vite build",
@@ -15,6 +17,7 @@
     "start": "node --disable-warning=ExperimentalWarning server/index.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "lucide-react": "^1.24.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"

@@ -90,6 +90,7 @@ type BootstrapData = {
 }
 
 const STORAGE_KEY = 'lvluplife-save-v1'
+const ACCESS_KEY_STORAGE = 'lvluplife-access-key-v1'
 const emptySave: SaveState = { activeIds: [], favoriteIds: [], completions: [] }
 const defaultSettings: AppSettings = { language: 'zh', font: 'noto' }
 
@@ -228,7 +229,10 @@ function App() {
   const [settings, setSettings] = useState<AppSettings>(defaultSettings)
   const [ready, setReady] = useState(false)
   const [bootstrapError, setBootstrapError] = useState('')
-  const bootstrapStarted = useRef(false)
+  const bootstrapStarted = useRef('')
+  const [accessKey, setAccessKey] = useState(() => import.meta.env.DEV ? 'local-dev' : localStorage.getItem(ACCESS_KEY_STORAGE) ?? '')
+  const [accessKeyDraft, setAccessKeyDraft] = useState('')
+  const [accessError, setAccessError] = useState('')
   const [view, setView] = useState<View>('home')
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('全部任务')
@@ -241,19 +245,26 @@ function App() {
   const [energyHelp, setEnergyHelp] = useState(false)
 
   useEffect(() => {
-    if (bootstrapStarted.current) return
-    bootstrapStarted.current = true
+    if (!accessKey || bootstrapStarted.current === accessKey) return
+    bootstrapStarted.current = accessKey
+    setBootstrapError('')
     void (async () => {
       try {
-        const response = await fetch('/api/bootstrap')
-        if (!response.ok) throw new Error('SQLite 服务不可用')
+        const response = await fetch('/api/bootstrap', { headers: { Authorization: `Bearer ${accessKey}` } })
+        if (response.status === 401) {
+          localStorage.removeItem(ACCESS_KEY_STORAGE)
+          setAccessKey('')
+          setAccessError('访问密钥不正确')
+          return
+        }
+        if (!response.ok) throw new Error('Neon 云存档服务不可用')
         const data = (await response.json()) as BootstrapData
         let initialSave = data.save
         if (!data.initialized) {
           initialSave = loadSave()
           const migration = await fetch('/api/save', {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessKey}` },
             body: JSON.stringify(initialSave),
           })
           if (!migration.ok) throw new Error('旧进度迁移失败')
@@ -262,24 +273,25 @@ function App() {
         setChallenges(data.challenges)
         setSave(initialSave)
         setSettings(data.settings)
+        setAccessError('')
         setReady(true)
       } catch (error) {
         setBootstrapError(error instanceof Error ? error.message : '载入失败')
       }
     })()
-  }, [])
+  }, [accessKey])
 
   useEffect(() => {
     if (!ready) return
     const timeout = window.setTimeout(() => {
       void fetch('/api/save', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessKey}` },
         body: JSON.stringify(save),
       })
     }, 120)
     return () => window.clearTimeout(timeout)
-  }, [ready, save])
+  }, [accessKey, ready, save])
 
   useEffect(() => {
     document.documentElement.dataset.font = settings.font
@@ -287,10 +299,10 @@ function App() {
     if (!ready) return
     void fetch('/api/settings', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessKey}` },
       body: JSON.stringify(settings),
     })
-  }, [ready, settings])
+  }, [accessKey, ready, settings])
 
   const challengeMap = useMemo(() => new Map(challenges.map((item) => [item.id, item])), [challenges])
   const completedChallenges = save.completions
@@ -413,12 +425,24 @@ function App() {
     window.setTimeout(() => document.querySelector('#character-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0)
   }
 
+  function unlockCloudSave() {
+    const value = accessKeyDraft.trim()
+    if (!value) return
+    localStorage.setItem(ACCESS_KEY_STORAGE, value)
+    setAccessError('')
+    setAccessKey(value)
+  }
+
+  if (!accessKey) {
+    return <AccessGate error={accessError} value={accessKeyDraft} onChange={setAccessKeyDraft} onSubmit={unlockCloudSave} />
+  }
+
   if (bootstrapError) {
-    return <div className="boot-state"><div className="boot-icon"><X /></div><h1>无法连接 SQLite</h1><p>{bootstrapError}</p><code>npm run dev</code></div>
+    return <div className="boot-state"><div className="boot-icon"><X /></div><h1>无法连接云存档</h1><p>{bootstrapError}</p><button className="secondary-button" onClick={() => { localStorage.removeItem(ACCESS_KEY_STORAGE); setAccessKey(''); bootstrapStarted.current = '' }}>重新输入访问密钥</button></div>
   }
 
   if (!ready) {
-    return <div className="boot-state"><div className="boot-icon boot-icon--loading"><Zap /></div><h1>正在载入冒险数据</h1><p>初始化 SQLite 与 538 项挑战……</p></div>
+    return <div className="boot-state"><div className="boot-icon boot-icon--loading"><Zap /></div><h1>正在载入冒险数据</h1><p>连接 Neon 云存档与 538 项挑战……</p></div>
   }
 
   const mainContent = (() => {
@@ -574,6 +598,25 @@ function App() {
       )}
     </div>
     </LanguageContext.Provider>
+  )
+}
+
+function AccessGate({ error, onChange, onSubmit, value }: { error: string; onChange: (value: string) => void; onSubmit: () => void; value: string }) {
+  return (
+    <main className="access-gate">
+      <section className="access-card">
+        <div className="access-emblem"><ShieldCheck size={29} /></div>
+        <p className="eyebrow">私人冒险存档</p>
+        <h1>欢迎回来，冒险者。</h1>
+        <p>输入你的个人访问密钥，连接保存在 Neon 中的进度。</p>
+        <form onSubmit={(event) => { event.preventDefault(); onSubmit() }}>
+          <label><span>访问密钥</span><input type="password" autoComplete="current-password" value={value} onChange={(event) => onChange(event.target.value)} placeholder="输入私人访问密钥" autoFocus /></label>
+          {error && <small className="access-error">{error}</small>}
+          <button className="primary-button" type="submit">解锁云存档 <ArrowRight size={17} /></button>
+        </form>
+        <small><ShieldCheck size={13} /> 密钥只保存在当前浏览器，并仅发送到你的 Vercel API。</small>
+      </section>
+    </main>
   )
 }
 
@@ -919,9 +962,10 @@ function LevelHelpModal({ levelInfo, onClose, totalXp }: { levelInfo: ReturnType
 
 function SettingsView({ settings, onChange }: { settings: AppSettings; onChange: (settings: AppSettings) => void }) {
   const { text } = useLanguage()
+  const cloud = !import.meta.env.DEV
   return (
     <>
-      <div className="page-heading"><p className="eyebrow">{text('设置', 'Settings')}</p><h1>{text('打造你的', 'Shape your')}<em>{text('冒险界面。', ' adventure UI.')}</em></h1><p>{text('外观和语言会保存在本地 SQLite 中，并在下次启动时自动恢复。', 'Appearance and language are stored in local SQLite and restored on startup.')}</p></div>
+      <div className="page-heading"><p className="eyebrow">{text('设置', 'Settings')}</p><h1>{text('打造你的', 'Shape your')}<em>{text('冒险界面。', ' adventure UI.')}</em></h1><p>{text('外观、语言与冒险进度会安全保存，并在下次启动时自动恢复。', 'Appearance, language, and progress are saved securely and restored on startup.')}</p></div>
       <section className="settings-panel">
         <div className="setting-copy"><span>{text('界面语言', 'Interface language')}</span><h2>{text('选择显示语言', 'Choose a language')}</h2><p>{text('挑战标题和全部操作界面会一起切换。', 'Challenge titles and interface controls switch together.')}</p></div>
         <div className="setting-options setting-options--two">
@@ -938,7 +982,7 @@ function SettingsView({ settings, onChange }: { settings: AppSettings; onChange:
           <button className={`font-preview font-preview--system ${settings.font === 'system' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'system' })}><strong>{text('系统字体', 'System font')}</strong><span>{text('跟随当前设备', 'Follow this device')}</span></button>
         </div>
       </section>
-      <section className="database-status"><div><ShieldCheck size={20} /><span>{text('数据存储', 'Data storage')}</span><strong>{text('SQLite 本地数据库', 'Local SQLite database')}</strong></div><code>data/lvluplife.sqlite</code></section>
+      <section className="database-status"><div><ShieldCheck size={20} /><span>{text('数据存储', 'Data storage')}</span><strong>{cloud ? text('Neon PostgreSQL 云存档', 'Neon PostgreSQL cloud save') : text('SQLite 本地开发数据库', 'Local SQLite development database')}</strong></div><code>{cloud ? 'Vercel + Neon' : 'data/lvluplife.sqlite'}</code></section>
     </>
   )
 }
