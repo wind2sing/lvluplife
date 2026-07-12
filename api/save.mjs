@@ -9,6 +9,12 @@ function normalizeSave(value) {
       challengeId: item.challengeId,
       note: String(item.note ?? '').slice(0, 280),
       completedAt: item.completedAt,
+      attachments: Array.isArray(item.attachments) ? item.attachments.filter((attachment) => attachment && typeof attachment.pathname === 'string' && attachment.pathname.startsWith('completions/')).slice(0, 3).map((attachment) => ({
+        pathname: attachment.pathname,
+        name: String(attachment.name ?? 'attachment').slice(0, 180),
+        contentType: String(attachment.contentType ?? 'application/octet-stream').slice(0, 120),
+        size: Number.isFinite(attachment.size) ? Math.max(0, attachment.size) : 0,
+      })) : [],
     })) : [],
   }
 }

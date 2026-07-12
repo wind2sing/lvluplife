@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { upload } from '@vercel/blob/client'
 import type { LucideIcon } from 'lucide-react'
 import {
   ArrowLeft,
@@ -10,6 +11,8 @@ import {
   ChevronDown,
   Compass,
   Dumbbell,
+  Download,
+  FileText,
   Flame,
   Footprints,
   Globe2,
@@ -37,6 +40,7 @@ import {
   Star,
   Target,
   Trophy,
+  UploadCloud,
   UserRound,
   Utensils,
   X,
@@ -69,6 +73,14 @@ type Completion = {
   challengeId: string
   note: string
   completedAt: string
+  attachments?: Attachment[]
+}
+
+type Attachment = {
+  pathname: string
+  name: string
+  contentType: string
+  size: number
 }
 
 type SaveState = {
@@ -95,6 +107,7 @@ const emptySave: SaveState = { activeIds: [], favoriteIds: [], completions: [] }
 const defaultSettings: AppSettings = { language: 'zh', font: 'noto' }
 
 const LanguageContext = createContext<Language>('zh')
+const AccessKeyContext = createContext('')
 
 function useLanguage() {
   const language = useContext(LanguageContext)
@@ -104,6 +117,10 @@ function useLanguage() {
     title: (challenge: Challenge) => language === 'zh' ? challenge.title : challenge.titleOriginal,
     category: (challenge: Challenge) => language === 'zh' ? challenge.category : challenge.categoryOriginal,
   }
+}
+
+function useAccessKey() {
+  return useContext(AccessKeyContext)
 }
 
 const tierLabels: Record<string, string> = { 轻松一胜: 'Quick Win', 支线任务: 'Side Quest', 进阶挑战: 'Advanced Challenge', 史诗任务: 'Epic Quest' }
@@ -190,6 +207,25 @@ const cadenceDescriptionsEn: Record<string, string> = {
   终身一次: 'This is a life-list achievement and can reward you only once.',
 }
 
+const attachmentTypes = new Set([
+  'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'application/pdf', 'text/plain', 'text/markdown', 'application/zip',
+  'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+])
+
+function getAttachmentContentType(file: File) {
+  if (file.type) return file.type
+  const extension = file.name.split('.').pop()?.toLowerCase()
+  return ({ md: 'text/markdown', txt: 'text/plain', pdf: 'application/pdf', zip: 'application/zip' } as Record<string, string>)[extension ?? ''] ?? ''
+}
+
+function formatFileSize(size: number) {
+  if (size < 1024) return `${size} B`
+  if (size < 1024 * 1024) return `${Math.round(size / 1024)} KB`
+  return `${(size / 1024 / 1024).toFixed(1)} MB`
+}
+
 function loadSave(): SaveState {
   try {
     const value = localStorage.getItem(STORAGE_KEY)
@@ -230,7 +266,7 @@ function App() {
   const [ready, setReady] = useState(false)
   const [bootstrapError, setBootstrapError] = useState('')
   const bootstrapStarted = useRef('')
-  const [accessKey, setAccessKey] = useState(() => import.meta.env.DEV ? 'local-dev' : localStorage.getItem(ACCESS_KEY_STORAGE) ?? '')
+  const [accessKey, setAccessKey] = useState(() => localStorage.getItem(ACCESS_KEY_STORAGE) ?? '')
   const [accessKeyDraft, setAccessKeyDraft] = useState('')
   const [accessError, setAccessError] = useState('')
   const [view, setView] = useState<View>('home')
@@ -370,7 +406,7 @@ function App() {
     }))
   }
 
-  function completeQuest() {
+  function completeQuest(attachments: Attachment[] = []) {
     if (!selected) return
     if (energy <= 0 || selected.level > level.level || getCooldownLabel(selected, save.completions, settings.language)) return
     const oldLevel = level.level
@@ -379,6 +415,7 @@ function App() {
       challengeId: selected.id,
       note: note.trim(),
       completedAt: new Date().toISOString(),
+      attachments,
     }
     const newLevel = getLevel(totalXp + selected.xp).level
     setSave((current) => ({
@@ -400,6 +437,14 @@ function App() {
 
   function undoCompletion() {
     if (!undoTarget) return
+    const attachmentPaths = undoTarget.completion.attachments?.map((item) => item.pathname) ?? []
+    if (attachmentPaths.length) {
+      void fetch('/api/attachments-delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessKey}` },
+        body: JSON.stringify({ pathnames: attachmentPaths }),
+      })
+    }
     setSave((current) => {
       const completions = current.completions.filter((item) => item.id !== undoTarget.completion.id)
       const remainingXp = completions.reduce((sum, item) => sum + (challengeMap.get(item.challengeId)?.xp ?? 0), 0)
@@ -537,6 +582,7 @@ function App() {
 
   return (
     <LanguageContext.Provider value={settings.language}>
+    <AccessKeyContext.Provider value={accessKey}>
     <div className="app-shell">
       <aside className={`sidebar ${mobileNav ? 'sidebar--open' : ''}`}>
         <div className="brand" onClick={() => navigate('home')} role="button" tabIndex={0}>
@@ -598,6 +644,7 @@ function App() {
         </div>
       )}
     </div>
+    </AccessKeyContext.Provider>
     </LanguageContext.Provider>
   )
 }
@@ -881,9 +928,64 @@ function ActivityItem({ challenge, completion, large, onOpen, onUndo }: { challe
   return (
     <article className={`activity-item ${large ? 'activity-item--large' : ''} ${onOpen ? 'activity-item--clickable' : ''}`} onClick={() => onOpen?.(challenge)}>
       <div className="activity-icon" style={{ color: meta.color }}><Icon size={20} /></div>
-      <div className="activity-copy"><span>{date.toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: large ? 'numeric' : undefined })}</span><h3>{title(challenge)}</h3>{completion.note && <p>“{completion.note}”</p>}<div className="quest-rewards"><span><Zap size={13} /> +{challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div></div>
+      <div className="activity-copy"><span>{date.toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: large ? 'numeric' : undefined })}</span><h3>{title(challenge)}</h3>{completion.note && <p>“{completion.note}”</p>}{Boolean(completion.attachments?.length) && <AttachmentList attachments={completion.attachments ?? []} />}<div className="quest-rewards"><span><Zap size={13} /> +{challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div></div>
       {large && (onOpen || onUndo) ? <div className="activity-actions">{onOpen && <button onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}>{text('查看任务', 'View quest')}</button>}{onUndo && <button className="undo-link" onClick={(event) => { event.stopPropagation(); onUndo() }}><RotateCcw size={14} /> {text('撤销', 'Undo')}</button>}</div> : <Check className="activity-check" size={18} />}
     </article>
+  )
+}
+
+function AttachmentList({ attachments }: { attachments: Attachment[] }) {
+  return <div className="attachment-list">{attachments.map((attachment) => <AttachmentItem key={attachment.pathname} attachment={attachment} />)}</div>
+}
+
+function AttachmentItem({ attachment }: { attachment: Attachment }) {
+  const { text } = useLanguage()
+  const accessKey = useAccessKey()
+  const [previewUrl, setPreviewUrl] = useState('')
+  const [loading, setLoading] = useState(attachment.contentType.startsWith('image/'))
+  const endpoint = `/api/attachment?pathname=${encodeURIComponent(attachment.pathname)}&name=${encodeURIComponent(attachment.name)}`
+
+  useEffect(() => {
+    if (!attachment.contentType.startsWith('image/')) return
+    let objectUrl = ''
+    let active = true
+    void fetch(endpoint, { headers: { Authorization: `Bearer ${accessKey}` } })
+      .then((response) => {
+        if (!response.ok) throw new Error('Unable to load attachment')
+        return response.blob()
+      })
+      .then((blob) => {
+        if (!active) return
+        objectUrl = URL.createObjectURL(blob)
+        setPreviewUrl(objectUrl)
+      })
+      .catch(() => {})
+      .finally(() => { if (active) setLoading(false) })
+    return () => {
+      active = false
+      if (objectUrl) URL.revokeObjectURL(objectUrl)
+    }
+  }, [accessKey, attachment.contentType, endpoint])
+
+  async function downloadAttachment(event: React.MouseEvent) {
+    event.stopPropagation()
+    const response = await fetch(endpoint, { headers: { Authorization: `Bearer ${accessKey}` } })
+    if (!response.ok) return
+    const blob = await response.blob()
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = attachment.name
+    anchor.click()
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000)
+  }
+
+  return (
+    <button className={`attachment-item ${attachment.contentType.startsWith('image/') ? 'attachment-item--image' : ''}`} onClick={downloadAttachment} title={text('下载附件', 'Download attachment')}>
+      {attachment.contentType.startsWith('image/') ? previewUrl ? <img src={previewUrl} alt={attachment.name} /> : <span className="attachment-placeholder">{loading ? <UploadCloud size={18} /> : <FileText size={18} />}</span> : <span className="attachment-placeholder"><FileText size={18} /></span>}
+      <span className="attachment-copy"><strong>{attachment.name}</strong><small>{formatFileSize(attachment.size)}</small></span>
+      <Download size={14} />
+    </button>
   )
 }
 
@@ -988,21 +1090,76 @@ function SettingsView({ settings, onChange }: { settings: AppSettings; onChange:
   )
 }
 
-function CompletionModal({ challenge, energy, note, onClose, onNote, onSubmit }: { challenge: Challenge; energy: number; note: string; onClose: () => void; onNote: (value: string) => void; onSubmit: () => void }) {
+function CompletionModal({ challenge, energy, note, onClose, onNote, onSubmit }: { challenge: Challenge; energy: number; note: string; onClose: () => void; onNote: (value: string) => void; onSubmit: (attachments: Attachment[]) => void }) {
   const { language, text, title } = useLanguage()
+  const accessKey = useAccessKey()
+  const [files, setFiles] = useState<File[]>([])
+  const [uploading, setUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [fileError, setFileError] = useState('')
   const meta = categoryMeta[challenge.category]
   const Icon = meta.icon
+
+  function selectFiles(selected: FileList | null) {
+    const next = Array.from(selected ?? []).slice(0, 3)
+    if (next.some((file) => file.size > 10 * 1024 * 1024)) return setFileError(text('单个附件不能超过 10MB。', 'Each attachment must be 10MB or smaller.'))
+    if (next.some((file) => !attachmentTypes.has(getAttachmentContentType(file)))) return setFileError(text('存在不支持的文件类型。', 'One or more file types are not supported.'))
+    setFileError('')
+    setFiles(next)
+  }
+
+  async function submitCompletion() {
+    if (energy <= 0 || uploading) return
+    setUploading(true)
+    setFileError('')
+    const attachments: Attachment[] = []
+    try {
+      for (let index = 0; index < files.length; index += 1) {
+        const file = files[index]
+        const safeName = file.name.replace(/[^\p{L}\p{N}._-]+/gu, '-').slice(-120)
+        const blob = await upload(`completions/${challenge.id}/${Date.now()}-${index}-${safeName}`, file, {
+          access: 'private',
+          handleUploadUrl: '/api/blob-upload',
+          headers: { Authorization: `Bearer ${accessKey}` },
+          clientPayload: JSON.stringify({ challengeId: challenge.id }),
+          contentType: getAttachmentContentType(file),
+          onUploadProgress: ({ percentage }) => setUploadProgress(Math.round(((index + percentage / 100) / files.length) * 100)),
+        })
+        attachments.push({ pathname: blob.pathname, name: file.name, contentType: getAttachmentContentType(file), size: file.size })
+      }
+      onSubmit(attachments)
+    } catch (error) {
+      console.error(error)
+      if (attachments.length) {
+        void fetch('/api/attachments-delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessKey}` },
+          body: JSON.stringify({ pathnames: attachments.map((item) => item.pathname) }),
+        })
+      }
+      setFileError(text('附件上传失败，请重试。', 'Attachment upload failed. Please try again.'))
+      setUploading(false)
+      setUploadProgress(0)
+    }
+  }
   return (
     <div className="modal-backdrop" role="presentation">
       <section className="completion-modal" role="dialog" aria-modal="true" aria-labelledby="completion-title">
-        <button className="modal-close" onClick={onClose} aria-label={text('关闭', 'Close')}><X /></button>
+        <button className="modal-close" disabled={uploading} onClick={onClose} aria-label={text('关闭', 'Close')}><X /></button>
         <div className="completion-badge" style={{ color: meta.color }}><Icon size={30} /></div>
         <p className="eyebrow">{text('领取真实奖励', 'Claim a real reward')}</p>
         <h2 id="completion-title">{text('你真的做到了吗？', 'Did you really do it?')}</h2>
         <h3>{title(challenge)}</h3>
         <label><span>{text('记录现实中的细节', 'Record the real-life details')} <small>{text('选填', 'optional')}</small></span><textarea autoFocus value={note} onChange={(event) => onNote(event.target.value)} placeholder={text('发生了什么？为什么这件事对你有意义？', 'What happened, and why did it matter?')} maxLength={280} /><small>{note.length}/280</small></label>
+        <div className="attachment-field">
+          <div><span>{text('图片或附件', 'Photos or attachments')} <small>{text('选填，最多 3 个', 'optional, up to 3')}</small></span><em>{text('支持图片、PDF、Office、文本和 ZIP，单个不超过 10MB。', 'Images, PDF, Office, text, and ZIP up to 10MB each.')}</em></div>
+          <label className="attachment-picker"><UploadCloud size={18} /><span>{text('选择文件', 'Choose files')}</span><input type="file" multiple accept="image/*,.pdf,.txt,.md,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip" onChange={(event) => selectFiles(event.target.files)} /></label>
+          {files.length > 0 && <div className="selected-files">{files.map((file) => <div key={`${file.name}-${file.size}`}><FileText size={14} /><span>{file.name}</span><small>{formatFileSize(file.size)}</small></div>)}</div>}
+          {uploading && <div className="upload-progress"><i style={{ width: `${uploadProgress}%` }} /><span>{text(`正在上传 ${uploadProgress}%`, `Uploading ${uploadProgress}%`)}</span></div>}
+          {fileError && <small className="attachment-error">{fileError}</small>}
+        </div>
         <div className="modal-reward"><div><Zap size={18} /> <strong>+{challenge.xp} {text('经验', 'XP')}</strong></div>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div>
-        <button className="primary-button claim-button" disabled={energy <= 0} onClick={onSubmit}><Check size={18} /> {energy > 0 ? text('确认完成', 'Confirm completion') : text('行动力不足', 'Not enough energy')}</button>
+        <button className="primary-button claim-button" disabled={energy <= 0 || uploading} onClick={submitCompletion}><Check size={18} /> {uploading ? text('正在上传附件…', 'Uploading attachments…') : energy > 0 ? text('确认完成', 'Confirm completion') : text('行动力不足', 'Not enough energy')}</button>
         <p className="honor-note"><ShieldCheck size={14} /> {text('荣誉规则：只有现实中真正完成，才能领取奖励。', 'Honor rule: only claim rewards for things you truly completed.')}</p>
       </section>
     </div>

@@ -11,6 +11,7 @@
 - 点击任务卡进入独立详情页，查看奖励、循环周期和完成历史
 - 每日、每周、每月、每年与终身成就冷却
 - 完成记录可撤销，并同步返还经验、属性、冷却和行动力
+- 完成任务时可上传图片或附件，私密文件保存在 Vercel Blob
 - 私人冒险日志与荣誉规则
 - 经验、等级、六项现实属性、连续天数与行动力
 - 私人访问密钥保护，云端进度保存在 Neon PostgreSQL
@@ -42,6 +43,6 @@ npm run dev
 npm run dev:cloud
 ```
 
-需要配置 `DATABASE_URL` 与 `PERSONAL_ACCESS_KEY`。
+需要配置 `DATABASE_URL`、`PERSONAL_ACCESS_KEY` 与 Vercel Blob 环境变量。
 
 生产模式先运行 `npm run build`，再运行 `npm start`。

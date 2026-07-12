@@ -17,7 +17,7 @@ const settingsRow = db.prepare('SELECT language, font FROM settings WHERE id = 1
 const save = {
   activeIds: stateRows.filter((item) => item.active).map((item) => item.challenge_id),
   favoriteIds: stateRows.filter((item) => item.favorite).map((item) => item.challenge_id),
-  completions: completionRows.map((item) => ({ id: item.id, challengeId: item.challenge_id, note: item.note, completedAt: item.completed_at })),
+  completions: completionRows.map((item) => ({ id: item.id, challengeId: item.challenge_id, note: item.note, completedAt: item.completed_at, attachments: [] })),
 }
 const settings = { language: settingsRow.language, font: settingsRow.font }
 
