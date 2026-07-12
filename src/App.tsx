@@ -524,7 +524,7 @@ function QuestRow({ active, challenge, completions, favorite, onComplete, onFavo
   const Icon = meta.icon
   const cooldown = getCooldownLabel(challenge, completions)
   return (
-    <article className="quest-row" style={{ '--category-color': meta.color } as React.CSSProperties}>
+    <article className={`quest-row ${active ? 'quest-row--active' : ''}`} style={{ '--category-color': meta.color } as React.CSSProperties}>
       <div className="category-icon"><Icon size={21} /></div>
       <div className="quest-row-copy"><span>{challenge.category} · {challenge.tierName}</span><h3>{challenge.title}</h3><div className="quest-rewards"><span><Zap size={13} /> {challenge.xp} 经验</span>{challenge.stats.map((stat) => <span key={stat.key}>{statLabels[stat.key]} +{stat.points}</span>)}<em>等级 {challenge.level}</em>{cooldown && <em className="cooldown-label">{cooldown}</em>}</div></div>
       <button className={`star-button ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)} aria-label="收藏任务"><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button>
