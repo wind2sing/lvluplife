@@ -27,6 +27,7 @@ import {
   Heart,
   History,
   House,
+  Info,
   Leaf,
   LibraryBig,
   ListChecks,
@@ -59,7 +60,7 @@ import {
 import './App.css'
 
 type StatKey = 'STR' | 'CUL' | 'ENV' | 'CHA' | 'TAL' | 'INT'
-type View = 'home' | 'character' | 'collection' | 'explore' | 'plans' | 'goals' | 'chronicle' | 'statistics' | 'settings'
+type View = 'home' | 'character' | 'collection' | 'explore' | 'plans' | 'goals' | 'chronicle' | 'statistics' | 'settings' | 'about'
 type Language = 'zh' | 'en'
 type FontChoice = 'noto' | 'zcool' | 'pixel' | 'system'
 type DailyEnergy = 'low' | 'normal' | 'high'
@@ -86,6 +87,7 @@ const viewPaths: Record<View, string> = {
   chronicle: '/chronicle',
   statistics: '/statistics',
   settings: '/settings',
+  about: '/about',
 }
 
 function readBrowserRoute(): { view: View; challengeId: string | null } {
@@ -99,6 +101,7 @@ function readBrowserRoute(): { view: View; challengeId: string | null } {
   if (path === '/chronicle') return { view: 'chronicle', challengeId: null }
   if (path === '/statistics') return { view: 'statistics', challengeId: null }
   if (path === '/settings') return { view: 'settings', challengeId: null }
+  if (path === '/about') return { view: 'about', challengeId: null }
   return { view: 'home', challengeId: null }
 }
 
@@ -118,7 +121,6 @@ type Challenge = {
   custom?: boolean
   description?: string
   completionPrompt?: string
-  estimatedMinutes?: number
   energyDemand?: DailyEnergy
   contexts?: string[]
   planId?: string
@@ -437,10 +439,6 @@ function stableHash(value: string) {
   return hash >>> 0
 }
 
-function getQuestEstimate(challenge: Challenge) {
-  return challenge.estimatedMinutes ?? [0, 20, 45, 90, 150][challenge.tier] ?? 45
-}
-
 function getQuestEnergy(challenge: Challenge): DailyEnergy {
   return challenge.energyDemand ?? (challenge.tier <= 1 ? 'low' : challenge.tier >= 4 ? 'high' : 'normal')
 }
@@ -602,7 +600,6 @@ function App() {
     const selectedIds = new Set<string>()
     return roles.flatMap((role) => {
       const ranked = dailyPool.filter((item) => !selectedIds.has(item.id)).map((challenge) => {
-        const estimate = getQuestEstimate(challenge)
         const demand = getQuestEnergy(challenge)
         let score = stableHash(`${dailyBoard.date}:${dailyBoard.reroll}:${role}:${challenge.id}`) % 31
         if (save.activeIds.includes(challenge.id)) score += 42
@@ -612,21 +609,21 @@ function App() {
         if (challenge.stats.some((stat) => lowestStats.has(stat.key))) score += role === 'growth' ? 45 : 14
         score -= recentCategories.filter((category) => category === challenge.category).length * 9
         score -= Math.abs(energyRank[demand] - energyRank[dailyBoard.energy]) * 30
-        if (role === 'quick') score += estimate <= (dailyBoard.energy === 'low' ? 30 : 45) ? 55 : -Math.min(50, estimate / 2)
+        if (role === 'quick') score += demand === 'low' ? 55 : challenge.tier === 1 ? 35 : -challenge.tier * 12
         if (role === 'growth') score += challenge.tier >= 2 && challenge.tier <= (dailyBoard.energy === 'high' ? 4 : 3) ? 34 : 0
         if (role === 'free') score += save.favoriteIds.includes(challenge.id) ? 24 : challenge.custom ? 18 : 0
-        return { challenge, score, estimate, demand }
+        return { challenge, score, demand }
       }).sort((a, b) => b.score - a.score)
       const picked = ranked[0]
       if (!picked) return []
       selectedIds.add(picked.challenge.id)
       const stat = picked.challenge.stats.find((item) => lowestStats.has(item.key))
       let reason = settings.language === 'zh'
-        ? `适合${dailyBoard.energy === 'low' ? '低' : dailyBoard.energy === 'high' ? '充沛' : '普通'}精力状态 · 预计 ${picked.estimate} 分钟`
-        : `Fits ${dailyBoard.energy} energy · about ${picked.estimate} min`
-      if (role === 'growth' && stat) reason = settings.language === 'zh' ? `补足最近较少提升的${statLabels[stat.key]}属性 · 预计 ${picked.estimate} 分钟` : `Builds your lower ${statLabelsEn[stat.key]} stat · about ${picked.estimate} min`
-      else if (save.favoriteIds.includes(picked.challenge.id)) reason = settings.language === 'zh' ? `你收藏的任务 · 预计 ${picked.estimate} 分钟` : `A saved quest · about ${picked.estimate} min`
-      else if (picked.challenge.custom) reason = settings.language === 'zh' ? `你的个人任务 · 预计 ${picked.estimate} 分钟` : `Your personal quest · about ${picked.estimate} min`
+        ? `适合${dailyBoard.energy === 'low' ? '低' : dailyBoard.energy === 'high' ? '充沛' : '普通'}精力状态`
+        : `Fits ${dailyBoard.energy} energy`
+      if (role === 'growth' && stat) reason = settings.language === 'zh' ? `补足最近较少提升的${statLabels[stat.key]}属性` : `Builds your lower ${statLabelsEn[stat.key]} stat`
+      else if (save.favoriteIds.includes(picked.challenge.id)) reason = settings.language === 'zh' ? '你收藏的任务' : 'A saved quest'
+      else if (picked.challenge.custom) reason = settings.language === 'zh' ? '你的个人任务' : 'Your personal quest'
       return [{ challenge: picked.challenge, role, reason }]
     })
   }, [challengeMap, dailyBoard.date, dailyBoard.energy, dailyBoard.reroll, dailyPool, save.activeIds, save.completions, save.favoriteIds, save.specialization, settings.language, stats])
@@ -731,7 +728,7 @@ function App() {
     const stepChallenges = input.steps.map((stepTitle, index): Challenge => {
       const categoryStats = CATEGORY_REWARD_STATS[input.category] ?? [input.stat, 'TAL']
       const secondaryStat = categoryStats.find((key) => key !== input.stat)
-      const reward = calculateReward({ level: level.level, estimatedMinutes: index === input.steps.length - 1 ? 60 : 30, energyDemand: index === input.steps.length - 1 ? 'high' : 'normal', cadence: '终身一次', primaryStat: input.stat, secondaryStat })
+      const reward = calculateReward({ level: level.level, tier: index === input.steps.length - 1 ? 3 : 2, energyDemand: index === input.steps.length - 1 ? 'high' : 'normal', cadence: '终身一次', primaryStat: input.stat, secondaryStat })
       return {
       id: `custom-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 7)}`,
       title: stepTitle, titleOriginal: stepTitle,
@@ -739,7 +736,7 @@ function App() {
       level: Math.min(30, level.level), tier: reward.tier, tierName: reward.tierName, xp: reward.xp,
       cadence: '终身一次', stats: reward.stats,
       source: 'custom', custom: true, description: `${input.title} · ${input.kind === 'chain' ? `第 ${index + 1} 步` : '项目子任务'}`,
-      completionPrompt: '记录这一步的成果或下一步行动。', estimatedMinutes: reward.estimatedMinutes, energyDemand: reward.energyDemand, contexts: [], planId, planOrder: index, rewardMode: 'auto',
+      completionPrompt: '记录这一步的成果或下一步行动。', energyDemand: reward.energyDemand, contexts: [], planId, planOrder: index, rewardMode: 'auto',
     } })
     const plan: QuestPlan = { id: planId, title: input.title, description: input.description, kind: input.kind, createdAt, stepIds: stepChallenges.map((item) => item.id) }
     setSave((current) => ({ ...current, plans: [plan, ...current.plans], customChallenges: [...stepChallenges, ...current.customChallenges] }))
@@ -957,6 +954,8 @@ function App() {
       return <SettingsView settings={settings} onChange={setSettings} />
     }
 
+    if (view === 'about') return <AboutView />
+
     return (
       <HomeView
         activeIds={save.activeIds}
@@ -1000,6 +999,7 @@ function App() {
           <NavButton active={view === 'chronicle'} icon={ScrollText} label={text('冒险日志', 'Chronicle')} onClick={() => navigate('chronicle')} />
           <NavButton active={view === 'statistics'} icon={BarChart3} label={text('成长统计', 'Statistics')} onClick={() => navigate('statistics')} />
           <NavButton active={view === 'settings'} icon={Settings} label={text('设置', 'Settings')} onClick={() => navigate('settings')} />
+          <NavButton active={view === 'about'} icon={Info} label={text('关于', 'About')} onClick={() => navigate('about')} />
         </nav>
         <div className="sidebar-spacer" />
         <button className="mini-profile" onClick={showCharacterPanel} title={text('查看角色面板', 'View character sheet')}>
@@ -1439,7 +1439,6 @@ function QuestDetailView({ active, allowCustomEditing, challenge, completions, f
             <span>{text('等级', 'Level')} {challenge.level}</span>
             {challenge.custom && <span><UserRound size={14} /> {text('个人任务', 'Personal quest')}</span>}
             {challenge.planId && <span><ListChecks size={14} /> {text('计划步骤', 'Plan step')}</span>}
-            {!locked && <span><Clock3 size={14} /> {getQuestEstimate(challenge)} {text('分钟', 'min')}</span>}
           </div>
         </div>
         <div className="detail-actions">
@@ -1463,7 +1462,6 @@ function QuestDetailView({ active, allowCustomEditing, challenge, completions, f
           <div className="detail-panel-heading"><ShieldCheck size={19} /><div><span>{text('完成标准', 'Completion standard')}</span><strong>{text('由你诚实判断', 'Your honest judgment')}</strong></div></div>
           <p>{challenge.completionPrompt || text('任务只在现实中真正发生后才应记录。你可以在完成时写下过程、结果或这件事对你的意义。', 'Record a quest only after it truly happens in real life. Add a note about the process, result, or why it mattered.')}</p>
           <div className="detail-rule-row"><span>{text('行动力消耗', 'Energy cost')}</span><strong>1</strong></div>
-          <div className="detail-rule-row"><span>{text('预计时长', 'Estimated time')}</span><strong>{getQuestEstimate(challenge)} {text('分钟', 'min')}</strong></div>
           <div className="detail-rule-row"><span>{text('所需精力', 'Energy demand')}</span><strong>{text(getQuestEnergy(challenge) === 'low' ? '低' : getQuestEnergy(challenge) === 'high' ? '高' : '普通', getQuestEnergy(challenge))}</strong></div>
           <div className="detail-rule-row"><span>{text('奖励模型', 'Reward model')}</span><strong>{challenge.rewardMode === 'manual' ? text('手动调整', 'Manual') : text('自动预算', 'Automatic')}</strong></div>
           <div className="detail-rule-row"><span>{text('历史完成', 'Times completed')}</span><strong>{history.length}</strong></div>
@@ -1637,7 +1635,7 @@ function StatisticsView({ items, stats }: { items: { completion: Completion; cha
   const since = new Date(); since.setHours(0, 0, 0, 0); since.setDate(since.getDate() - days + 1)
   const scoped = items.filter((item) => new Date(item.completion.completedAt) >= since)
   const xp = scoped.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).xp, 0)
-  const minutes = scoped.reduce((sum, item) => sum + getQuestEstimate(item.challenge), 0)
+  const statGain = scoped.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).stats.reduce((total, stat) => total + stat.points, 0), 0)
   const categories = Object.entries(scoped.reduce((result, item) => { result[item.challenge.category] = (result[item.challenge.category] ?? 0) + 1; return result }, {} as Record<string, number>)).sort((a, b) => b[1] - a[1]).slice(0, 8)
   const maxCategory = Math.max(1, ...categories.map(([, count]) => count))
   const hourGroups = [0, 0, 0, 0]
@@ -1657,7 +1655,7 @@ function StatisticsView({ items, stats }: { items: { completion: Completion; cha
     context.fillStyle = '#7f9185'; context.font = '28px sans-serif'; context.fillText('真实行动，真实成长。', 110, 1430)
     const anchor = document.createElement('a'); anchor.href = canvas.toDataURL('image/png'); anchor.download = `升级人生-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}.png`; anchor.click()
   }
-  return <><div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('个人统计', 'Personal statistics')}</p><h1>{text('看见长期积累的', 'See the shape of')}<em>{text('形状。', ' your growth.')}</em></h1><p>{text('全部计算只发生在你的私人存档中，不上传公共分析平台。', 'All calculations stay inside your private save.')}</p></div><div className="range-selector">{(['week', 'month', 'year'] as const).map((value) => <button key={value} className={range === value ? 'active' : ''} onClick={() => setRange(value)}>{text(value === 'week' ? '7 天' : value === 'month' ? '30 天' : '一年', value)}</button>)}</div></div><section className="statistics-summary"><div><Zap size={19} /><span>{text('经验', 'XP')}</span><strong>{xp}</strong></div><div><Check size={19} /><span>{text('完成', 'Done')}</span><strong>{scoped.length}</strong></div><div><Clock3 size={19} /><span>{text('预计投入', 'Estimated time')}</span><strong>{Math.round(minutes / 60)}h</strong></div><div><Flame size={19} /><span>{text('活跃日期', 'Active days')}</span><strong>{new Set(scoped.map((item) => item.completion.completedAt.slice(0, 10))).size}</strong></div></section><div className="statistics-grid"><section className="detail-panel"><div className="detail-panel-heading"><BarChart3 size={19} /><div><span>{text('分类热力图', 'Category map')}</span><strong>{text('时间投入方向', 'Where effort went')}</strong></div></div><div className="category-bars">{categories.length ? categories.map(([name, count]) => <div key={name}><span>{name}</span><i><b style={{ width: `${count / maxCategory * 100}%` }} /></i><strong>{count}</strong></div>) : <p>{text('这个周期还没有完成记录。', 'No completions in this period.')}</p>}</div></section><section className="detail-panel"><div className="detail-panel-heading"><Clock3 size={19} /><div><span>{text('行动时段', 'Time of day')}</span><strong>{text('你的现实节奏', 'Your real-life rhythm')}</strong></div></div><div className="hour-grid">{['深夜 0–6', '上午 6–12', '下午 12–18', '晚上 18–24'].map((label, index) => <div key={label}><i style={{ height: `${Math.max(8, hourGroups[index] / Math.max(1, ...hourGroups) * 100)}%` }} /><strong>{hourGroups[index]}</strong><span>{label}</span></div>)}</div></section></div><section className="monthly-cover-panel"><div><p className="eyebrow">{text('月度冒险封面', 'Monthly adventure cover')}</p><h2>{representative ? representative.challenge.title : text('本月仍在蓄力', 'Gathering strength this month')}</h2><p>{text(`本月完成 ${monthlyItems.length} 次行动。封面会选取经验最高的一项作为代表成就，并生成仅保存在本机的 PNG。`, `${monthlyItems.length} actions this month. Generate a private PNG keepsake.`)}</p><button className="primary-button" onClick={downloadCover}><Download size={17} /> {text('下载本月封面', 'Download monthly cover')}</button></div><StatRadar stats={stats} /></section></>
+  return <><div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('个人统计', 'Personal statistics')}</p><h1>{text('看见长期积累的', 'See the shape of')}<em>{text('形状。', ' your growth.')}</em></h1><p>{text('全部计算只发生在你的私人存档中，不上传公共分析平台。', 'All calculations stay inside your private save.')}</p></div><div className="range-selector">{(['week', 'month', 'year'] as const).map((value) => <button key={value} className={range === value ? 'active' : ''} onClick={() => setRange(value)}>{text(value === 'week' ? '7 天' : value === 'month' ? '30 天' : '一年', value)}</button>)}</div></div><section className="statistics-summary"><div><Zap size={19} /><span>{text('经验', 'XP')}</span><strong>{xp}</strong></div><div><Check size={19} /><span>{text('完成', 'Done')}</span><strong>{scoped.length}</strong></div><div><Sparkles size={19} /><span>{text('属性成长', 'Stat growth')}</span><strong>+{statGain}</strong></div><div><Flame size={19} /><span>{text('活跃日期', 'Active days')}</span><strong>{new Set(scoped.map((item) => item.completion.completedAt.slice(0, 10))).size}</strong></div></section><div className="statistics-grid"><section className="detail-panel"><div className="detail-panel-heading"><BarChart3 size={19} /><div><span>{text('分类热力图', 'Category map')}</span><strong>{text('现实行动分布', 'Action distribution')}</strong></div></div><div className="category-bars">{categories.length ? categories.map(([name, count]) => <div key={name}><span>{name}</span><i><b style={{ width: `${count / maxCategory * 100}%` }} /></i><strong>{count}</strong></div>) : <p>{text('这个周期还没有完成记录。', 'No completions in this period.')}</p>}</div></section><section className="detail-panel"><div className="detail-panel-heading"><Clock3 size={19} /><div><span>{text('行动时段', 'Time of day')}</span><strong>{text('你的现实节奏', 'Your real-life rhythm')}</strong></div></div><div className="hour-grid">{['深夜 0–6', '上午 6–12', '下午 12–18', '晚上 18–24'].map((label, index) => <div key={label}><i style={{ height: `${Math.max(8, hourGroups[index] / Math.max(1, ...hourGroups) * 100)}%` }} /><strong>{hourGroups[index]}</strong><span>{label}</span></div>)}</div></section></div><section className="monthly-cover-panel"><div><p className="eyebrow">{text('月度冒险封面', 'Monthly adventure cover')}</p><h2>{representative ? representative.challenge.title : text('本月仍在蓄力', 'Gathering strength this month')}</h2><p>{text(`本月完成 ${monthlyItems.length} 次行动。封面会选取经验最高的一项作为代表成就，并生成仅保存在本机的 PNG。`, `${monthlyItems.length} actions this month. Generate a private PNG keepsake.`)}</p><button className="primary-button" onClick={downloadCover}><Download size={17} /> {text('下载本月封面', 'Download monthly cover')}</button></div><StatRadar stats={stats} /></section></>
 }
 
 function SettingsView({ settings, onChange }: { settings: AppSettings; onChange: (settings: AppSettings) => void }) {
@@ -1700,6 +1698,29 @@ function SettingsView({ settings, onChange }: { settings: AppSettings; onChange:
   )
 }
 
+function AboutView() {
+  const { text } = useLanguage()
+  return (
+    <>
+      <div className="page-heading about-heading"><p className="eyebrow">{text('关于升级人生', 'About LvlUpLife')}</p><h1>{text('把现实生活当作', 'Treat real life as')}<em>{text('真正的冒险。', ' the real adventure.')}</em></h1><p>{text('这是一个为个人使用设计的开源生活游戏：它不替你判断人生，只负责把真实行动留下的成长清楚地呈现出来。', 'An open-source life game for personal use. It does not judge your life; it makes the growth behind real actions visible.')}</p></div>
+      <section className="about-principles">
+        <div><ShieldCheck size={23} /><strong>{text('诚实记录', 'Honest records')}</strong><p>{text('只有现实中真正发生的行动才算完成。备注和附件是留给未来自己的证据，不是表演。', 'Only actions that truly happened count. Notes and attachments are evidence for your future self.')}</p></div>
+        <div><UserRound size={23} /><strong>{text('单人、私人', 'Solo and private')}</strong><p>{text('没有排行榜、社交压力、抽卡或付费数值。你的存档只服务于你自己的成长。', 'No leaderboards, social pressure, loot boxes, or paid power. Your save exists for your growth.')}</p></div>
+        <div><RotateCcw size={23} /><strong>{text('允许反复与回头', 'Room to return')}</strong><p>{text('任务可以循环、取消接取、撤销完成或暂时封印。离开一段时间后回来，也仍然算冒险。', 'Quests can repeat, be abandoned, undone, or sealed. Returning after time away still counts.')}</p></div>
+      </section>
+      <div className="about-grid">
+        <section className="about-card"><div className="about-card-heading"><Zap size={21} /><div><span>01</span><h2>{text('经验、等级与迷雾', 'XP, levels, and fog')}</h2></div></div><p>{text('完成任务会获得固定经验。等级提升后，任务公会中更高等级的成就才会从迷雾中显现；迷雾任务无法提前查看。撤销完成会扣回对应经验。', 'Completing quests grants fixed XP. Higher-level achievements emerge from fog as you level up, and undoing a completion removes its XP.')}</p></section>
+        <section className="about-card"><div className="about-card-heading"><Sparkles size={21} /><div><span>02</span><h2>{text('六项现实属性', 'Six real-life stats')}</h2></div></div><p>{text('力量代表身体与执行，文化代表审美与人文，环境代表空间与自然，魅力代表连接与影响，才能代表创造与技巧，智慧代表学习与判断。属性只描述成长方向，不评价人的价值。', 'Strength, Culture, Environment, Charisma, Talent, and Intelligence describe directions of growth, never a person’s worth.')}</p></section>
+        <section className="about-card"><div className="about-card-heading"><Heart size={21} /><div><span>03</span><h2>{text('行动力与推荐', 'Energy and recommendations')}</h2></div></div><p>{text('行动力是防止短时间集中刷取奖励的节奏限制，不是生命值，也不会惩罚你。每日冒险板会结合当前精力、属性短板、收藏和已接任务给出建议。', 'Energy prevents reward grinding in a short burst. It is not health and never punishes you. Daily recommendations consider your energy, lower stats, saved quests, and active quests.')}</p></section>
+        <section className="about-card"><div className="about-card-heading"><Target size={21} /><div><span>04</span><h2>{text('自定义任务奖励', 'Custom quest rewards')}</h2></div></div><p>{text('自动奖励根据任务等级、所需精力、重复周期、分类和主要属性计算，不再假设任务需要多少分钟。你也可以切换到手动模式调整稀有度、经验和属性点。', 'Automatic rewards use level, energy demand, cadence, category, and primary stat without guessing duration. Manual reward tuning remains available.')}</p></section>
+        <section className="about-card"><div className="about-card-heading"><Gem size={21} /><div><span>05</span><h2>{text('私人收藏馆', 'Private collection')}</h2></div></div><p>{text('称号、徽章、头像框、营地主题和纪念物由真实完成记录解锁。收藏进度来自完成次数、日期、属性、附件和任务链，并可以在设置中整体关闭。', 'Titles, badges, frames, themes, and keepsakes unlock from real completions, dates, stats, attachments, and plans, and can be disabled in Settings.')}</p></section>
+        <section className="about-card"><div className="about-card-heading"><FileText size={21} /><div><span>06</span><h2>{text('数据与附件', 'Data and attachments')}</h2></div></div><p>{text('正式版本使用 Neon PostgreSQL 保存进度，Vercel Blob 保存完成附件；本地开发使用 SQLite。访问密钥用于保护单人存档，请不要把它公开。', 'Production uses Neon PostgreSQL for progress and Vercel Blob for attachments; local development uses SQLite. Keep the save access key private.')}</p></section>
+      </div>
+      <section className="about-sources"><div><p className="eyebrow">{text('项目来源', 'Project sources')}</p><h2>{text('站在旧版 LvlUpLife 的肩膀上', 'Built on the legacy of LvlUpLife')}</h2><p>{text('挑战列表来自原项目的公开备份，界面与玩法参考了原站存档，并在此基础上重新设计为现代、中文优先、单人可持续使用的版本。原项目名称、内容和资料归各自权利人所有。', 'The challenge list comes from a public backup of the original project. The interface and mechanics were rebuilt as a modern, Chinese-first, sustainable solo experience. Original names and materials remain with their respective owners.')}</p></div><div className="about-links"><a href="https://github.com/wind2sing/lvluplife" target="_blank" rel="noreferrer"><Globe2 size={16} /> GitHub</a><a href="https://docs.google.com/document/d/1ji2-rvl26vksrx874wFnt8Ixs-zXcBKL/edit" target="_blank" rel="noreferrer"><FileText size={16} /> {text('挑战列表备份', 'Challenge backup')}</a><a href="https://web.archive.org/web/20170604105300/http://lvluplife.com/" target="_blank" rel="noreferrer"><History size={16} /> Wayback Machine</a></div></section>
+    </>
+  )
+}
+
 const suggestedContexts = ['在家', '户外', '电脑', '通勤', '跑腿', '社交', '安静环境']
 
 function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challenge: Challenge | null; currentLevel: number; onClose: () => void; onSave: (challenge: Challenge) => void }) {
@@ -1715,13 +1736,12 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
   const [rewardMode, setRewardMode] = useState<'auto' | 'manual'>(challenge ? challenge.rewardMode ?? 'manual' : 'auto')
   const [cadence, setCadence] = useState(challenge?.cadence ?? '终身一次')
   const [completionPrompt, setCompletionPrompt] = useState(challenge?.completionPrompt ?? '')
-  const [estimatedMinutes, setEstimatedMinutes] = useState(challenge?.estimatedMinutes ?? 30)
   const [energyDemand, setEnergyDemand] = useState<DailyEnergy>(challenge?.energyDemand ?? 'normal')
   const [contexts, setContexts] = useState<string[]>(challenge?.contexts ?? [])
   const [error, setError] = useState('')
   const categoryStats = CATEGORY_REWARD_STATS[categoryValue] ?? ['INT', 'TAL']
   const secondaryStat = categoryStats.find((key) => key !== statKey)
-  const autoReward = useMemo(() => calculateReward({ level: levelValue, estimatedMinutes, energyDemand, cadence, primaryStat: statKey, secondaryStat }), [cadence, energyDemand, estimatedMinutes, levelValue, secondaryStat, statKey])
+  const autoReward = useMemo(() => calculateReward({ level: levelValue, energyDemand, cadence, primaryStat: statKey, secondaryStat }), [cadence, energyDemand, levelValue, secondaryStat, statKey])
 
   function toggleContext(value: string) {
     setContexts((current) => current.includes(value) ? current.filter((item) => item !== value) : current.length < 8 ? [...current, value] : current)
@@ -1735,7 +1755,7 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
     const cleanPoints = Math.min(Math.max(cleanLevel * 3, tierValue * 3), Math.max(1, Math.round(statPoints)))
     const tierNames = ['', '轻松一胜', '支线任务', '进阶挑战', '史诗任务']
     const meta = categoryMeta[categoryValue]
-    const reward = rewardMode === 'auto' ? autoReward : { tier: Math.min(4, Math.max(1, Math.round(tierValue))), tierName: tierNames[Math.min(4, Math.max(1, Math.round(tierValue)))], xp: Math.min(1500, Math.max(25, Math.round(xp))), stats: [{ key: statKey, points: cleanPoints }], estimatedMinutes: Math.min(1440, Math.max(5, Math.round(estimatedMinutes))), energyDemand }
+    const reward = rewardMode === 'auto' ? autoReward : { tier: Math.min(4, Math.max(1, Math.round(tierValue))), tierName: tierNames[Math.min(4, Math.max(1, Math.round(tierValue)))], xp: Math.min(1500, Math.max(25, Math.round(xp))), stats: [{ key: statKey, points: cleanPoints }], energyDemand }
     onSave({
       id: challenge?.id ?? `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       title: cleanTitle.slice(0, 120),
@@ -1752,7 +1772,6 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
       custom: true,
       description: description.trim().slice(0, 600),
       completionPrompt: completionPrompt.trim().slice(0, 180),
-      estimatedMinutes: reward.estimatedMinutes,
       energyDemand: reward.energyDemand,
       contexts,
       planId: challenge?.planId,
@@ -1773,10 +1792,9 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
           <label><span>{text('分类', 'Category')}</span><select value={categoryValue} onChange={(event) => { const value = event.target.value; setCategoryValue(value); setStatKey(CATEGORY_REWARD_STATS[value]?.[0] ?? 'INT') }}>{Object.keys(categoryMeta).map((item) => <option key={item}>{item}</option>)}</select></label>
           <label><span>{text('重复周期', 'Cadence')}</span><select value={cadence} onChange={(event) => setCadence(event.target.value)}>{Object.keys(cadenceDays).map((item) => <option key={item}>{item}</option>)}</select></label>
           <label><span>{text('主要属性', 'Primary stat')}</span><select value={statKey} onChange={(event) => setStatKey(event.target.value as StatKey)}>{(Object.keys(statLabels) as StatKey[]).map((key) => <option key={key} value={key}>{statLabels[key]}</option>)}</select></label>
-          <label><span>{text('预计时长（分钟）', 'Estimated minutes')}</span><input type="number" min="5" max="1440" step="5" value={estimatedMinutes} onChange={(event) => setEstimatedMinutes(Number(event.target.value))} /></label>
           <fieldset className="field-wide"><legend>{text('所需精力', 'Energy demand')}</legend><div className="form-segmented">{(['low', 'normal', 'high'] as DailyEnergy[]).map((value) => <button type="button" key={value} className={energyDemand === value ? 'active' : ''} onClick={() => setEnergyDemand(value)}>{text(value === 'low' ? '低精力' : value === 'high' ? '高精力' : '普通', value)}</button>)}</div></fieldset>
           <fieldset className="field-wide"><legend>{text('奖励计算方式', 'Reward calculation')}</legend><div className="form-segmented"><button type="button" className={rewardMode === 'auto' ? 'active' : ''} onClick={() => setRewardMode('auto')}>{text('自动计算（推荐）', 'Automatic')}</button><button type="button" className={rewardMode === 'manual' ? 'active' : ''} onClick={() => setRewardMode('manual')}>{text('手动调整', 'Manual')}</button></div></fieldset>
-          {rewardMode === 'auto' ? <div className="reward-calculator field-wide"><div><span>{text('自动稀有度', 'Tier')}</span><strong>{autoReward.tierName}</strong></div><div><span>{text('经验奖励', 'XP')}</span><strong>+{autoReward.xp}</strong></div>{autoReward.stats.map((stat) => <div key={stat.key}><span>{statLabels[stat.key]}</span><strong>+{stat.points}</strong></div>)}<p><Sparkles size={14} /> {text(`根据 ${estimatedMinutes} 分钟、${energyDemand === 'low' ? '低' : energyDemand === 'high' ? '高' : '普通'}精力、${cadence}和当前等级 ${levelValue} 自动计算。`, 'Calculated from time, energy, cadence, and level.')}</p></div> : <><label><span>{text('建议等级', 'Level')}</span><input type="number" min="1" max="30" value={levelValue} onChange={(event) => setLevelValue(Number(event.target.value))} /></label><label><span>{text('任务稀有度', 'Tier')}</span><select value={tierValue} onChange={(event) => setTierValue(Number(event.target.value))}><option value="1">1 · 轻松一胜</option><option value="2">2 · 支线任务</option><option value="3">3 · 进阶挑战</option><option value="4">4 · 史诗任务</option></select></label><label><span>{text('经验奖励', 'XP reward')}</span><input type="number" min="25" max="1500" step="5" value={xp} onChange={(event) => setXp(Number(event.target.value))} /></label><label><span>{text('属性点', 'Stat points')}</span><input type="number" min="1" max={Math.max(3, levelValue * 3, tierValue * 3)} value={statPoints} onChange={(event) => setStatPoints(Number(event.target.value))} /></label></>}
+          {rewardMode === 'auto' ? <div className="reward-calculator field-wide"><div><span>{text('自动稀有度', 'Tier')}</span><strong>{autoReward.tierName}</strong></div><div><span>{text('经验奖励', 'XP')}</span><strong>+{autoReward.xp}</strong></div>{autoReward.stats.map((stat) => <div key={stat.key}><span>{statLabels[stat.key]}</span><strong>+{stat.points}</strong></div>)}<p><Sparkles size={14} /> {text(`根据${energyDemand === 'low' ? '低' : energyDemand === 'high' ? '高' : '普通'}精力、${cadence}、主要属性和当前等级 ${levelValue} 自动计算。`, 'Calculated from energy, cadence, primary stat, and level.')}</p></div> : <><label><span>{text('建议等级', 'Level')}</span><input type="number" min="1" max="30" value={levelValue} onChange={(event) => setLevelValue(Number(event.target.value))} /></label><label><span>{text('任务稀有度', 'Tier')}</span><select value={tierValue} onChange={(event) => setTierValue(Number(event.target.value))}><option value="1">1 · 轻松一胜</option><option value="2">2 · 支线任务</option><option value="3">3 · 进阶挑战</option><option value="4">4 · 史诗任务</option></select></label><label><span>{text('经验奖励', 'XP reward')}</span><input type="number" min="25" max="1500" step="5" value={xp} onChange={(event) => setXp(Number(event.target.value))} /></label><label><span>{text('属性点', 'Stat points')}</span><input type="number" min="1" max={Math.max(3, levelValue * 3, tierValue * 3)} value={statPoints} onChange={(event) => setStatPoints(Number(event.target.value))} /></label></>}
           <fieldset className="field-wide"><legend>{text('适用情境', 'Contexts')}</legend><div className="context-picker">{suggestedContexts.map((item) => <button type="button" key={item} className={contexts.includes(item) ? 'active' : ''} onClick={() => toggleContext(item)}>{item}</button>)}</div></fieldset>
           <label className="field-wide"><span>{text('完成记录提示', 'Completion prompt')}</span><input value={completionPrompt} maxLength={180} onChange={(event) => setCompletionPrompt(event.target.value)} placeholder={text('例如：上传结果照片，或写下三点复盘', 'e.g. Upload a photo or write three reflections')} /></label>
         </div>

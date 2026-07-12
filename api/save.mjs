@@ -17,13 +17,12 @@ function normalizeCustomChallenge(item) {
   })) : []
   const category = String(item.category ?? '学习与成长').slice(0, 60)
   const cadence = cadences.has(item.cadence) ? item.cadence : '终身一次'
-  const estimatedMinutes = Math.min(1440, Math.max(5, Math.round(Number(item.estimatedMinutes) || 30)))
   const energyDemand = energyLevels.has(item.energyDemand) ? item.energyDemand : 'normal'
   const rewardMode = item.rewardMode === 'auto' ? 'auto' : 'manual'
   const categoryStats = CATEGORY_REWARD_STATS[category] ?? ['INT', 'TAL']
   const primaryStat = stats[0]?.key ?? categoryStats[0]
   const secondaryStat = categoryStats.find((key) => key !== primaryStat)
-  const automaticReward = calculateReward({ level, estimatedMinutes, energyDemand, cadence, primaryStat, secondaryStat })
+  const automaticReward = calculateReward({ level, energyDemand, cadence, primaryStat, secondaryStat })
   const reward = rewardMode === 'auto' ? automaticReward : { tier, tierName: String(item.tierName ?? '支线任务').slice(0, 30), xp: Math.min(1500, Math.max(25, Math.round(Number(item.xp) || 70))), stats: stats.length ? stats : [{ key: 'INT', points: Math.min(Math.max(level * 3, tier * 3), 2) }] }
   return {
     id: item.id.slice(0, 120),
@@ -41,7 +40,6 @@ function normalizeCustomChallenge(item) {
     custom: true,
     description: String(item.description ?? '').slice(0, 600),
     completionPrompt: String(item.completionPrompt ?? '').slice(0, 180),
-    estimatedMinutes,
     energyDemand,
     contexts: Array.isArray(item.contexts) ? item.contexts.filter((context) => typeof context === 'string').slice(0, 8).map((context) => context.slice(0, 30)) : [],
     planId: typeof item.planId === 'string' && item.planId.startsWith('plan-') ? item.planId.slice(0, 120) : undefined,

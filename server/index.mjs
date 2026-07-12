@@ -138,7 +138,7 @@ function getBootstrap() {
   })
   const settings = selectSettings.get()
   const customChallenges = selectCustomChallenges.all().flatMap((item) => {
-    try { return [JSON.parse(item.custom_json)] } catch { return [] }
+    try { const challenge = JSON.parse(item.custom_json); delete challenge.estimatedMinutes; return [challenge] } catch { return [] }
   })
   let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
   try { dailyBoard = { ...dailyBoard, ...JSON.parse(selectDailyBoard.get()?.value ?? '{}') } } catch {}
@@ -192,11 +192,13 @@ function replaceSave(save) {
     db.exec('DELETE FROM quest_state; DELETE FROM completions;')
     deleteCustomChallenges.run()
     for (const item of customChallenges) {
+      const normalizedItem = { ...item }
+      delete normalizedItem.estimatedMinutes
       insertCustomChallenge.run(
-        item.id, String(item.title ?? ''), String(item.titleOriginal ?? item.title ?? ''),
-        String(item.category ?? '学习与成长'), String(item.categoryOriginal ?? 'Custom'),
-        Number(item.level) || 1, Number(item.tier) || 1, String(item.tierName ?? '支线任务'),
-        Number(item.xp) || 70, String(item.cadence ?? '终身一次'), JSON.stringify(item.stats ?? []), JSON.stringify(item),
+        normalizedItem.id, String(normalizedItem.title ?? ''), String(normalizedItem.titleOriginal ?? normalizedItem.title ?? ''),
+        String(normalizedItem.category ?? '学习与成长'), String(normalizedItem.categoryOriginal ?? 'Custom'),
+        Number(normalizedItem.level) || 1, Number(normalizedItem.tier) || 1, String(normalizedItem.tierName ?? '支线任务'),
+        Number(normalizedItem.xp) || 70, String(normalizedItem.cadence ?? '终身一次'), JSON.stringify(normalizedItem.stats ?? []), JSON.stringify(normalizedItem),
       )
     }
     for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)

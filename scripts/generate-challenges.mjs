@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'node:fs'
-import { calculateReward, inferQuestConditions } from '../shared/reward-rules.mjs'
+import { calculateReward, inferQuestEnergy } from '../shared/reward-rules.mjs'
 
 const sourcePath = new URL('../data/original-challenges.txt', import.meta.url)
 const outputPath = new URL('../src/data/challenges.json', import.meta.url)
@@ -84,8 +84,8 @@ for (const [category, items] of categoryItems) {
     const projectedLevel = Math.ceil((index + 1) / divisor) + (config.seed[4] - Math.ceil(5 / divisor))
     const level = index < config.seed.length ? config.seed[index] : Math.max(config.seed[4], projectedLevel)
     const cadence = getCadence(title, category, tier)
-    const conditions = inferQuestConditions(tier)
-    const reward = calculateReward({ level, tier, cadence, ...conditions, primaryStat: config.stats[0], secondaryStat: config.stats[1] })
+    const energyDemand = inferQuestEnergy(tier)
+    const reward = calculateReward({ level, tier, cadence, energyDemand, primaryStat: config.stats[0], secondaryStat: config.stats[1] })
     const id = `${slugify(category)}-${String(index + 1).padStart(3, '0')}`
 
     challenges.push({
@@ -100,7 +100,6 @@ for (const [category, items] of categoryItems) {
       xp: reward.xp,
       cadence,
       stats: reward.stats,
-      estimatedMinutes: reward.estimatedMinutes,
       energyDemand: reward.energyDemand,
       source: 'LvlUpLife 挑战列表备份',
     })

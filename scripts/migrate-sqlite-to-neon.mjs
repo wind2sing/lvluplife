@@ -18,7 +18,7 @@ const completionRows = db.prepare(`SELECT id, challenge_id, note, completed_at, 
 const settingsColumns = db.prepare('PRAGMA table_info(settings)').all().map((item) => item.name)
 const settingsRow = db.prepare(`SELECT language, font, ${settingsColumns.includes('custom_features') ? 'custom_features' : '1 AS custom_features'}, ${settingsColumns.includes('hide_personal_content') ? 'hide_personal_content' : '1 AS hide_personal_content'}, ${settingsColumns.includes('collection_features') ? 'collection_features' : '1 AS collection_features'} FROM settings WHERE id = 1`).get() ?? { language: 'zh', font: 'noto', custom_features: 1, hide_personal_content: 1, collection_features: 1 }
 const customChallenges = hasCustomJson ? db.prepare("SELECT custom_json FROM challenges WHERE source = 'custom' AND custom_json IS NOT NULL").all().flatMap((item) => {
-  try { return [JSON.parse(item.custom_json)] } catch { return [] }
+  try { const challenge = JSON.parse(item.custom_json); delete challenge.estimatedMinutes; return [challenge] } catch { return [] }
 }) : []
 let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
 try { dailyBoard = { ...dailyBoard, ...JSON.parse(db.prepare("SELECT value FROM app_meta WHERE key = 'daily_board'").get()?.value ?? '{}') } } catch {}
