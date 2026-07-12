@@ -1,4 +1,5 @@
 import { authorize, ensureSchema, methodNotAllowed, readBody } from './_shared.mjs'
+import { calculateReward, CATEGORY_REWARD_STATS } from '../shared/reward-rules.mjs'
 
 const statKeys = new Set(['STR', 'CUL', 'ENV', 'CHA', 'TAL', 'INT'])
 const cadences = new Set(['每日', '每周', '每月', '每年', '终身一次'])
@@ -12,29 +13,40 @@ function normalizeCustomChallenge(item) {
   const tier = Math.min(4, Math.max(1, Math.round(Number(item.tier) || 1)))
   const stats = Array.isArray(item.stats) ? item.stats.filter((stat) => stat && statKeys.has(stat.key)).slice(0, 3).map((stat) => ({
     key: stat.key,
-    points: Math.min(level * 3, Math.max(1, Math.round(Number(stat.points) || 1))),
+    points: Math.min(Math.max(level * 3, tier * 3), Math.max(1, Math.round(Number(stat.points) || 1))),
   })) : []
+  const category = String(item.category ?? '学习与成长').slice(0, 60)
+  const cadence = cadences.has(item.cadence) ? item.cadence : '终身一次'
+  const estimatedMinutes = Math.min(1440, Math.max(5, Math.round(Number(item.estimatedMinutes) || 30)))
+  const energyDemand = energyLevels.has(item.energyDemand) ? item.energyDemand : 'normal'
+  const rewardMode = item.rewardMode === 'auto' ? 'auto' : 'manual'
+  const categoryStats = CATEGORY_REWARD_STATS[category] ?? ['INT', 'TAL']
+  const primaryStat = stats[0]?.key ?? categoryStats[0]
+  const secondaryStat = categoryStats.find((key) => key !== primaryStat)
+  const automaticReward = calculateReward({ level, estimatedMinutes, energyDemand, cadence, primaryStat, secondaryStat })
+  const reward = rewardMode === 'auto' ? automaticReward : { tier, tierName: String(item.tierName ?? '支线任务').slice(0, 30), xp: Math.min(1500, Math.max(25, Math.round(Number(item.xp) || 70))), stats: stats.length ? stats : [{ key: 'INT', points: Math.min(Math.max(level * 3, tier * 3), 2) }] }
   return {
     id: item.id.slice(0, 120),
     title,
     titleOriginal: String(item.titleOriginal ?? title).slice(0, 120),
-    category: String(item.category ?? '学习与成长').slice(0, 60),
+    category,
     categoryOriginal: String(item.categoryOriginal ?? 'Custom').slice(0, 60),
     level,
-    tier,
-    tierName: String(item.tierName ?? '支线任务').slice(0, 30),
-    xp: Math.min(1500, Math.max(25, Math.round(Number(item.xp) || 70))),
-    cadence: cadences.has(item.cadence) ? item.cadence : '终身一次',
-    stats: stats.length ? stats : [{ key: 'INT', points: Math.min(level * 3, 2) }],
+    tier: reward.tier,
+    tierName: reward.tierName,
+    xp: reward.xp,
+    cadence,
+    stats: reward.stats,
     source: 'custom',
     custom: true,
     description: String(item.description ?? '').slice(0, 600),
     completionPrompt: String(item.completionPrompt ?? '').slice(0, 180),
-    estimatedMinutes: Math.min(1440, Math.max(5, Math.round(Number(item.estimatedMinutes) || 30))),
-    energyDemand: energyLevels.has(item.energyDemand) ? item.energyDemand : 'normal',
+    estimatedMinutes,
+    energyDemand,
     contexts: Array.isArray(item.contexts) ? item.contexts.filter((context) => typeof context === 'string').slice(0, 8).map((context) => context.slice(0, 30)) : [],
     planId: typeof item.planId === 'string' && item.planId.startsWith('plan-') ? item.planId.slice(0, 120) : undefined,
     planOrder: Number.isFinite(item.planOrder) ? Math.max(0, Math.round(item.planOrder)) : undefined,
+    rewardMode,
   }
 }
 
@@ -71,6 +83,10 @@ function normalizeSave(value) {
       challengeId: item.challengeId,
       note: String(item.note ?? '').slice(0, 280),
       completedAt: item.completedAt,
+      reward: item.reward && Number.isFinite(item.reward.xp) ? {
+        xp: Math.min(1500, Math.max(0, Math.round(item.reward.xp))),
+        stats: Array.isArray(item.reward.stats) ? item.reward.stats.filter((stat) => stat && statKeys.has(stat.key)).slice(0, 3).map((stat) => ({ key: stat.key, points: Math.min(30, Math.max(0, Math.round(Number(stat.points) || 0))) })) : [],
+      } : undefined,
       attachments: Array.isArray(item.attachments) ? item.attachments.filter((attachment) => attachment && typeof attachment.pathname === 'string' && attachment.pathname.startsWith('completions/')).slice(0, 3).map((attachment) => ({
         pathname: attachment.pathname,
         name: String(attachment.name ?? 'attachment').slice(0, 180),

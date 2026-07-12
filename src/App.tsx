@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { upload } from '@vercel/blob/client'
 import type { LucideIcon } from 'lucide-react'
+import { calculateReward, CATEGORY_REWARD_STATS } from '../shared/reward-rules.mjs'
 import {
   ArrowLeft,
   ArrowRight,
@@ -116,6 +117,7 @@ type Challenge = {
   contexts?: string[]
   planId?: string
   planOrder?: number
+  rewardMode?: 'auto' | 'manual'
 }
 
 type QuestPlan = {
@@ -133,6 +135,7 @@ type Completion = {
   note: string
   completedAt: string
   attachments?: Attachment[]
+  reward?: { xp: number; stats: { key: StatKey; points: number }[] }
 }
 
 type Attachment = {
@@ -299,6 +302,21 @@ function formatFileSize(size: number) {
   return `${(size / 1024 / 1024).toFixed(1)} MB`
 }
 
+function getEarnedReward(completion: Completion, challenge: Challenge) {
+  return completion.reward ?? { xp: challenge.xp, stats: challenge.stats }
+}
+
+function getLegacyReward(challenge: Challenge) {
+  if (challenge.custom) return { xp: challenge.xp, stats: challenge.stats }
+  const index = Math.max(0, Number(challenge.id.match(/-(\d+)$/)?.[1] ?? 1) - 1)
+  const baseXp = [0, 70, 125, 250, 650][challenge.tier]
+  const points = challenge.tier * 2 + (index % 3)
+  return {
+    xp: baseXp + (index % 4) * (challenge.tier === 1 ? 5 : challenge.tier * 10),
+    stats: challenge.stats.map((stat, statIndex) => ({ key: stat.key, points: statIndex === 0 ? points : Math.max(1, points - 2) })),
+  }
+}
+
 function loadSave(): SaveState {
   try {
     const value = localStorage.getItem(STORAGE_KEY)
@@ -400,6 +418,8 @@ function App() {
           })
           if (!migration.ok) throw new Error('旧进度迁移失败')
         }
+        const bootstrapChallengeMap = new Map([...data.challenges, ...initialSave.customChallenges].map((item) => [item.id, item]))
+        initialSave = { ...initialSave, completions: initialSave.completions.map((completion) => completion.reward ? completion : { ...completion, reward: bootstrapChallengeMap.has(completion.challengeId) ? getLegacyReward(bootstrapChallengeMap.get(completion.challengeId)!) : undefined }) }
         localStorage.removeItem(STORAGE_KEY)
         setChallenges(data.challenges)
         setSave(initialSave)
@@ -461,7 +481,7 @@ function App() {
     .map((completion) => ({ completion, challenge: challengeMap.get(completion.challengeId) }))
     .filter((item): item is { completion: Completion; challenge: Challenge } => Boolean(item.challenge))
 
-  const totalXp = completedChallenges.reduce((sum, item) => sum + item.challenge.xp, 0)
+  const totalXp = completedChallenges.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).xp, 0)
   const level = getLevel(totalXp)
   const streak = getStreak(save.completions)
   const maxEnergy = Math.min(8, 3 + Math.floor((level.level - 1) / 5))
@@ -469,7 +489,7 @@ function App() {
   const energy = Math.max(0, maxEnergy - recentCompletions)
   const stats = completedChallenges.reduce(
     (result, item) => {
-      item.challenge.stats.forEach((stat) => (result[stat.key] += stat.points))
+      getEarnedReward(item.completion, item.challenge).stats.forEach((stat) => (result[stat.key] += stat.points))
       return result
     },
     { STR: 0, CUL: 0, ENV: 0, CHA: 0, TAL: 0, INT: 0 } as Record<StatKey, number>,
@@ -608,16 +628,19 @@ function App() {
   function createPlan(input: { title: string; description: string; kind: QuestPlan['kind']; category: string; stat: StatKey; steps: string[] }) {
     const planId = `plan-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
     const createdAt = new Date().toISOString()
-    const stepChallenges = input.steps.map((stepTitle, index): Challenge => ({
+    const stepChallenges = input.steps.map((stepTitle, index): Challenge => {
+      const categoryStats = CATEGORY_REWARD_STATS[input.category] ?? [input.stat, 'TAL']
+      const secondaryStat = categoryStats.find((key) => key !== input.stat)
+      const reward = calculateReward({ level: level.level, estimatedMinutes: index === input.steps.length - 1 ? 60 : 30, energyDemand: index === input.steps.length - 1 ? 'high' : 'normal', cadence: '终身一次', primaryStat: input.stat, secondaryStat })
+      return {
       id: `custom-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 7)}`,
       title: stepTitle, titleOriginal: stepTitle,
       category: input.category, categoryOriginal: categoryMeta[input.category].labelEn,
-      level: Math.min(30, level.level), tier: index === input.steps.length - 1 ? 2 : 1,
-      tierName: index === input.steps.length - 1 ? '支线任务' : '轻松一胜', xp: index === input.steps.length - 1 ? 120 : 70,
-      cadence: '终身一次', stats: [{ key: input.stat, points: index === input.steps.length - 1 ? 4 : 2 }],
+      level: Math.min(30, level.level), tier: reward.tier, tierName: reward.tierName, xp: reward.xp,
+      cadence: '终身一次', stats: reward.stats,
       source: 'custom', custom: true, description: `${input.title} · ${input.kind === 'chain' ? `第 ${index + 1} 步` : '项目子任务'}`,
-      completionPrompt: '记录这一步的成果或下一步行动。', estimatedMinutes: 30, energyDemand: 'normal', contexts: [], planId, planOrder: index,
-    }))
+      completionPrompt: '记录这一步的成果或下一步行动。', estimatedMinutes: reward.estimatedMinutes, energyDemand: reward.energyDemand, contexts: [], planId, planOrder: index, rewardMode: 'auto',
+    } })
     const plan: QuestPlan = { id: planId, title: input.title, description: input.description, kind: input.kind, createdAt, stepIds: stepChallenges.map((item) => item.id) }
     setSave((current) => ({ ...current, plans: [plan, ...current.plans], customChallenges: [...stepChallenges, ...current.customChallenges] }))
     setPlanEditor(false)
@@ -648,6 +671,7 @@ function App() {
       note: note.trim(),
       completedAt: new Date().toISOString(),
       attachments,
+      reward: { xp: selected.xp, stats: selected.stats },
     }
     const newLevel = getLevel(totalXp + selected.xp).level
     setSave((current) => ({
@@ -691,7 +715,7 @@ function App() {
     }
     setSave((current) => {
       const completions = current.completions.filter((item) => item.id !== undoTarget.completion.id)
-      const remainingXp = completions.reduce((sum, item) => sum + (challengeMap.get(item.challengeId)?.xp ?? 0), 0)
+      const remainingXp = completions.reduce((sum, item) => { const challenge = challengeMap.get(item.challengeId); return sum + (challenge ? getEarnedReward(item, challenge).xp : 0) }, 0)
       const remainingLevel = getLevel(remainingXp).level
       return {
         ...current,
@@ -1163,8 +1187,8 @@ function ChronicleView({ items, onOpen, onUndo }: { items: { completion: Complet
   const filtered = normalized ? items.filter(({ challenge, completion }) => [challenge.title, challenge.titleOriginal, challenge.category, completion.note, ...(completion.attachments?.map((item) => item.name) ?? [])].some((value) => value.toLowerCase().includes(normalized))) : items
   const weekStart = new Date(); weekStart.setHours(0, 0, 0, 0); weekStart.setDate(weekStart.getDate() - 6)
   const weekly = items.filter((item) => new Date(item.completion.completedAt) >= weekStart)
-  const weeklyXp = weekly.reduce((sum, item) => sum + item.challenge.xp, 0)
-  const weeklyStats = weekly.reduce((result, item) => { item.challenge.stats.forEach((stat) => { result[stat.key] += stat.points }); return result }, { STR: 0, CUL: 0, ENV: 0, CHA: 0, TAL: 0, INT: 0 } as Record<StatKey, number>)
+  const weeklyXp = weekly.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).xp, 0)
+  const weeklyStats = weekly.reduce((result, item) => { getEarnedReward(item.completion, item.challenge).stats.forEach((stat) => { result[stat.key] += stat.points }); return result }, { STR: 0, CUL: 0, ENV: 0, CHA: 0, TAL: 0, INT: 0 } as Record<StatKey, number>)
   const topWeeklyStat = (Object.entries(weeklyStats) as [StatKey, number][]).sort((a, b) => b[1] - a[1])[0]
   return (
     <>
@@ -1286,7 +1310,9 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
           <div className="detail-panel-heading"><ShieldCheck size={19} /><div><span>{text('完成标准', 'Completion standard')}</span><strong>{text('由你诚实判断', 'Your honest judgment')}</strong></div></div>
           <p>{challenge.completionPrompt || text('任务只在现实中真正发生后才应记录。你可以在完成时写下过程、结果或这件事对你的意义。', 'Record a quest only after it truly happens in real life. Add a note about the process, result, or why it mattered.')}</p>
           <div className="detail-rule-row"><span>{text('行动力消耗', 'Energy cost')}</span><strong>1</strong></div>
+          <div className="detail-rule-row"><span>{text('预计时长', 'Estimated time')}</span><strong>{getQuestEstimate(challenge)} {text('分钟', 'min')}</strong></div>
           <div className="detail-rule-row"><span>{text('所需精力', 'Energy demand')}</span><strong>{text(getQuestEnergy(challenge) === 'low' ? '低' : getQuestEnergy(challenge) === 'high' ? '高' : '普通', getQuestEnergy(challenge))}</strong></div>
+          <div className="detail-rule-row"><span>{text('奖励模型', 'Reward model')}</span><strong>{challenge.rewardMode === 'manual' ? text('手动调整', 'Manual') : text('自动预算', 'Automatic')}</strong></div>
           <div className="detail-rule-row"><span>{text('历史完成', 'Times completed')}</span><strong>{history.length}</strong></div>
         </section>
       </div>
@@ -1304,10 +1330,11 @@ function ActivityItem({ challenge, completion, large, onOpen, onUndo }: { challe
   const meta = categoryMeta[challenge.category] ?? categoryMeta['学习与成长']
   const Icon = meta.icon
   const date = new Date(completion.completedAt)
+  const earned = getEarnedReward(completion, challenge)
   return (
     <article className={`activity-item ${large ? 'activity-item--large' : ''} ${onOpen ? 'activity-item--clickable' : ''}`} onClick={() => onOpen?.(challenge)}>
       <div className="activity-icon" style={{ color: meta.color }}><Icon size={20} /></div>
-      <div className="activity-copy"><span>{date.toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: large ? 'numeric' : undefined })}</span><h3>{title(challenge)}</h3>{completion.note && <p>“{completion.note}”</p>}{Boolean(completion.attachments?.length) && <AttachmentList attachments={completion.attachments ?? []} />}<div className="quest-rewards"><span><Zap size={13} /> +{challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div></div>
+      <div className="activity-copy"><span>{date.toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: large ? 'numeric' : undefined })}</span><h3>{title(challenge)}</h3>{completion.note && <p>“{completion.note}”</p>}{Boolean(completion.attachments?.length) && <AttachmentList attachments={completion.attachments ?? []} />}<div className="quest-rewards"><span><Zap size={13} /> +{earned.xp} {text('经验', 'XP')}</span>{earned.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div></div>
       {large && (onOpen || onUndo) ? <div className="activity-actions">{onOpen && <button onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}>{text('查看任务', 'View quest')}</button>}{onUndo && <button className="undo-link" onClick={(event) => { event.stopPropagation(); onUndo() }}><RotateCcw size={14} /> {text('撤销', 'Undo')}</button>}</div> : <Check className="activity-check" size={18} />}
     </article>
   )
@@ -1456,14 +1483,14 @@ function StatisticsView({ items, stats }: { items: { completion: Completion; cha
   const days = range === 'week' ? 7 : range === 'month' ? 30 : 365
   const since = new Date(); since.setHours(0, 0, 0, 0); since.setDate(since.getDate() - days + 1)
   const scoped = items.filter((item) => new Date(item.completion.completedAt) >= since)
-  const xp = scoped.reduce((sum, item) => sum + item.challenge.xp, 0)
+  const xp = scoped.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).xp, 0)
   const minutes = scoped.reduce((sum, item) => sum + getQuestEstimate(item.challenge), 0)
   const categories = Object.entries(scoped.reduce((result, item) => { result[item.challenge.category] = (result[item.challenge.category] ?? 0) + 1; return result }, {} as Record<string, number>)).sort((a, b) => b[1] - a[1]).slice(0, 8)
   const maxCategory = Math.max(1, ...categories.map(([, count]) => count))
   const hourGroups = [0, 0, 0, 0]
   scoped.forEach((item) => { const hour = new Date(item.completion.completedAt).getHours(); hourGroups[hour < 6 ? 0 : hour < 12 ? 1 : hour < 18 ? 2 : 3] += 1 })
   const monthlyItems = items.filter((item) => { const date = new Date(item.completion.completedAt); const now = new Date(); return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() })
-  const representative = [...monthlyItems].sort((a, b) => b.challenge.xp - a.challenge.xp)[0]
+  const representative = [...monthlyItems].sort((a, b) => getEarnedReward(b.completion, b.challenge).xp - getEarnedReward(a.completion, a.challenge).xp)[0]
   function downloadCover() {
     const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 1600
     const context = canvas.getContext('2d'); if (!context) return
@@ -1471,7 +1498,7 @@ function StatisticsView({ items, stats }: { items: { completion: Completion; cha
     context.strokeStyle = '#90e36d'; context.lineWidth = 4; context.strokeRect(70, 70, 1060, 1460)
     context.fillStyle = '#90e36d'; context.font = '36px sans-serif'; context.fillText('升级人生 · 月度冒险封面', 110, 170)
     context.fillStyle = '#f2ead8'; context.font = 'bold 88px sans-serif'; const now = new Date(); context.fillText(`${now.getFullYear()} 年 ${now.getMonth() + 1} 月`, 110, 310)
-    context.fillStyle = '#9aaba0'; context.font = '34px sans-serif'; context.fillText(`完成 ${monthlyItems.length} 次现实行动`, 110, 385); context.fillText(`获得 ${monthlyItems.reduce((sum, item) => sum + item.challenge.xp, 0)} 经验`, 110, 440)
+    context.fillStyle = '#9aaba0'; context.font = '34px sans-serif'; context.fillText(`完成 ${monthlyItems.length} 次现实行动`, 110, 385); context.fillText(`获得 ${monthlyItems.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).xp, 0)} 经验`, 110, 440)
     context.fillStyle = '#90e36d'; context.font = '28px sans-serif'; context.fillText('本月代表成就', 110, 650)
     context.fillStyle = '#f2ead8'; context.font = 'bold 54px sans-serif'; const title = representative?.challenge.title ?? '本月仍在蓄力'; const lines = title.match(/.{1,16}/g) ?? [title]; lines.slice(0, 3).forEach((line, index) => context.fillText(line, 110, 740 + index * 72))
     context.fillStyle = '#7f9185'; context.font = '28px sans-serif'; context.fillText('真实行动，真实成长。', 110, 1430)
@@ -1517,14 +1544,18 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
   const [levelValue, setLevelValue] = useState(challenge?.level ?? Math.min(30, currentLevel))
   const [tierValue, setTierValue] = useState(challenge?.tier ?? 1)
   const [xp, setXp] = useState(challenge?.xp ?? 70)
-  const [statKey, setStatKey] = useState<StatKey>(challenge?.stats[0]?.key ?? 'INT')
+  const [statKey, setStatKey] = useState<StatKey>(challenge?.stats[0]?.key ?? CATEGORY_REWARD_STATS[challenge?.category ?? '学习与成长']?.[0] ?? 'INT')
   const [statPoints, setStatPoints] = useState(challenge?.stats[0]?.points ?? 2)
+  const [rewardMode, setRewardMode] = useState<'auto' | 'manual'>(challenge ? challenge.rewardMode ?? 'manual' : 'auto')
   const [cadence, setCadence] = useState(challenge?.cadence ?? '终身一次')
   const [completionPrompt, setCompletionPrompt] = useState(challenge?.completionPrompt ?? '')
   const [estimatedMinutes, setEstimatedMinutes] = useState(challenge?.estimatedMinutes ?? 30)
   const [energyDemand, setEnergyDemand] = useState<DailyEnergy>(challenge?.energyDemand ?? 'normal')
   const [contexts, setContexts] = useState<string[]>(challenge?.contexts ?? [])
   const [error, setError] = useState('')
+  const categoryStats = CATEGORY_REWARD_STATS[categoryValue] ?? ['INT', 'TAL']
+  const secondaryStat = categoryStats.find((key) => key !== statKey)
+  const autoReward = useMemo(() => calculateReward({ level: levelValue, estimatedMinutes, energyDemand, cadence, primaryStat: statKey, secondaryStat }), [cadence, energyDemand, estimatedMinutes, levelValue, secondaryStat, statKey])
 
   function toggleContext(value: string) {
     setContexts((current) => current.includes(value) ? current.filter((item) => item !== value) : current.length < 8 ? [...current, value] : current)
@@ -1535,9 +1566,10 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
     const cleanTitle = titleValue.trim()
     if (!cleanTitle) return setError(text('请填写任务名称。', 'Enter a quest title.'))
     const cleanLevel = Math.min(30, Math.max(1, Math.round(levelValue)))
-    const cleanPoints = Math.min(cleanLevel * 3, Math.max(1, Math.round(statPoints)))
+    const cleanPoints = Math.min(Math.max(cleanLevel * 3, tierValue * 3), Math.max(1, Math.round(statPoints)))
     const tierNames = ['', '轻松一胜', '支线任务', '进阶挑战', '史诗任务']
     const meta = categoryMeta[categoryValue]
+    const reward = rewardMode === 'auto' ? autoReward : { tier: Math.min(4, Math.max(1, Math.round(tierValue))), tierName: tierNames[Math.min(4, Math.max(1, Math.round(tierValue)))], xp: Math.min(1500, Math.max(25, Math.round(xp))), stats: [{ key: statKey, points: cleanPoints }], estimatedMinutes: Math.min(1440, Math.max(5, Math.round(estimatedMinutes))), energyDemand }
     onSave({
       id: challenge?.id ?? `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       title: cleanTitle.slice(0, 120),
@@ -1545,20 +1577,21 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
       category: categoryValue,
       categoryOriginal: meta.labelEn,
       level: cleanLevel,
-      tier: Math.min(4, Math.max(1, Math.round(tierValue))),
-      tierName: tierNames[Math.min(4, Math.max(1, Math.round(tierValue)))],
-      xp: Math.min(1500, Math.max(25, Math.round(xp))),
+      tier: reward.tier,
+      tierName: reward.tierName,
+      xp: reward.xp,
       cadence,
-      stats: [{ key: statKey, points: cleanPoints }],
+      stats: reward.stats,
       source: 'custom',
       custom: true,
       description: description.trim().slice(0, 600),
       completionPrompt: completionPrompt.trim().slice(0, 180),
-      estimatedMinutes: Math.min(1440, Math.max(5, Math.round(estimatedMinutes))),
-      energyDemand,
+      estimatedMinutes: reward.estimatedMinutes,
+      energyDemand: reward.energyDemand,
       contexts,
       planId: challenge?.planId,
       planOrder: challenge?.planOrder,
+      rewardMode,
     })
   }
 
@@ -1571,15 +1604,13 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
         <div className="custom-form-grid">
           <label className="field-wide"><span>{text('任务名称', 'Quest title')}</span><input autoFocus value={titleValue} maxLength={120} onChange={(event) => setTitleValue(event.target.value)} placeholder={text('例如：整理本周的学习笔记', 'e.g. Organize this week’s study notes')} /></label>
           <label className="field-wide"><span>{text('任务说明', 'Description')}</span><textarea value={description} maxLength={600} onChange={(event) => setDescription(event.target.value)} placeholder={text('为什么要做、做到什么程度……', 'Why it matters and what done looks like…')} /></label>
-          <label><span>{text('分类', 'Category')}</span><select value={categoryValue} onChange={(event) => setCategoryValue(event.target.value)}>{Object.keys(categoryMeta).map((item) => <option key={item}>{item}</option>)}</select></label>
+          <label><span>{text('分类', 'Category')}</span><select value={categoryValue} onChange={(event) => { const value = event.target.value; setCategoryValue(value); setStatKey(CATEGORY_REWARD_STATS[value]?.[0] ?? 'INT') }}>{Object.keys(categoryMeta).map((item) => <option key={item}>{item}</option>)}</select></label>
           <label><span>{text('重复周期', 'Cadence')}</span><select value={cadence} onChange={(event) => setCadence(event.target.value)}>{Object.keys(cadenceDays).map((item) => <option key={item}>{item}</option>)}</select></label>
-          <label><span>{text('建议等级', 'Level')}</span><input type="number" min="1" max="30" value={levelValue} onChange={(event) => setLevelValue(Number(event.target.value))} /></label>
-          <label><span>{text('任务稀有度', 'Tier')}</span><select value={tierValue} onChange={(event) => setTierValue(Number(event.target.value))}><option value="1">1 · 轻松一胜</option><option value="2">2 · 支线任务</option><option value="3">3 · 进阶挑战</option><option value="4">4 · 史诗任务</option></select></label>
-          <label><span>{text('经验奖励', 'XP reward')}</span><input type="number" min="25" max="1500" step="5" value={xp} onChange={(event) => setXp(Number(event.target.value))} /></label>
           <label><span>{text('主要属性', 'Primary stat')}</span><select value={statKey} onChange={(event) => setStatKey(event.target.value as StatKey)}>{(Object.keys(statLabels) as StatKey[]).map((key) => <option key={key} value={key}>{statLabels[key]}</option>)}</select></label>
-          <label><span>{text('属性点', 'Stat points')}</span><input type="number" min="1" max={Math.max(3, levelValue * 3)} value={statPoints} onChange={(event) => setStatPoints(Number(event.target.value))} /><small>{text(`当前等级最多 ${Math.max(3, levelValue * 3)} 点`, `Up to ${Math.max(3, levelValue * 3)} at this level`)}</small></label>
           <label><span>{text('预计时长（分钟）', 'Estimated minutes')}</span><input type="number" min="5" max="1440" step="5" value={estimatedMinutes} onChange={(event) => setEstimatedMinutes(Number(event.target.value))} /></label>
           <fieldset className="field-wide"><legend>{text('所需精力', 'Energy demand')}</legend><div className="form-segmented">{(['low', 'normal', 'high'] as DailyEnergy[]).map((value) => <button type="button" key={value} className={energyDemand === value ? 'active' : ''} onClick={() => setEnergyDemand(value)}>{text(value === 'low' ? '低精力' : value === 'high' ? '高精力' : '普通', value)}</button>)}</div></fieldset>
+          <fieldset className="field-wide"><legend>{text('奖励计算方式', 'Reward calculation')}</legend><div className="form-segmented"><button type="button" className={rewardMode === 'auto' ? 'active' : ''} onClick={() => setRewardMode('auto')}>{text('自动计算（推荐）', 'Automatic')}</button><button type="button" className={rewardMode === 'manual' ? 'active' : ''} onClick={() => setRewardMode('manual')}>{text('手动调整', 'Manual')}</button></div></fieldset>
+          {rewardMode === 'auto' ? <div className="reward-calculator field-wide"><div><span>{text('自动稀有度', 'Tier')}</span><strong>{autoReward.tierName}</strong></div><div><span>{text('经验奖励', 'XP')}</span><strong>+{autoReward.xp}</strong></div>{autoReward.stats.map((stat) => <div key={stat.key}><span>{statLabels[stat.key]}</span><strong>+{stat.points}</strong></div>)}<p><Sparkles size={14} /> {text(`根据 ${estimatedMinutes} 分钟、${energyDemand === 'low' ? '低' : energyDemand === 'high' ? '高' : '普通'}精力、${cadence}和当前等级 ${levelValue} 自动计算。`, 'Calculated from time, energy, cadence, and level.')}</p></div> : <><label><span>{text('建议等级', 'Level')}</span><input type="number" min="1" max="30" value={levelValue} onChange={(event) => setLevelValue(Number(event.target.value))} /></label><label><span>{text('任务稀有度', 'Tier')}</span><select value={tierValue} onChange={(event) => setTierValue(Number(event.target.value))}><option value="1">1 · 轻松一胜</option><option value="2">2 · 支线任务</option><option value="3">3 · 进阶挑战</option><option value="4">4 · 史诗任务</option></select></label><label><span>{text('经验奖励', 'XP reward')}</span><input type="number" min="25" max="1500" step="5" value={xp} onChange={(event) => setXp(Number(event.target.value))} /></label><label><span>{text('属性点', 'Stat points')}</span><input type="number" min="1" max={Math.max(3, levelValue * 3, tierValue * 3)} value={statPoints} onChange={(event) => setStatPoints(Number(event.target.value))} /></label></>}
           <fieldset className="field-wide"><legend>{text('适用情境', 'Contexts')}</legend><div className="context-picker">{suggestedContexts.map((item) => <button type="button" key={item} className={contexts.includes(item) ? 'active' : ''} onClick={() => toggleContext(item)}>{item}</button>)}</div></fieldset>
           <label className="field-wide"><span>{text('完成记录提示', 'Completion prompt')}</span><input value={completionPrompt} maxLength={180} onChange={(event) => setCompletionPrompt(event.target.value)} placeholder={text('例如：上传结果照片，或写下三点复盘', 'e.g. Upload a photo or write three reflections')} /></label>
         </div>

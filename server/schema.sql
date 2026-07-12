@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS completions (
   id TEXT PRIMARY KEY,
   challenge_id TEXT NOT NULL REFERENCES challenges(id) ON DELETE CASCADE,
   note TEXT NOT NULL DEFAULT '',
-  completed_at TEXT NOT NULL
+  completed_at TEXT NOT NULL,
+  reward_json TEXT
 );
 
 CREATE INDEX IF NOT EXISTS completions_challenge_id_idx ON completions(challenge_id);

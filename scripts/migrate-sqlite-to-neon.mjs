@@ -13,7 +13,8 @@ const db = new DatabaseSync(sqlitePath, { readOnly: true })
 const hasHiddenState = db.prepare('PRAGMA table_info(quest_state)').all().some((item) => item.name === 'hidden')
 const hasCustomJson = db.prepare('PRAGMA table_info(challenges)').all().some((item) => item.name === 'custom_json')
 const stateRows = db.prepare(`SELECT challenge_id, active, favorite, ${hasHiddenState ? 'hidden' : '0 AS hidden'} FROM quest_state`).all()
-const completionRows = db.prepare('SELECT id, challenge_id, note, completed_at FROM completions ORDER BY completed_at DESC').all()
+const hasRewardSnapshot = db.prepare('PRAGMA table_info(completions)').all().some((item) => item.name === 'reward_json')
+const completionRows = db.prepare(`SELECT id, challenge_id, note, completed_at, ${hasRewardSnapshot ? 'reward_json' : 'NULL AS reward_json'} FROM completions ORDER BY completed_at DESC`).all()
 const settingsRow = db.prepare('SELECT language, font FROM settings WHERE id = 1').get() ?? { language: 'zh', font: 'noto' }
 const customChallenges = hasCustomJson ? db.prepare("SELECT custom_json FROM challenges WHERE source = 'custom' AND custom_json IS NOT NULL").all().flatMap((item) => {
   try { return [JSON.parse(item.custom_json)] } catch { return [] }
@@ -31,7 +32,7 @@ const save = {
   dailyBoard,
   plans: gameplayState.plans,
   specialization: gameplayState.specialization,
-  completions: completionRows.map((item) => ({ id: item.id, challengeId: item.challenge_id, note: item.note, completedAt: item.completed_at, attachments: [] })),
+  completions: completionRows.map((item) => { let reward; try { reward = item.reward_json ? JSON.parse(item.reward_json) : undefined } catch {}; return { id: item.id, challengeId: item.challenge_id, note: item.note, completedAt: item.completed_at, attachments: [], reward } }),
 }
 const settings = { language: settingsRow.language, font: settingsRow.font }
 

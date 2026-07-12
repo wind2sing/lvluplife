@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync } from 'node:fs'
+import { calculateReward, inferQuestConditions } from '../shared/reward-rules.mjs'
 
 const sourcePath = new URL('../data/original-challenges.txt', import.meta.url)
 const outputPath = new URL('../src/data/challenges.json', import.meta.url)
@@ -71,8 +72,6 @@ const getCadence = (title, category, tier) => {
   return ['每日', '每周', '每月', '终身一次'][tier - 1]
 }
 
-const tierNames = ['轻松一胜', '支线任务', '进阶挑战', '史诗任务']
-const baseXp = [70, 125, 250, 650]
 const challenges = []
 
 for (const [category, items] of categoryItems) {
@@ -84,8 +83,9 @@ for (const [category, items] of categoryItems) {
     const divisor = config.divisor ?? 2
     const projectedLevel = Math.ceil((index + 1) / divisor) + (config.seed[4] - Math.ceil(5 / divisor))
     const level = index < config.seed.length ? config.seed[index] : Math.max(config.seed[4], projectedLevel)
-    const stats = config.stats
-    const points = tier * 2 + (index % 3)
+    const cadence = getCadence(title, category, tier)
+    const conditions = inferQuestConditions(tier)
+    const reward = calculateReward({ level, tier, cadence, ...conditions, primaryStat: config.stats[0], secondaryStat: config.stats[1] })
     const id = `${slugify(category)}-${String(index + 1).padStart(3, '0')}`
 
     challenges.push({
@@ -95,14 +95,13 @@ for (const [category, items] of categoryItems) {
       category: config.zh,
       categoryOriginal: category,
       level,
-      tier,
-      tierName: tierNames[tier - 1],
-      xp: baseXp[tier - 1] + (index % 4) * (tier === 1 ? 5 : tier * 10),
-      cadence: getCadence(title, category, tier),
-      stats: [
-        { key: stats[0], points },
-        ...(tier > 1 ? [{ key: stats[1], points: Math.max(1, points - 2) }] : []),
-      ],
+      tier: reward.tier,
+      tierName: reward.tierName,
+      xp: reward.xp,
+      cadence,
+      stats: reward.stats,
+      estimatedMinutes: reward.estimatedMinutes,
+      energyDemand: reward.energyDemand,
       source: 'LvlUpLife 挑战列表备份',
     })
   })

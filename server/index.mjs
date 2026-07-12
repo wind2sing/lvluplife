@@ -18,6 +18,8 @@ const questStateColumns = db.prepare('PRAGMA table_info(quest_state)').all().map
 if (!questStateColumns.includes('hidden')) db.exec('ALTER TABLE quest_state ADD COLUMN hidden INTEGER NOT NULL DEFAULT 0 CHECK (hidden IN (0, 1))')
 const challengeColumns = db.prepare('PRAGMA table_info(challenges)').all().map((item) => item.name)
 if (!challengeColumns.includes('custom_json')) db.exec('ALTER TABLE challenges ADD COLUMN custom_json TEXT')
+const completionColumns = db.prepare('PRAGMA table_info(completions)').all().map((item) => item.name)
+if (!completionColumns.includes('reward_json')) db.exec('ALTER TABLE completions ADD COLUMN reward_json TEXT')
 
 const settingsTableSql = db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'settings'").get()?.sql ?? ''
 if (!settingsTableSql.includes("'pixel'")) {
@@ -86,14 +88,14 @@ const selectChallenges = db.prepare(`
 `)
 const selectCustomChallenges = db.prepare("SELECT custom_json FROM challenges WHERE source = 'custom' AND custom_json IS NOT NULL ORDER BY rowid")
 const selectQuestState = db.prepare('SELECT challenge_id, active, favorite, hidden FROM quest_state')
-const selectCompletions = db.prepare('SELECT id, challenge_id, note, completed_at FROM completions ORDER BY completed_at DESC')
+const selectCompletions = db.prepare('SELECT id, challenge_id, note, completed_at, reward_json FROM completions ORDER BY completed_at DESC')
 const selectSettings = db.prepare('SELECT language, font FROM settings WHERE id = 1')
 const selectInitialized = db.prepare("SELECT value FROM app_meta WHERE key = 'state_initialized'")
 const upsertQuestState = db.prepare(`
   INSERT INTO quest_state (challenge_id, active, favorite, hidden) VALUES (?, ?, ?, ?)
   ON CONFLICT(challenge_id) DO UPDATE SET active = excluded.active, favorite = excluded.favorite, hidden = excluded.hidden
 `)
-const insertCompletion = db.prepare('INSERT INTO completions (id, challenge_id, note, completed_at) VALUES (?, ?, ?, ?)')
+const insertCompletion = db.prepare('INSERT INTO completions (id, challenge_id, note, completed_at, reward_json) VALUES (?, ?, ?, ?, ?)')
 const updateSettings = db.prepare('UPDATE settings SET language = ?, font = ? WHERE id = 1')
 const markInitialized = db.prepare("INSERT INTO app_meta (key, value) VALUES ('state_initialized', '1') ON CONFLICT(key) DO UPDATE SET value = '1'")
 const selectDailyBoard = db.prepare("SELECT value FROM app_meta WHERE key = 'daily_board'")
@@ -122,12 +124,11 @@ async function readJson(request) {
 
 function getBootstrap() {
   const stateRows = selectQuestState.all()
-  const completions = selectCompletions.all().map((item) => ({
-    id: item.id,
-    challengeId: item.challenge_id,
-    note: item.note,
-    completedAt: item.completed_at,
-  }))
+  const completions = selectCompletions.all().map((item) => {
+    let reward
+    try { reward = item.reward_json ? JSON.parse(item.reward_json) : undefined } catch {}
+    return { id: item.id, challengeId: item.challenge_id, note: item.note, completedAt: item.completed_at, reward }
+  })
   const settings = selectSettings.get()
   const customChallenges = selectCustomChallenges.all().flatMap((item) => {
     try { return [JSON.parse(item.custom_json)] } catch { return [] }
@@ -190,7 +191,7 @@ function replaceSave(save) {
       )
     }
     for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)
-    for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt)
+    for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt, item.reward ? JSON.stringify(item.reward) : null)
     upsertDailyBoard.run(JSON.stringify(dailyBoard))
     upsertGameplayState.run(JSON.stringify({ plans, specialization }))
     markInitialized.run()

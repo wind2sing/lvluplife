@@ -7,6 +7,7 @@
     "data:generate": "node scripts/generate-challenges.mjs",
     "data:translate": "node scripts/translate-challenges.mjs",
     "data:migrate:neon": "node --disable-warning=ExperimentalWarning scripts/migrate-sqlite-to-neon.mjs",
+    "reward:validate": "node scripts/validate-reward-rules.mjs",
     "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:server\"",
     "dev:cloud": "vercel dev",
     "dev:web": "vite",
