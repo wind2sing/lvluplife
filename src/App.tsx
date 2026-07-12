@@ -941,12 +941,13 @@ function AttachmentList({ attachments }: { attachments: Attachment[] }) {
 function AttachmentItem({ attachment }: { attachment: Attachment }) {
   const { text } = useLanguage()
   const accessKey = useAccessKey()
+  const isImage = attachment.contentType.startsWith('image/')
   const [previewUrl, setPreviewUrl] = useState('')
-  const [loading, setLoading] = useState(attachment.contentType.startsWith('image/'))
+  const [loading, setLoading] = useState(isImage)
   const endpoint = `/api/attachment?pathname=${encodeURIComponent(attachment.pathname)}&name=${encodeURIComponent(attachment.name)}`
 
   useEffect(() => {
-    if (!attachment.contentType.startsWith('image/')) return
+    if (!isImage) return
     let objectUrl = ''
     let active = true
     void fetch(endpoint, { headers: { Authorization: `Bearer ${accessKey}` } })
@@ -965,7 +966,7 @@ function AttachmentItem({ attachment }: { attachment: Attachment }) {
       active = false
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
-  }, [accessKey, attachment.contentType, endpoint])
+  }, [accessKey, endpoint, isImage])
 
   async function downloadAttachment(event: React.MouseEvent) {
     event.stopPropagation()
@@ -980,9 +981,16 @@ function AttachmentItem({ attachment }: { attachment: Attachment }) {
     window.setTimeout(() => URL.revokeObjectURL(url), 1000)
   }
 
+  if (isImage) return (
+    <button className="attachment-item attachment-item--image" onClick={downloadAttachment} title={text('下载原图', 'Download original image')}>
+      <span className="attachment-image-preview">{previewUrl ? <img src={previewUrl} alt={attachment.name} /> : <span className="attachment-placeholder">{loading ? <UploadCloud size={22} /> : <FileText size={22} />}</span>}</span>
+      <span className="attachment-image-caption"><span className="attachment-copy"><strong>{attachment.name}</strong><small>{formatFileSize(attachment.size)}</small></span><Download size={15} /></span>
+    </button>
+  )
+
   return (
-    <button className={`attachment-item ${attachment.contentType.startsWith('image/') ? 'attachment-item--image' : ''}`} onClick={downloadAttachment} title={text('下载附件', 'Download attachment')}>
-      {attachment.contentType.startsWith('image/') ? previewUrl ? <img src={previewUrl} alt={attachment.name} /> : <span className="attachment-placeholder">{loading ? <UploadCloud size={18} /> : <FileText size={18} />}</span> : <span className="attachment-placeholder"><FileText size={18} /></span>}
+    <button className="attachment-item" onClick={downloadAttachment} title={text('下载附件', 'Download attachment')}>
+      <span className="attachment-placeholder"><FileText size={18} /></span>
       <span className="attachment-copy"><strong>{attachment.name}</strong><small>{formatFileSize(attachment.size)}</small></span>
       <Download size={14} />
     </button>
@@ -1147,9 +1155,9 @@ function CompletionModal({ challenge, energy, note, onClose, onNote, onSubmit }:
       <section className="completion-modal" role="dialog" aria-modal="true" aria-labelledby="completion-title">
         <button className="modal-close" disabled={uploading} onClick={onClose} aria-label={text('关闭', 'Close')}><X /></button>
         <div className="completion-badge" style={{ color: meta.color }}><Icon size={30} /></div>
-        <p className="eyebrow">{text('领取真实奖励', 'Claim a real reward')}</p>
-        <h2 id="completion-title">{text('你真的做到了吗？', 'Did you really do it?')}</h2>
-        <h3>{title(challenge)}</h3>
+        <p className="eyebrow">{text('完成任务', 'Complete quest')}</p>
+        <h2 id="completion-title">{title(challenge)}</h2>
+        <p className="completion-prompt">{text('你真的完成了吗？记录下这次现实中的胜利。', 'Did you really complete it? Record this real-life victory.')}</p>
         <label><span>{text('记录现实中的细节', 'Record the real-life details')} <small>{text('选填', 'optional')}</small></span><textarea autoFocus value={note} onChange={(event) => onNote(event.target.value)} placeholder={text('发生了什么？为什么这件事对你有意义？', 'What happened, and why did it matter?')} maxLength={280} /><small>{note.length}/280</small></label>
         <div className="attachment-field">
           <div><span>{text('图片或附件', 'Photos or attachments')} <small>{text('选填，最多 3 个', 'optional, up to 3')}</small></span><em>{text('支持图片、PDF、Office、文本和 ZIP，单个不超过 10MB。', 'Images, PDF, Office, text, and ZIP up to 10MB each.')}</em></div>
