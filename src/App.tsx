@@ -533,6 +533,7 @@ function App() {
   })()
 
   const text = (zh: string, en: string) => settings.language === 'zh' ? zh : en
+  const cloud = !import.meta.env.DEV
 
   return (
     <LanguageContext.Provider value={settings.language}>
@@ -555,7 +556,7 @@ function App() {
           <div><strong>{text('独行冒险者', 'Solo Adventurer')}</strong><span>{text('等级', 'Level')} {level.level}</span></div>
           <ArrowRight className="profile-arrow" size={15} />
         </button>
-        <button className="local-note" onClick={() => navigate('settings')}><ShieldCheck size={14} /> {text('进度仅保存在本机', 'Progress stays on this device')}<Settings size={12} /></button>
+        <button className="local-note" onClick={() => navigate('settings')}><ShieldCheck size={14} /> {cloud ? text('进度已同步至云端', 'Progress synced to cloud') : text('进度仅保存在本机', 'Progress stays on this device')}<Settings size={12} /></button>
       </aside>
 
       {mobileNav && <button className="nav-scrim" aria-label={text('关闭菜单', 'Close menu')} onClick={() => setMobileNav(false)} />}
