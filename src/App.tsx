@@ -187,6 +187,7 @@ type AppSettings = {
   font: FontChoice
   customFeatures: boolean
   hidePersonalContentWhenDisabled: boolean
+  collectionFeatures: boolean
 }
 
 type BootstrapData = {
@@ -209,7 +210,7 @@ const emptySave: SaveState = {
   cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' },
   completions: [],
 }
-const defaultSettings: AppSettings = { language: 'zh', font: 'noto', customFeatures: true, hidePersonalContentWhenDisabled: true }
+const defaultSettings: AppSettings = { language: 'zh', font: 'noto', customFeatures: true, hidePersonalContentWhenDisabled: true, collectionFeatures: true }
 
 const LanguageContext = createContext<Language>('zh')
 const AccessKeyContext = createContext('')
@@ -581,9 +582,9 @@ function App() {
     return locked
   }, [completedPlanStepIds, save.plans])
   const collectionItems = useMemo(() => buildCollection(completedChallenges, save.plans, stats, streak, totalXp), [completedChallenges, save.plans, stats, streak, totalXp])
-  const equippedTitle = collectionItems.find((item) => item.id === save.cosmetics.titleId && item.unlocked) ?? collectionItems.find((item) => item.id === 'title-solo')!
-  const equippedFrame = collectionItems.find((item) => item.id === save.cosmetics.frameId && item.unlocked) ?? collectionItems.find((item) => item.id === 'frame-basic')!
-  const equippedTheme = collectionItems.find((item) => item.id === save.cosmetics.themeId && item.unlocked) ?? collectionItems.find((item) => item.id === 'theme-camp')!
+  const equippedTitle = collectionItems.find((item) => item.id === (settings.collectionFeatures ? save.cosmetics.titleId : 'title-solo') && item.unlocked) ?? collectionItems.find((item) => item.id === 'title-solo')!
+  const equippedFrame = collectionItems.find((item) => item.id === (settings.collectionFeatures ? save.cosmetics.frameId : 'frame-basic') && item.unlocked) ?? collectionItems.find((item) => item.id === 'frame-basic')!
+  const equippedTheme = collectionItems.find((item) => item.id === (settings.collectionFeatures ? save.cosmetics.themeId : 'theme-camp') && item.unlocked) ?? collectionItems.find((item) => item.id === 'theme-camp')!
   useEffect(() => { document.documentElement.dataset.theme = equippedTheme.id }, [equippedTheme.id])
 
   const unlockedChallenges = allChallenges.filter((item) => item.level <= level.level && !lockedPlanStepIds.has(item.id))
@@ -674,6 +675,13 @@ function App() {
       window.scrollTo({ top: 0 })
     }
   }, [ready, settings.customFeatures, view])
+
+  useEffect(() => {
+    if (!ready || settings.collectionFeatures || view !== 'collection') return
+    setView('settings')
+    window.history.replaceState({ lvluplife: true }, '', viewPaths.settings)
+    window.scrollTo({ top: 0 })
+  }, [ready, settings.collectionFeatures, view])
 
   function toggleActive(id: string) {
     if (lockedPlanStepIds.has(id)) return
@@ -885,10 +893,10 @@ function App() {
     }
 
     if (view === 'character') {
-      return <CharacterView completedCount={completedChallenges.length} energy={energy} equippedFrame={equippedFrame} equippedTitle={equippedTitle} levelInfo={level} maxEnergy={maxEnergy} onCollection={() => navigate('collection')} onSpecialization={(specialization) => setSave((current) => ({ ...current, specialization }))} specialization={save.specialization} stats={stats} streak={streak} totalXp={totalXp} />
+      return <CharacterView collectionEnabled={settings.collectionFeatures} completedCount={completedChallenges.length} energy={energy} equippedFrame={equippedFrame} equippedTitle={equippedTitle} levelInfo={level} maxEnergy={maxEnergy} onCollection={() => navigate('collection')} onSpecialization={(specialization) => setSave((current) => ({ ...current, specialization }))} specialization={save.specialization} stats={stats} streak={streak} totalXp={totalXp} />
     }
 
-    if (view === 'collection') return <CollectionGallery equipped={save.cosmetics} items={collectionItems} onEquip={equipCollectionItem} />
+    if (view === 'collection' && settings.collectionFeatures) return <CollectionGallery equipped={save.cosmetics} items={collectionItems} onEquip={equipCollectionItem} />
 
     if (view === 'plans' && settings.customFeatures) return <PlansView challengeMap={challengeMap} completedStepIds={completedPlanStepIds} lockedStepIds={lockedPlanStepIds} onComplete={setSelected} onCreate={() => setPlanEditor(true)} onOpen={openChallenge} plans={save.plans} />
 
@@ -985,7 +993,7 @@ function App() {
         <nav className="main-nav" aria-label={text('主导航', 'Main navigation')}>
           <NavButton active={view === 'home'} icon={House} label={text('营地', 'Camp')} onClick={() => navigate('home')} />
           <NavButton active={view === 'character'} icon={UserRound} label={text('角色面板', 'Character')} onClick={() => navigate('character')} />
-          <NavButton active={view === 'collection'} icon={Gem} label={text('私人收藏馆', 'Collection')} onClick={() => navigate('collection')} badge={collectionItems.filter((item) => item.unlocked).length} />
+          {settings.collectionFeatures && <NavButton active={view === 'collection'} icon={Gem} label={text('私人收藏馆', 'Collection')} onClick={() => navigate('collection')} />}
           <NavButton active={view === 'explore'} icon={Compass} label={text('任务公会', 'Quest Guild')} onClick={() => navigate('explore')} />
           {settings.customFeatures && <NavButton active={view === 'plans'} icon={ListChecks} label={text('任务链与项目', 'Plans')} onClick={() => navigate('plans')} badge={save.plans.length} />}
           <NavButton active={view === 'goals'} icon={Target} label={text('我的任务', 'My Quests')} onClick={() => navigate('goals')} badge={activeChallenges.length} />
@@ -1139,7 +1147,8 @@ function getStatStage(value: number) {
   return { ...current, level: index + 1, next, percent: next ? Math.min(100, Math.round(((value - current.min) / (next.min - current.min)) * 100)) : 100 }
 }
 
-function CharacterView({ completedCount, energy, equippedFrame, equippedTitle, levelInfo, maxEnergy, onCollection, onSpecialization, specialization, stats, streak, totalXp }: {
+function CharacterView({ collectionEnabled, completedCount, energy, equippedFrame, equippedTitle, levelInfo, maxEnergy, onCollection, onSpecialization, specialization, stats, streak, totalXp }: {
+  collectionEnabled: boolean
   completedCount: number
   energy: number
   equippedFrame: CollectionItem
@@ -1186,7 +1195,7 @@ function CharacterView({ completedCount, energy, equippedFrame, equippedTitle, l
         <div className="detail-panel specialization-panel"><div className="detail-panel-heading"><Target size={19} /><div><span>{text('当前专精', 'Current focus')}</span><strong>{specialization ? statLabels[specialization] : text('自由成长', 'Open growth')}</strong></div></div><p>{text('专精只会提高对应属性任务在每日冒险板中的出现倾向，不限制其他任务，也不增加数值奖励。', 'A focus only influences recommendations. It never blocks other quests or adds numeric rewards.')}</p><div className="specialization-picker"><button className={!specialization ? 'active' : ''} onClick={() => onSpecialization(null)}>{text('自由', 'Open')}</button>{(Object.keys(statLabels) as StatKey[]).map((key) => <button key={key} className={specialization === key ? 'active' : ''} onClick={() => onSpecialization(key)}>{statLabels[key]}</button>)}</div></div>
         <div className="detail-panel radar-panel"><div className="detail-panel-heading"><Sparkles size={19} /><div><span>{text('六维成长图', 'Growth radar')}</span><strong>{text('现实属性分布', 'Real-life profile')}</strong></div></div><StatRadar stats={stats} /></div>
       </section>
-      <section className="section-block collection-preview"><div><p className="eyebrow">{text('当前装扮', 'Current collection')}</p><h2>{equippedTitle.title}</h2><p>{equippedTitle.flavor}</p></div><div className={`collection-preview-frame cosmetic-frame ${equippedFrame.id}`}><UserRound size={30} /></div><button className="primary-button" onClick={onCollection}><Gem size={17} /> {text('进入私人收藏馆', 'Open private collection')}</button></section>
+      {collectionEnabled && <section className="section-block collection-preview"><div><p className="eyebrow">{text('当前装扮', 'Current collection')}</p><h2>{equippedTitle.title}</h2><p>{equippedTitle.flavor}</p></div><div className={`collection-preview-frame cosmetic-frame ${equippedFrame.id}`}><UserRound size={30} /></div><button className="primary-button" onClick={onCollection}><Gem size={17} /> {text('进入私人收藏馆', 'Open private collection')}</button></section>}
       {selectedStat && <StatHelpModal stat={selectedStat} value={stats[selectedStat]} onClose={() => setSelectedStat(null)} />}
       {levelHelp && <LevelHelpModal levelInfo={levelInfo} totalXp={totalXp} onClose={() => setLevelHelp(false)} />}
     </>
@@ -1206,10 +1215,30 @@ function StatRadar({ stats }: { stats: Record<StatKey, number> }) {
 function CollectionGallery({ equipped, items, onEquip }: { equipped: CosmeticState; items: CollectionItem[]; onEquip: (item: CollectionItem) => void }) {
   const { text } = useLanguage()
   const [filter, setFilter] = useState<'all' | CollectionKind>('all')
-  const visible = filter === 'all' ? items : items.filter((item) => item.kind === filter)
+  const [status, setStatus] = useState<'all' | 'unlocked' | 'locked' | 'equipped'>('all')
+  const [sort, setSort] = useState<'default' | 'unlocked' | 'progress' | 'closest' | 'title'>('default')
+  const [query, setQuery] = useState('')
   const unlocked = items.filter((item) => item.unlocked).length
   const kindLabels: Record<CollectionKind, string> = { title: '称号', badge: '徽章', frame: '头像框', theme: '营地主题', keepsake: '纪念物' }
   function isEquipped(item: CollectionItem) { return item.id === equipped.titleId || item.id === equipped.frameId || item.id === equipped.themeId }
+  const visible = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase()
+    const originalOrder = new Map(items.map((item, index) => [item.id, index]))
+    const result = items.filter((item) => {
+      if (filter !== 'all' && item.kind !== filter) return false
+      if (status === 'unlocked' && !item.unlocked) return false
+      if (status === 'locked' && item.unlocked) return false
+      if (status === 'equipped' && item.id !== equipped.titleId && item.id !== equipped.frameId && item.id !== equipped.themeId) return false
+      return !normalizedQuery || [item.title, item.description, item.flavor].some((value) => value.toLowerCase().includes(normalizedQuery))
+    })
+    return result.sort((a, b) => {
+      if (sort === 'unlocked') return Number(b.unlocked) - Number(a.unlocked) || (originalOrder.get(a.id) ?? 0) - (originalOrder.get(b.id) ?? 0)
+      if (sort === 'progress') return b.progress / b.target - a.progress / a.target || (originalOrder.get(a.id) ?? 0) - (originalOrder.get(b.id) ?? 0)
+      if (sort === 'closest') return Number(a.unlocked) - Number(b.unlocked) || (a.target - a.progress) / a.target - (b.target - b.progress) / b.target || (originalOrder.get(a.id) ?? 0) - (originalOrder.get(b.id) ?? 0)
+      if (sort === 'title') return a.title.localeCompare(b.title, 'zh-CN')
+      return (originalOrder.get(a.id) ?? 0) - (originalOrder.get(b.id) ?? 0)
+    })
+  }, [equipped.frameId, equipped.themeId, equipped.titleId, filter, items, query, sort, status])
   function downloadCard(item: CollectionItem) {
     const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 720
     const context = canvas.getContext('2d'); if (!context) return
@@ -1222,7 +1251,7 @@ function CollectionGallery({ equipped, items, onEquip }: { equipped: CosmeticSta
     context.fillStyle = '#90e36d'; context.font = '24px sans-serif'; context.fillText(`私人纪念 · ${new Date().toLocaleDateString('zh-CN')}`, 90, 610)
     const anchor = document.createElement('a'); anchor.href = canvas.toDataURL('image/png'); anchor.download = `升级人生-${item.title}.png`; anchor.click()
   }
-  return <><div className="page-heading collection-heading"><p className="eyebrow">{text('私人收藏馆', 'Private collection')}</p><h1>{text('把真实成长变成', 'Turn real growth into')}<em>{text('可以珍藏的东西。', ' something worth keeping.')}</em></h1><p>{text('称号、徽章、头像框、营地主题和纪念物只记录你的真实行动，不提供数值优势，也不会公开分享。', 'Titles, badges, frames, themes, and keepsakes record real actions without numeric advantages or public sharing.')}</p></div><section className="collection-overview"><div><Gem size={28} /><span>{text('已解锁收藏', 'Unlocked')}</span><strong>{unlocked} / {items.length}</strong></div><div className="collection-overview-progress"><i><b style={{ width: `${unlocked / items.length * 100}%` }} /></i><span>{Math.round(unlocked / items.length * 100)}%</span></div><p>{text('所有进度都来自私人存档中的完成记录、属性、任务链与附件。', 'All progress comes from your private completions, stats, plans, and attachments.')}</p></section><div className="collection-filters">{(['all', 'title', 'badge', 'frame', 'theme', 'keepsake'] as const).map((value) => <button key={value} className={filter === value ? 'active' : ''} onClick={() => setFilter(value)}>{value === 'all' ? text('全部收藏', 'All') : kindLabels[value]}</button>)}</div><div className="collection-gallery-grid">{visible.map((item) => { const Icon = item.icon; const equippedNow = isEquipped(item); const equippable = ['title', 'frame', 'theme'].includes(item.kind); return <article className={`collection-card ${item.unlocked ? 'unlocked' : 'locked'} ${equippedNow ? 'equipped' : ''}`} key={item.id}><div className={`collection-card-icon ${item.kind === 'frame' ? `cosmetic-frame ${item.id}` : ''}`}><Icon size={27} /></div><div className="collection-card-kind">{kindLabels[item.kind]}{equippedNow && <b>{text('使用中', 'Equipped')}</b>}</div><h2>{item.title}</h2><p>{item.description}</p><blockquote>{item.flavor}</blockquote><div className="collection-progress"><div><span>{item.unlocked ? text('已解锁', 'Unlocked') : text('解锁进度', 'Progress')}</span><strong>{item.progress} / {item.target}</strong></div><i><b style={{ width: `${item.progress / item.target * 100}%` }} /></i></div><div className="collection-card-actions">{equippable && <button disabled={!item.unlocked || equippedNow} onClick={() => onEquip(item)}>{equippedNow ? text('正在使用', 'Equipped') : item.unlocked ? text('装备收藏', 'Equip') : text('尚未解锁', 'Locked')}</button>}{item.unlocked && <button className="download-keepsake" onClick={() => downloadCard(item)}><Download size={14} /> {text('纪念卡', 'Card')}</button>}</div></article>})}</div></>
+  return <><div className="page-heading collection-heading"><p className="eyebrow">{text('私人收藏馆', 'Private collection')}</p><h1>{text('把真实成长变成', 'Turn real growth into')}<em>{text('可以珍藏的东西。', ' something worth keeping.')}</em></h1><p>{text('称号、徽章、头像框、营地主题和纪念物只记录你的真实行动。', 'Titles, badges, frames, themes, and keepsakes record your real actions.')}</p></div><section className="collection-overview"><div><Gem size={28} /><span>{text('已解锁收藏', 'Unlocked')}</span><strong>{unlocked} / {items.length}</strong></div><div className="collection-overview-progress"><i><b style={{ width: `${unlocked / items.length * 100}%` }} /></i><span>{Math.round(unlocked / items.length * 100)}%</span></div><p>{text('所有进度都来自私人存档中的完成记录、属性、任务链与附件。', 'All progress comes from your private completions, stats, plans, and attachments.')}</p></section><section className="collection-toolbar"><label className="collection-search"><Search size={15} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={text('搜索称号、收藏描述或纪念语', 'Search titles and collectibles')} /></label><label><span>{text('解锁状态', 'Status')}</span><select value={status} onChange={(event) => setStatus(event.target.value as typeof status)}><option value="all">{text('全部状态', 'All statuses')}</option><option value="unlocked">{text('已解锁', 'Unlocked')}</option><option value="locked">{text('未解锁', 'Locked')}</option><option value="equipped">{text('使用中', 'Equipped')}</option></select></label><label><span>{text('排序方式', 'Sort')}</span><select value={sort} onChange={(event) => setSort(event.target.value as typeof sort)}><option value="default">{text('默认顺序', 'Default')}</option><option value="unlocked">{text('已解锁优先', 'Unlocked first')}</option><option value="progress">{text('完成度从高到低', 'Progress high to low')}</option><option value="closest">{text('距离解锁最近', 'Closest to unlock')}</option><option value="title">{text('按名称排序', 'By title')}</option></select></label></section><div className="collection-filters">{(['all', 'title', 'badge', 'frame', 'theme', 'keepsake'] as const).map((value) => <button key={value} className={filter === value ? 'active' : ''} onClick={() => setFilter(value)}>{value === 'all' ? text('全部收藏', 'All') : kindLabels[value]}</button>)}<span>{text(`显示 ${visible.length} 项`, `${visible.length} shown`)}</span></div>{visible.length ? <div className="collection-gallery-grid">{visible.map((item) => { const Icon = item.icon; const equippedNow = isEquipped(item); const equippable = ['title', 'frame', 'theme'].includes(item.kind); return <article className={`collection-card ${item.unlocked ? 'unlocked' : 'locked'} ${equippedNow ? 'equipped' : ''}`} key={item.id}><div className={`collection-card-icon ${item.kind === 'frame' ? `cosmetic-frame ${item.id}` : ''}`}><Icon size={27} /></div><div className="collection-card-kind">{kindLabels[item.kind]}{equippedNow && <b>{text('使用中', 'Equipped')}</b>}</div><h2>{item.title}</h2><p>{item.description}</p><blockquote>{item.flavor}</blockquote><div className="collection-progress"><div><span>{item.unlocked ? text('已解锁', 'Unlocked') : text('解锁进度', 'Progress')}</span><strong>{item.progress} / {item.target}</strong></div><i><b style={{ width: `${item.progress / item.target * 100}%` }} /></i></div><div className="collection-card-actions">{equippable && <button disabled={!item.unlocked || equippedNow} onClick={() => onEquip(item)}>{equippedNow ? text('正在使用', 'Equipped') : item.unlocked ? text('装备收藏', 'Equip') : text('尚未解锁', 'Locked')}</button>}{item.unlocked && <button className="download-keepsake" onClick={() => downloadCard(item)}><Download size={14} /> {text('纪念卡', 'Card')}</button>}</div></article>})}</div> : <EmptyState compact icon={Search} title={text('没有符合条件的收藏', 'No matching collectibles')} text={text('尝试清除搜索词或切换筛选条件。', 'Clear the search or change the filters.')} />}</>
 }
 
 function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onCreate, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
@@ -1658,6 +1687,12 @@ function SettingsView({ settings, onChange }: { settings: AppSettings; onChange:
         <div className="creation-toggle-list">
           <button className={`setting-toggle ${settings.customFeatures ? 'selected' : ''}`} aria-pressed={settings.customFeatures} onClick={() => onChange({ ...settings, customFeatures: !settings.customFeatures })}><span><strong>{text('启用个人创作功能', 'Enable personal creation')}</strong><small>{settings.customFeatures ? text('可以创建和编辑个人任务、任务链与项目', 'Creation and editing are available') : text('创建、编辑以及任务链界面已关闭', 'Creation, editing, and plan UI are disabled')}</small></span><i><b /></i></button>
           <button className={`setting-toggle setting-toggle--nested ${settings.hidePersonalContentWhenDisabled ? 'selected' : ''}`} aria-pressed={settings.hidePersonalContentWhenDisabled} onClick={() => onChange({ ...settings, hidePersonalContentWhenDisabled: !settings.hidePersonalContentWhenDisabled })}><span><strong>{text('关闭时隐藏已有个人内容', 'Hide personal content when disabled')}</strong><small>{text('同时从任务公会、每日推荐、我的任务、日志和统计中暂时移除；重新开启后恢复。', 'Temporarily removes it from the guild, recommendations, my quests, chronicle, and statistics.')}</small></span><i><b /></i></button>
+        </div>
+      </section>
+      <section className="settings-panel creation-settings-panel">
+        <div className="setting-copy"><span>{text('玩法模块', 'Gameplay modules')}</span><h2>{text('私人收藏馆', 'Private collection')}</h2><p>{text('控制收藏馆页面、称号、头像框和营地主题。关闭不会清除解锁进度或已选择的装扮。', 'Controls the collection page, titles, frames, and themes without deleting progress or selections.')}</p></div>
+        <div className="creation-toggle-list">
+          <button className={`setting-toggle ${settings.collectionFeatures ? 'selected' : ''}`} aria-pressed={settings.collectionFeatures} onClick={() => onChange({ ...settings, collectionFeatures: !settings.collectionFeatures })}><span><strong>{text('启用私人收藏馆', 'Enable private collection')}</strong><small>{settings.collectionFeatures ? text('显示收藏馆入口，并应用当前称号、头像框和营地主题', 'Shows the collection and applies equipped cosmetics') : text('收藏馆入口和装扮暂时关闭，重新开启后自动恢复', 'Collection UI and cosmetics are temporarily disabled')}</small></span><i><b /></i></button>
         </div>
       </section>
       <section className="database-status"><div><ShieldCheck size={20} /><span>{text('数据存储', 'Data storage')}</span><strong>{cloud ? text('Neon PostgreSQL 云存档', 'Neon PostgreSQL cloud save') : text('SQLite 本地开发数据库', 'Local SQLite development database')}</strong></div><code>{cloud ? 'Vercel + Neon' : 'data/lvluplife.sqlite'}</code></section>
