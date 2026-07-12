@@ -145,25 +145,25 @@ const statMeta: Record<StatKey, { icon: LucideIcon; color: string }> = {
   INT: { icon: GraduationCap, color: '#a997ff' },
 }
 
-const categoryMeta: Record<string, { icon: LucideIcon; color: string; short: string }> = {
-  艺术与创意: { icon: Palette, color: '#f38bba', short: '艺术' },
-  音乐: { icon: Music2, color: '#a997ff', short: '音乐' },
-  摄影: { icon: Camera, color: '#72d6d0', short: '摄影' },
-  写作: { icon: ScrollText, color: '#e4a66d', short: '写作' },
-  事业与财务: { icon: BriefcaseBusiness, color: '#f2c561', short: '事业' },
-  健身与健康: { icon: Dumbbell, color: '#ff837a', short: '健康' },
-  运动: { icon: Medal, color: '#ff9f59', short: '运动' },
-  美食与烹饪: { icon: Utensils, color: '#f0bd63', short: '烹饪' },
-  家务与手作: { icon: Hammer, color: '#99c879', short: '家务' },
-  善意与公益: { icon: Heart, color: '#ff7993', short: '公益' },
-  心智与情绪: { icon: Sparkles, color: '#c49aff', short: '心智' },
-  户外: { icon: Leaf, color: '#68cf88', short: '户外' },
-  阅读: { icon: BookOpen, color: '#75b7ff', short: '阅读' },
-  经典书单: { icon: LibraryBig, color: '#6fa5e8', short: '书单' },
-  学习与成长: { icon: GraduationCap, color: '#83b5ff', short: '学习' },
-  社交: { icon: MessageCircle, color: '#ed8ecb', short: '社交' },
-  旅行: { icon: Compass, color: '#57c7b1', short: '旅行' },
-  一生必去: { icon: Globe2, color: '#4eb7d7', short: '远方' },
+const categoryMeta: Record<string, { icon: LucideIcon; color: string; short: string; labelEn: string; shortEn: string }> = {
+  艺术与创意: { icon: Palette, color: '#f38bba', short: '艺术', labelEn: 'Arts & Creativity', shortEn: 'Arts' },
+  音乐: { icon: Music2, color: '#a997ff', short: '音乐', labelEn: 'Music', shortEn: 'Music' },
+  摄影: { icon: Camera, color: '#72d6d0', short: '摄影', labelEn: 'Photography', shortEn: 'Photo' },
+  写作: { icon: ScrollText, color: '#e4a66d', short: '写作', labelEn: 'Writing', shortEn: 'Writing' },
+  事业与财务: { icon: BriefcaseBusiness, color: '#f2c561', short: '事业', labelEn: 'Career & Finances', shortEn: 'Career' },
+  健身与健康: { icon: Dumbbell, color: '#ff837a', short: '健康', labelEn: 'Fitness & Health', shortEn: 'Health' },
+  运动: { icon: Medal, color: '#ff9f59', short: '运动', labelEn: 'Sports', shortEn: 'Sports' },
+  美食与烹饪: { icon: Utensils, color: '#f0bd63', short: '烹饪', labelEn: 'Food & Cooking', shortEn: 'Cooking' },
+  家务与手作: { icon: Hammer, color: '#99c879', short: '家务', labelEn: 'Household & DIY', shortEn: 'DIY' },
+  善意与公益: { icon: Heart, color: '#ff7993', short: '公益', labelEn: 'Humanity', shortEn: 'Humanity' },
+  心智与情绪: { icon: Sparkles, color: '#c49aff', short: '心智', labelEn: 'Mental & Emotional', shortEn: 'Mental' },
+  户外: { icon: Leaf, color: '#68cf88', short: '户外', labelEn: 'Outdoors', shortEn: 'Outdoors' },
+  阅读: { icon: BookOpen, color: '#75b7ff', short: '阅读', labelEn: 'Reading', shortEn: 'Reading' },
+  经典书单: { icon: LibraryBig, color: '#6fa5e8', short: '书单', labelEn: 'Classic Reading List', shortEn: 'Book List' },
+  学习与成长: { icon: GraduationCap, color: '#83b5ff', short: '学习', labelEn: 'Learning & Growth', shortEn: 'Learning' },
+  社交: { icon: MessageCircle, color: '#ed8ecb', short: '社交', labelEn: 'Social', shortEn: 'Social' },
+  旅行: { icon: Compass, color: '#57c7b1', short: '旅行', labelEn: 'Travel', shortEn: 'Travel' },
+  一生必去: { icon: Globe2, color: '#4eb7d7', short: '远方', labelEn: 'Must-Visit Places', shortEn: 'Places' },
 }
 
 const statLabels: Record<StatKey, string> = {
@@ -768,12 +768,12 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenLock
       <div className="unlock-banner"><div className="unlock-emblem"><LockKeyhole size={22} /></div><div><span>{text('冒险者等级', 'Adventurer level')} {level}</span><strong>{text('已发现', 'Discovered')} {unlockedTotal} / {totalChallenges}</strong></div><div className="unlock-progress"><i style={{ width: `${totalChallenges ? (unlockedTotal / totalChallenges) * 100 : 0}%` }} /></div><small>{text('下一批成就将在等级', 'Next achievements unlock at level')} {Number.isFinite(nextLevel) ? nextLevel : '—'}</small></div>
       <div className="filter-bar">
         <label className="search-field"><Search size={19} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={text('搜索已解锁的任务……', 'Search unlocked quests…')} /></label>
-        <label className="select-field"><select value={category} onChange={(event) => onCategory(event.target.value)}>{categories.map((item) => <option key={item} value={item}>{item === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? item : Object.values(categoryMeta).length && ({ 艺术与创意:'Arts & Creativity', 音乐:'Music', 摄影:'Photography', 写作:'Writing', 事业与财务:'Career & Finances', 健身与健康:'Fitness & Health', 运动:'Sports', 美食与烹饪:'Food & Cooking', 家务与手作:'Household & DIY', 善意与公益:'Humanity', 心智与情绪:'Mental', 户外:'Outdoors', 阅读:'Reading', 经典书单:'Top 150', 学习与成长:'School & Learning', 社交:'Social', 旅行:'Travel', 一生必去:'Destinations' } as Record<string,string>)[item]}</option>)}</select><ChevronDown size={17} /></label>
+        <label className="select-field"><select value={category} onChange={(event) => onCategory(event.target.value)}>{categories.map((item) => <option key={item} value={item}>{item === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? item : categoryMeta[item].labelEn}</option>)}</select><ChevronDown size={17} /></label>
       </div>
       <div className="category-strip">
-        {categories.slice(0, 9).map((item) => <button key={item} className={category === item ? 'active' : ''} onClick={() => onCategory(item)}>{item === '全部任务' ? <Sparkles size={17} /> : (() => { const Icon = categoryMeta[item].icon; return <Icon size={17} /> })()}<span>{item === '全部任务' ? text('全部任务', 'All') : language === 'zh' ? categoryMeta[item].short : ({ 艺术与创意:'Arts', 音乐:'Music', 摄影:'Photo', 写作:'Writing', 事业与财务:'Career', 健身与健康:'Health', 运动:'Sports', 美食与烹饪:'Cooking' } as Record<string,string>)[item]}</span></button>)}
+        {categories.map((item) => <button key={item} className={category === item ? 'active' : ''} onClick={() => onCategory(item)}>{item === '全部任务' ? <Sparkles size={17} /> : (() => { const Icon = categoryMeta[item].icon; return <Icon size={17} /> })()}<span>{item === '全部任务' ? text('全部任务', 'All') : language === 'zh' ? categoryMeta[item].short : categoryMeta[item].shortEn}</span></button>)}
       </div>
-      <div className="result-meta"><strong>{visibleChallenges.filter((item) => item.level <= level).length}</strong> {text('项可领取任务', 'available quests')} <span>•</span> {category === '全部任务' ? text('全部任务', 'All quests') : category}</div>
+      <div className="result-meta"><strong>{visibleChallenges.filter((item) => item.level <= level).length}</strong> {text('项可领取任务', 'available quests')} <span>•</span> {category === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? category : categoryMeta[category].labelEn}</div>
       <div className="quest-list">
         {visibleChallenges.slice(0, 80).map((challenge) => challenge.level > level
           ? <LockedQuestRow key={challenge.id} challenge={challenge} onOpen={onOpen} />
