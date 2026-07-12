@@ -9,7 +9,7 @@ export default async function handler(request, response) {
       return response.status(400).json({ error: 'Invalid settings' })
     }
     const sql = await ensureSchema()
-    await sql`UPDATE app_state SET settings = CAST(${JSON.stringify({ language: settings.language, font: settings.font })} AS jsonb), updated_at = NOW() WHERE id = 1`
+    await sql`UPDATE app_state SET settings = CAST(${JSON.stringify({ language: settings.language, font: settings.font, customFeatures: settings.customFeatures !== false, hidePersonalContentWhenDisabled: settings.hidePersonalContentWhenDisabled !== false })} AS jsonb), updated_at = NOW() WHERE id = 1`
     response.status(200).json({ ok: true })
   } catch (error) {
     console.error(error)

@@ -159,6 +159,8 @@ type SaveState = {
 type AppSettings = {
   language: Language
   font: FontChoice
+  customFeatures: boolean
+  hidePersonalContentWhenDisabled: boolean
 }
 
 type BootstrapData = {
@@ -180,7 +182,7 @@ const emptySave: SaveState = {
   specialization: null,
   completions: [],
 }
-const defaultSettings: AppSettings = { language: 'zh', font: 'noto' }
+const defaultSettings: AppSettings = { language: 'zh', font: 'noto', customFeatures: true, hidePersonalContentWhenDisabled: true }
 
 const LanguageContext = createContext<Language>('zh')
 const AccessKeyContext = createContext('')
@@ -423,7 +425,7 @@ function App() {
         localStorage.removeItem(STORAGE_KEY)
         setChallenges(data.challenges)
         setSave(initialSave)
-        setSettings(data.settings)
+        setSettings({ ...defaultSettings, ...data.settings })
         setAccessError('')
         setReady(true)
       } catch (error) {
@@ -471,10 +473,11 @@ function App() {
     return () => window.removeEventListener('popstate', syncBrowserRoute)
   }, [])
 
+  const personalContentVisible = settings.customFeatures || !settings.hidePersonalContentWhenDisabled
   const allChallenges = useMemo(() => {
     const originalIds = new Set(challenges.map((item) => item.id))
-    return [...challenges, ...save.customChallenges.filter((item) => !originalIds.has(item.id))]
-  }, [challenges, save.customChallenges])
+    return [...challenges, ...(personalContentVisible ? save.customChallenges.filter((item) => !originalIds.has(item.id)) : [])]
+  }, [challenges, personalContentVisible, save.customChallenges])
   const challengeMap = useMemo(() => new Map(allChallenges.map((item) => [item.id, item])), [allChallenges])
   const detailChallenge = detailChallengeId ? challengeMap.get(detailChallengeId) ?? null : null
   const completedChallenges = save.completions
@@ -483,7 +486,7 @@ function App() {
 
   const totalXp = completedChallenges.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).xp, 0)
   const level = getLevel(totalXp)
-  const streak = getStreak(save.completions)
+  const streak = getStreak(completedChallenges.map((item) => item.completion))
   const maxEnergy = Math.min(8, 3 + Math.floor((level.level - 1) / 5))
   const recentCompletions = save.completions.filter((item) => Date.now() - new Date(item.completedAt).getTime() < 3600000).length
   const energy = Math.max(0, maxEnergy - recentCompletions)
@@ -582,6 +585,17 @@ function App() {
     if (!ready || save.dailyBoard.date === todayKey) return
     setSave((current) => ({ ...current, dailyBoard: { date: todayKey, energy: current.dailyBoard.energy, reroll: 0 } }))
   }, [ready, save.dailyBoard.date, todayKey])
+
+  useEffect(() => {
+    if (!ready || settings.customFeatures) return
+    setCustomEditor(null)
+    setPlanEditor(false)
+    if (view === 'plans') {
+      setView('settings')
+      window.history.replaceState({ lvluplife: true }, '', viewPaths.settings)
+      window.scrollTo({ top: 0 })
+    }
+  }, [ready, settings.customFeatures, view])
 
   function toggleActive(id: string) {
     if (lockedPlanStepIds.has(id)) return
@@ -767,6 +781,7 @@ function App() {
       return (
         <QuestDetailView
           active={save.activeIds.includes(detailChallenge.id)}
+          allowCustomEditing={settings.customFeatures}
           challenge={detailChallenge}
           completions={save.completions}
           favorite={save.favoriteIds.includes(detailChallenge.id)}
@@ -786,10 +801,10 @@ function App() {
     }
 
     if (view === 'character') {
-      return <CharacterView completedCount={save.completions.length} energy={energy} levelInfo={level} maxEnergy={maxEnergy} onSpecialization={(specialization) => setSave((current) => ({ ...current, specialization }))} specialization={save.specialization} stats={stats} streak={streak} totalXp={totalXp} />
+      return <CharacterView completedCount={completedChallenges.length} energy={energy} levelInfo={level} maxEnergy={maxEnergy} onSpecialization={(specialization) => setSave((current) => ({ ...current, specialization }))} specialization={save.specialization} stats={stats} streak={streak} totalXp={totalXp} />
     }
 
-    if (view === 'plans') return <PlansView challengeMap={challengeMap} completedStepIds={completedPlanStepIds} lockedStepIds={lockedPlanStepIds} onComplete={setSelected} onCreate={() => setPlanEditor(true)} onOpen={openChallenge} plans={save.plans} />
+    if (view === 'plans' && settings.customFeatures) return <PlansView challengeMap={challengeMap} completedStepIds={completedPlanStepIds} lockedStepIds={lockedPlanStepIds} onComplete={setSelected} onCreate={() => setPlanEditor(true)} onOpen={openChallenge} plans={save.plans} />
 
     if (view === 'explore') {
       return (
@@ -806,7 +821,7 @@ function App() {
           nextLevel={Math.min(...challenges.filter((item) => item.level > level.level).map((item) => item.level))}
           onCategory={setCategory}
           onComplete={setSelected}
-          onCreate={() => setCustomEditor('new')}
+          onCreate={settings.customFeatures ? () => setCustomEditor('new') : undefined}
           onFavorite={toggleFavorite}
           onSeal={toggleSealed}
           onOpen={openChallenge}
@@ -885,8 +900,8 @@ function App() {
           <NavButton active={view === 'home'} icon={House} label={text('营地', 'Camp')} onClick={() => navigate('home')} />
           <NavButton active={view === 'character'} icon={UserRound} label={text('角色面板', 'Character')} onClick={() => navigate('character')} />
           <NavButton active={view === 'explore'} icon={Compass} label={text('任务公会', 'Quest Guild')} onClick={() => navigate('explore')} />
-          <NavButton active={view === 'plans'} icon={ListChecks} label={text('任务链与项目', 'Plans')} onClick={() => navigate('plans')} badge={save.plans.length} />
-          <NavButton active={view === 'goals'} icon={Target} label={text('我的任务', 'My Quests')} onClick={() => navigate('goals')} badge={save.activeIds.length} />
+          {settings.customFeatures && <NavButton active={view === 'plans'} icon={ListChecks} label={text('任务链与项目', 'Plans')} onClick={() => navigate('plans')} badge={save.plans.length} />}
+          <NavButton active={view === 'goals'} icon={Target} label={text('我的任务', 'My Quests')} onClick={() => navigate('goals')} badge={activeChallenges.length} />
           <NavButton active={view === 'chronicle'} icon={ScrollText} label={text('冒险日志', 'Chronicle')} onClick={() => navigate('chronicle')} />
           <NavButton active={view === 'statistics'} icon={BarChart3} label={text('成长统计', 'Statistics')} onClick={() => navigate('statistics')} />
           <NavButton active={view === 'settings'} icon={Settings} label={text('设置', 'Settings')} onClick={() => navigate('settings')} />
@@ -913,7 +928,7 @@ function App() {
           <div className="top-stats">
             <button className="topbar-action energy-hearts" onClick={() => setEnergyHelp(true)} title={text('查看行动力规则', 'View energy rules')}><span className="topbar-stat-label">{text('行动力', 'Energy')}</span>{Array.from({ length: maxEnergy }, (_, index) => <Heart key={index} size={16} fill={index < energy ? 'currentColor' : 'none'} />)} <strong>{energy}/{maxEnergy}</strong></button>
             <button className="topbar-action" onClick={() => navigate('chronicle')} title={text('查看连续记录', 'View streak history')}><Flame size={17} /> {text('连续', 'Streak')} <strong>{streak}</strong> {text('天', 'days')}</button>
-            <button className="topbar-action" onClick={() => navigate('chronicle')} title={text('查看全部完成记录', 'View all completions')}><Trophy size={17} /> {text('完成', 'Done')} <strong>{save.completions.length}</strong> {text('次', 'times')}</button>
+            <button className="topbar-action" onClick={() => navigate('chronicle')} title={text('查看全部完成记录', 'View all completions')}><Trophy size={17} /> {text('完成', 'Done')} <strong>{completedChallenges.length}</strong> {text('次', 'times')}</button>
           </div>
         </header>
         <div className="page-content">{mainContent}</div>
@@ -1111,7 +1126,7 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds,
   unlockedTotal: number
   nextLevel: number
   onCategory: (value: string) => void
-  onCreate: () => void
+  onCreate?: () => void
   onSeal: (id: string) => void
   onShowSealed: () => void
   search: string
@@ -1124,7 +1139,7 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds,
   const categories = ['全部任务', ...Object.keys(categoryMeta)]
   return (
     <>
-      <div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('任务公会', 'Quest Guild')}</p><h1>{text('寻找下一场', 'Find your next')}<em>{text('胜利。', ' victory.')}</em></h1><p>{text(`完整收录 ${totalChallenges} 项原版挑战，也可以创建只属于你的个人任务。`, `All ${totalChallenges} original challenges, plus personal quests of your own.`)}</p></div><button className="primary-button create-quest-button" onClick={onCreate}><Plus size={17} /> {text('创建任务', 'Create quest')}</button></div>
+      <div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('任务公会', 'Quest Guild')}</p><h1>{text('寻找下一场', 'Find your next')}<em>{text('胜利。', ' victory.')}</em></h1><p>{text(onCreate ? `完整收录 ${totalChallenges} 项原版挑战，也可以创建只属于你的个人任务。` : `完整收录 ${totalChallenges} 项原版挑战。个人创作功能当前已关闭。`, onCreate ? `All ${totalChallenges} original challenges, plus personal quests of your own.` : `All ${totalChallenges} original challenges. Personal creation is disabled.`)}</p></div>{onCreate && <button className="primary-button create-quest-button" onClick={onCreate}><Plus size={17} /> {text('创建任务', 'Create quest')}</button>}</div>
       <div className="unlock-banner"><div className="unlock-emblem"><LockKeyhole size={22} /></div><div><span>{text('冒险者等级', 'Adventurer level')} {level}</span><strong>{text('已发现', 'Discovered')} {unlockedTotal} / {totalChallenges}</strong></div><div className="unlock-progress"><i style={{ width: `${totalChallenges ? (unlockedTotal / totalChallenges) * 100 : 0}%` }} /></div><small>{text('下一批成就将在等级', 'Next achievements unlock at level')} {Number.isFinite(nextLevel) ? nextLevel : '—'}</small></div>
       <div className="filter-bar">
         <label className="search-field"><Search size={19} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={text('搜索已解锁的任务……', 'Search unlocked quests…')} /></label>
@@ -1246,8 +1261,9 @@ function LockedQuestRow({ challenge }: { challenge: Challenge }) {
   )
 }
 
-function QuestDetailView({ active, challenge, completions, favorite, level, onBack, onComplete, onDuplicate, onEdit, onFavorite, onSeal, onStart, onUndo, planLocked, sealed }: {
+function QuestDetailView({ active, allowCustomEditing, challenge, completions, favorite, level, onBack, onComplete, onDuplicate, onEdit, onFavorite, onSeal, onStart, onUndo, planLocked, sealed }: {
   active: boolean
+  allowCustomEditing: boolean
   challenge: Challenge
   completions: Completion[]
   favorite: boolean
@@ -1290,8 +1306,8 @@ function QuestDetailView({ active, challenge, completions, favorite, level, onBa
           </div>
         </div>
         <div className="detail-actions">
-          {challenge.custom && !sealed && <button className="detail-secondary" onClick={() => onEdit(challenge)}><Pencil size={15} /> {text('编辑', 'Edit')}</button>}
-          {challenge.custom && !sealed && <button className="detail-secondary" onClick={() => onDuplicate(challenge)}><Copy size={15} /> {text('复制', 'Copy')}</button>}
+          {challenge.custom && allowCustomEditing && !sealed && <button className="detail-secondary" onClick={() => onEdit(challenge)}><Pencil size={15} /> {text('编辑', 'Edit')}</button>}
+          {challenge.custom && allowCustomEditing && !sealed && <button className="detail-secondary" onClick={() => onDuplicate(challenge)}><Copy size={15} /> {text('复制', 'Copy')}</button>}
           {!locked && !sealed && <button className={`detail-favorite ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /> {favorite ? text('已收藏', 'Saved') : text('收藏', 'Save')}</button>}
           {!locked && !sealed && <button className="detail-secondary detail-seal" onClick={() => onSeal(challenge.id)}><LockKeyhole size={16} /> {text('封印任务', 'Seal quest')}</button>}
           {sealed ? <button className="primary-button" onClick={() => onSeal(challenge.id)}><RotateCcw size={16} /> {text('解除封印', 'Restore quest')}</button> : planLocked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text('完成前一步后解锁', 'Complete the previous step')}</button> : locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
@@ -1527,6 +1543,13 @@ function SettingsView({ settings, onChange }: { settings: AppSettings; onChange:
           <button className={`font-preview font-preview--zcool ${settings.font === 'zcool' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'zcool' })}><strong>{text('站酷快乐体', 'ZCOOL KuaiLe')}</strong><span>{text('复古、活泼、游戏感', 'Playful, retro, game-like')}</span></button>
           <button className={`font-preview font-preview--pixel ${settings.font === 'pixel' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'pixel' })}><strong>{text('像素街机体', 'Pixel Arcade')}</strong><span>{text('方块笔画、复古像素感', 'Blocky, retro pixel style')}</span></button>
           <button className={`font-preview font-preview--system ${settings.font === 'system' ? 'selected' : ''}`} onClick={() => onChange({ ...settings, font: 'system' })}><strong>{text('系统字体', 'System font')}</strong><span>{text('跟随当前设备', 'Follow this device')}</span></button>
+        </div>
+      </section>
+      <section className="settings-panel creation-settings-panel">
+        <div className="setting-copy"><span>{text('玩法模块', 'Gameplay modules')}</span><h2>{text('个人创作功能', 'Personal creation')}</h2><p>{text('控制自定义任务、任务链和项目的创建、编辑入口。关闭不会删除任何已有内容。', 'Controls creation and editing for personal quests, chains, and projects. Disabling never deletes data.')}</p></div>
+        <div className="creation-toggle-list">
+          <button className={`setting-toggle ${settings.customFeatures ? 'selected' : ''}`} aria-pressed={settings.customFeatures} onClick={() => onChange({ ...settings, customFeatures: !settings.customFeatures })}><span><strong>{text('启用个人创作功能', 'Enable personal creation')}</strong><small>{settings.customFeatures ? text('可以创建和编辑个人任务、任务链与项目', 'Creation and editing are available') : text('创建、编辑以及任务链界面已关闭', 'Creation, editing, and plan UI are disabled')}</small></span><i><b /></i></button>
+          <button className={`setting-toggle setting-toggle--nested ${settings.hidePersonalContentWhenDisabled ? 'selected' : ''}`} aria-pressed={settings.hidePersonalContentWhenDisabled} onClick={() => onChange({ ...settings, hidePersonalContentWhenDisabled: !settings.hidePersonalContentWhenDisabled })}><span><strong>{text('关闭时隐藏已有个人内容', 'Hide personal content when disabled')}</strong><small>{text('同时从任务公会、每日推荐、我的任务、日志和统计中暂时移除；重新开启后恢复。', 'Temporarily removes it from the guild, recommendations, my quests, chronicle, and statistics.')}</small></span><i><b /></i></button>
         </div>
       </section>
       <section className="database-status"><div><ShieldCheck size={20} /><span>{text('数据存储', 'Data storage')}</span><strong>{cloud ? text('Neon PostgreSQL 云存档', 'Neon PostgreSQL cloud save') : text('SQLite 本地开发数据库', 'Local SQLite development database')}</strong></div><code>{cloud ? 'Vercel + Neon' : 'data/lvluplife.sqlite'}</code></section>

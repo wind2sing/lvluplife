@@ -29,13 +29,18 @@ if (!settingsTableSql.includes("'pixel'")) {
     CREATE TABLE settings (
       id INTEGER PRIMARY KEY CHECK (id = 1),
       language TEXT NOT NULL DEFAULT 'zh' CHECK (language IN ('zh', 'en')),
-      font TEXT NOT NULL DEFAULT 'noto' CHECK (font IN ('noto', 'zcool', 'pixel', 'system'))
+      font TEXT NOT NULL DEFAULT 'noto' CHECK (font IN ('noto', 'zcool', 'pixel', 'system')),
+      custom_features INTEGER NOT NULL DEFAULT 1 CHECK (custom_features IN (0, 1)),
+      hide_personal_content INTEGER NOT NULL DEFAULT 1 CHECK (hide_personal_content IN (0, 1))
     );
     INSERT INTO settings (id, language, font) SELECT id, language, font FROM settings_legacy;
     DROP TABLE settings_legacy;
     COMMIT;
   `)
 }
+const settingsColumns = db.prepare('PRAGMA table_info(settings)').all().map((item) => item.name)
+if (!settingsColumns.includes('custom_features')) db.exec('ALTER TABLE settings ADD COLUMN custom_features INTEGER NOT NULL DEFAULT 1 CHECK (custom_features IN (0, 1))')
+if (!settingsColumns.includes('hide_personal_content')) db.exec('ALTER TABLE settings ADD COLUMN hide_personal_content INTEGER NOT NULL DEFAULT 1 CHECK (hide_personal_content IN (0, 1))')
 
 const challengeSeed = JSON.parse(readFileSync(join(root, 'src/data/challenges.json'), 'utf8'))
 const upsertChallenge = db.prepare(`
@@ -89,14 +94,14 @@ const selectChallenges = db.prepare(`
 const selectCustomChallenges = db.prepare("SELECT custom_json FROM challenges WHERE source = 'custom' AND custom_json IS NOT NULL ORDER BY rowid")
 const selectQuestState = db.prepare('SELECT challenge_id, active, favorite, hidden FROM quest_state')
 const selectCompletions = db.prepare('SELECT id, challenge_id, note, completed_at, reward_json FROM completions ORDER BY completed_at DESC')
-const selectSettings = db.prepare('SELECT language, font FROM settings WHERE id = 1')
+const selectSettings = db.prepare('SELECT language, font, custom_features, hide_personal_content FROM settings WHERE id = 1')
 const selectInitialized = db.prepare("SELECT value FROM app_meta WHERE key = 'state_initialized'")
 const upsertQuestState = db.prepare(`
   INSERT INTO quest_state (challenge_id, active, favorite, hidden) VALUES (?, ?, ?, ?)
   ON CONFLICT(challenge_id) DO UPDATE SET active = excluded.active, favorite = excluded.favorite, hidden = excluded.hidden
 `)
 const insertCompletion = db.prepare('INSERT INTO completions (id, challenge_id, note, completed_at, reward_json) VALUES (?, ?, ?, ?, ?)')
-const updateSettings = db.prepare('UPDATE settings SET language = ?, font = ? WHERE id = 1')
+const updateSettings = db.prepare('UPDATE settings SET language = ?, font = ?, custom_features = ?, hide_personal_content = ? WHERE id = 1')
 const markInitialized = db.prepare("INSERT INTO app_meta (key, value) VALUES ('state_initialized', '1') ON CONFLICT(key) DO UPDATE SET value = '1'")
 const selectDailyBoard = db.prepare("SELECT value FROM app_meta WHERE key = 'daily_board'")
 const upsertDailyBoard = db.prepare("INSERT INTO app_meta (key, value) VALUES ('daily_board', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value")
@@ -163,7 +168,7 @@ function getBootstrap() {
       specialization: gameplayState.specialization,
       completions,
     },
-    settings: { language: settings.language, font: settings.font },
+    settings: { language: settings.language, font: settings.font, customFeatures: Boolean(settings.custom_features), hidePersonalContentWhenDisabled: Boolean(settings.hide_personal_content) },
   }
 }
 
@@ -234,7 +239,7 @@ const server = createServer(async (request, response) => {
     if (request.method === 'PUT' && request.url === '/api/settings') {
       const settings = await readJson(request)
       if (!['zh', 'en'].includes(settings.language) || !['noto', 'zcool', 'pixel', 'system'].includes(settings.font)) return json(response, 400, { error: 'Invalid settings' })
-      updateSettings.run(settings.language, settings.font)
+      updateSettings.run(settings.language, settings.font, settings.customFeatures === false ? 0 : 1, settings.hidePersonalContentWhenDisabled === false ? 0 : 1)
       return json(response, 200, { ok: true })
     }
     if (request.url?.startsWith('/api/')) return json(response, 404, { error: 'Not found' })

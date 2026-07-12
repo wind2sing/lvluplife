@@ -38,7 +38,9 @@ CREATE INDEX IF NOT EXISTS completions_completed_at_idx ON completions(completed
 CREATE TABLE IF NOT EXISTS settings (
   id INTEGER PRIMARY KEY CHECK (id = 1),
   language TEXT NOT NULL DEFAULT 'zh' CHECK (language IN ('zh', 'en')),
-  font TEXT NOT NULL DEFAULT 'noto' CHECK (font IN ('noto', 'zcool', 'pixel', 'system'))
+  font TEXT NOT NULL DEFAULT 'noto' CHECK (font IN ('noto', 'zcool', 'pixel', 'system')),
+  custom_features INTEGER NOT NULL DEFAULT 1 CHECK (custom_features IN (0, 1)),
+  hide_personal_content INTEGER NOT NULL DEFAULT 1 CHECK (hide_personal_content IN (0, 1))
 );
 
 INSERT INTO settings (id, language, font) VALUES (1, 'zh', 'noto')
