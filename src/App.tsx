@@ -176,6 +176,7 @@ type Attachment = {
 
 type SaveState = {
   activeIds: string[]
+  activeTrackingVersion: number
   favoriteIds: string[]
   hiddenIds: string[]
   discoveredIds: string[]
@@ -206,6 +207,7 @@ const STORAGE_KEY = 'lvluplife-save-v1'
 const ACCESS_KEY_STORAGE = 'lvluplife-access-key-v1'
 const emptySave: SaveState = {
   activeIds: [],
+  activeTrackingVersion: 0,
   favoriteIds: [],
   hiddenIds: [],
   discoveredIds: [],
@@ -548,6 +550,14 @@ function App() {
         }
         const bootstrapChallengeMap = new Map([...data.challenges, ...initialSave.customChallenges].map((item) => [item.id, item]))
         initialSave = { ...initialSave, completions: initialSave.completions.map((completion) => completion.reward ? completion : { ...completion, reward: bootstrapChallengeMap.has(completion.challengeId) ? getLegacyReward(bootstrapChallengeMap.get(completion.challengeId)!) : undefined }) }
+        if (initialSave.activeTrackingVersion < 1) {
+          const migratedActiveIds = new Set(initialSave.activeIds)
+          initialSave.completions.forEach((completion) => {
+            const challenge = bootstrapChallengeMap.get(completion.challengeId)
+            if (challenge && challenge.cadence !== '终身一次' && !initialSave.hiddenIds.includes(challenge.id) && getCooldownLabel(challenge, initialSave.completions)) migratedActiveIds.add(challenge.id)
+          })
+          initialSave = { ...initialSave, activeIds: [...migratedActiveIds], activeTrackingVersion: 1 }
+        }
         localStorage.removeItem(STORAGE_KEY)
         setChallenges(data.challenges)
         setSave(initialSave)
@@ -839,16 +849,18 @@ function App() {
       reward: { xp: selected.xp, stats: selected.stats },
     }
     const newLevel = getLevel(totalXp + selected.xp).level
+    const keepActive = selected.cadence !== '终身一次'
+    const nextActiveIds = keepActive ? [...new Set([...save.activeIds, selected.id])] : save.activeIds.filter((id) => id !== selected.id)
     const nextSave = {
       ...save,
-      activeIds: save.activeIds.filter((id) => id !== selected.id),
+      activeIds: nextActiveIds,
       completions: [completion, ...save.completions],
     }
     const nextDiscovered = buildDiscoveryState(allChallenges, nextSave, newLevel).discovered
     const unlockedCount = [...nextDiscovered].filter((id) => !discoveredIds.has(id)).length
     setSave((current) => ({
       ...current,
-      activeIds: current.activeIds.filter((id) => id !== selected.id),
+      activeIds: keepActive ? [...new Set([...current.activeIds, selected.id])] : current.activeIds.filter((id) => id !== selected.id),
       completions: [completion, ...current.completions],
       discoveredIds: [...new Set([...current.discoveredIds, ...nextDiscovered])],
     }))
@@ -1442,7 +1454,7 @@ function QuestCard({ active, challenge, completions, favorite, featured, onCompl
       <h3>{title(challenge)}</h3>
       {recommendationReason && <p className="recommendation-reason"><Sparkles size={13} /> {recommendationReason}</p>}
       <div className="quest-rewards"><span><Zap size={14} /> {challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div>
-      <div className="quest-card-footer"><span>{cooldown || `${language === 'zh' ? challenge.tierName : tierLabels[challenge.tierName]} · ${text('等级', 'Level')} ${challenge.level}`}</span>{cooldown ? <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={14} /> {text('冷却中', 'Cooling down')}</button> : active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> {text('完成', 'Complete')}</button></div> : <button className="add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={17} /> {text('接取', 'Start')}</button>}</div>
+      <div className="quest-card-footer"><span>{cooldown || `${language === 'zh' ? challenge.tierName : tierLabels[challenge.tierName]} · ${text('等级', 'Level')} ${challenge.level}`}</span>{cooldown ? active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={14} /> {text('冷却中', 'Cooling down')}</button></div> : <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={14} /> {text('冷却中', 'Cooling down')}</button> : active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> {text('完成', 'Complete')}</button></div> : <button className="add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={17} /> {text('接取', 'Start')}</button>}</div>
     </article>
   )
 }
@@ -1457,7 +1469,7 @@ function QuestRow({ active, challenge, completions, favorite, onComplete, onFavo
       <div className="category-icon"><Icon size={21} /></div>
       <div className="quest-row-copy"><span>{category(challenge)} · {language === 'zh' ? challenge.tierName : tierLabels[challenge.tierName]}</span><h3>{title(challenge)}</h3><div className="quest-rewards"><span><Zap size={13} /> {challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}<em>{text('等级', 'Level')} {challenge.level}</em>{cooldown && <em className="cooldown-label">{cooldown}</em>}</div></div>
       <button className={`star-button ${favorite ? 'active' : ''}`} disabled={sealed} onClick={(event) => { event.stopPropagation(); onFavorite(challenge.id) }} aria-label={text('收藏任务', 'Save quest')}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button>
-      {sealed ? <button className="restore-button" onClick={(event) => { event.stopPropagation(); onSeal?.(challenge.id) }}><RotateCcw size={15} /> {text('解除封印', 'Restore')}</button> : cooldown ? <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={15} /> {text('冷却中', 'Cooldown')}</button> : active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> {text('完成', 'Complete')}</button></div> : <button className="row-add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={18} /><span>{text('接取任务', 'Start quest')}</span></button>}
+      {sealed ? <button className="restore-button" onClick={(event) => { event.stopPropagation(); onSeal?.(challenge.id) }}><RotateCcw size={15} /> {text('解除封印', 'Restore')}</button> : cooldown ? active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={15} /> {text('冷却中', 'Cooldown')}</button></div> : <button className="cooldown-button" onClick={(event) => { event.stopPropagation(); onOpen(challenge) }}><LockKeyhole size={15} /> {text('冷却中', 'Cooldown')}</button> : active ? <div className="quest-active-actions"><button className="abandon-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><X size={14} /> {text('退回', 'Abandon')}</button><button className="complete-button" onClick={(event) => { event.stopPropagation(); onComplete(challenge) }}><Check size={16} /> {text('完成', 'Complete')}</button></div> : <button className="row-add-button" onClick={(event) => { event.stopPropagation(); onStart(challenge.id) }}><Plus size={18} /><span>{text('接取任务', 'Start quest')}</span></button>}
     </article>
   )
 }
@@ -1522,7 +1534,7 @@ function QuestDetailView({ active, allowCustomEditing, challenge, completions, f
           {challenge.custom && allowCustomEditing && !sealed && <button className="detail-secondary" onClick={() => onDuplicate(challenge)}><Copy size={15} /> {text('复制', 'Copy')}</button>}
           {!locked && !sealed && <button className={`detail-favorite ${favorite ? 'active' : ''}`} onClick={() => onFavorite(challenge.id)}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /> {favorite ? text('已收藏', 'Saved') : text('收藏', 'Save')}</button>}
           {!locked && !sealed && <button className="detail-secondary detail-seal" onClick={() => onSeal(challenge.id)}><LockKeyhole size={16} /> {text('封印任务', 'Seal quest')}</button>}
-          {sealed ? <button className="primary-button" onClick={() => onSeal(challenge.id)}><RotateCcw size={16} /> {text('解除封印', 'Restore quest')}</button> : planLocked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text('完成前一步后解锁', 'Complete the previous step')}</button> : locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
+          {sealed ? <button className="primary-button" onClick={() => onSeal(challenge.id)}><RotateCcw size={16} /> {text('解除封印', 'Restore quest')}</button> : planLocked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text('完成前一步后解锁', 'Complete the previous step')}</button> : locked ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {text(`等级 ${challenge.level} 解锁`, `Unlocks at level ${challenge.level}`)}</button> : cooldown && active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button></> : levelRestricted ? <button className="detail-secondary" onClick={() => onUndo(history[0])}><RotateCcw size={16} /> {text('撤销最近完成', 'Undo latest completion')}</button> : cooldown ? <button className="cooldown-button" disabled><LockKeyhole size={16} /> {cooldown}</button> : active ? <><button className="detail-secondary" onClick={() => onStart(challenge.id)}>{text('取消接取', 'Abandon')}</button><button className="primary-button" onClick={() => onComplete(challenge)}><Check size={17} /> {text('记录完成', 'Record completion')}</button></> : <button className="primary-button" onClick={() => onStart(challenge.id)}><Plus size={17} /> {text('接取任务', 'Start quest')}</button>}
         </div>
       </section>
 

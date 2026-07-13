@@ -66,6 +66,7 @@ function normalizeSave(value) {
   const dailyBoard = value?.dailyBoard ?? {}
   return {
     activeIds: Array.isArray(value.activeIds) ? value.activeIds.filter((item) => typeof item === 'string') : [],
+    activeTrackingVersion: Math.max(0, Math.round(Number(value.activeTrackingVersion) || 0)),
     favoriteIds: Array.isArray(value.favoriteIds) ? value.favoriteIds.filter((item) => typeof item === 'string') : [],
     hiddenIds: Array.isArray(value.hiddenIds) ? value.hiddenIds.filter((item) => typeof item === 'string') : [],
     discoveredIds: Array.isArray(value.discoveredIds) ? value.discoveredIds.filter((item) => typeof item === 'string').slice(0, 2000) : [],

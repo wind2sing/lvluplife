@@ -27,6 +27,7 @@ try { gameplayState = { ...gameplayState, ...JSON.parse(db.prepare("SELECT value
 
 const save = {
   activeIds: stateRows.filter((item) => item.active).map((item) => item.challenge_id),
+  activeTrackingVersion: 0,
   favoriteIds: stateRows.filter((item) => item.favorite).map((item) => item.challenge_id),
   hiddenIds: stateRows.filter((item) => item.hidden).map((item) => item.challenge_id),
   discoveredIds: gameplayState.discoveredIds,
