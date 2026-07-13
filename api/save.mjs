@@ -68,6 +68,7 @@ function normalizeSave(value) {
     activeIds: Array.isArray(value.activeIds) ? value.activeIds.filter((item) => typeof item === 'string') : [],
     favoriteIds: Array.isArray(value.favoriteIds) ? value.favoriteIds.filter((item) => typeof item === 'string') : [],
     hiddenIds: Array.isArray(value.hiddenIds) ? value.hiddenIds.filter((item) => typeof item === 'string') : [],
+    discoveredIds: Array.isArray(value.discoveredIds) ? value.discoveredIds.filter((item) => typeof item === 'string').slice(0, 2000) : [],
     customChallenges: Array.isArray(value.customChallenges) ? value.customChallenges.map(normalizeCustomChallenge).filter(Boolean).slice(0, 500) : [],
     dailyBoard: {
       date: typeof dailyBoard.date === 'string' ? dailyBoard.date.slice(0, 10) : '',

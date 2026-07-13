@@ -142,7 +142,7 @@ function getBootstrap() {
   })
   let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
   try { dailyBoard = { ...dailyBoard, ...JSON.parse(selectDailyBoard.get()?.value ?? '{}') } } catch {}
-  let gameplayState = { plans: [], specialization: null, cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' } }
+  let gameplayState = { plans: [], specialization: null, cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' }, discoveredIds: [] }
   try { gameplayState = { ...gameplayState, ...JSON.parse(selectGameplayState.get()?.value ?? '{}') } } catch {}
   return {
     initialized: Boolean(selectInitialized.get()),
@@ -164,6 +164,7 @@ function getBootstrap() {
       activeIds: stateRows.filter((item) => item.active).map((item) => item.challenge_id),
       favoriteIds: stateRows.filter((item) => item.favorite).map((item) => item.challenge_id),
       hiddenIds: stateRows.filter((item) => item.hidden).map((item) => item.challenge_id),
+      discoveredIds: gameplayState.discoveredIds,
       customChallenges,
       dailyBoard,
       plans: gameplayState.plans,
@@ -179,6 +180,7 @@ function replaceSave(save) {
   const activeIds = new Set(Array.isArray(save.activeIds) ? save.activeIds : [])
   const favoriteIds = new Set(Array.isArray(save.favoriteIds) ? save.favoriteIds : [])
   const hiddenIds = new Set(Array.isArray(save.hiddenIds) ? save.hiddenIds : [])
+  const discoveredIds = Array.isArray(save.discoveredIds) ? save.discoveredIds.filter((item) => typeof item === 'string').slice(0, 2000) : []
   const challengeIds = new Set([...activeIds, ...favoriteIds, ...hiddenIds])
   const completions = Array.isArray(save.completions) ? save.completions : []
   const customChallenges = Array.isArray(save.customChallenges) ? save.customChallenges.filter((item) => item?.id?.startsWith('custom-')).slice(0, 500) : []
@@ -204,7 +206,7 @@ function replaceSave(save) {
     for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)
     for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt, item.reward ? JSON.stringify(item.reward) : null)
     upsertDailyBoard.run(JSON.stringify(dailyBoard))
-    upsertGameplayState.run(JSON.stringify({ plans, specialization, cosmetics }))
+    upsertGameplayState.run(JSON.stringify({ plans, specialization, cosmetics, discoveredIds }))
     markInitialized.run()
     db.exec('COMMIT')
   } catch (error) {

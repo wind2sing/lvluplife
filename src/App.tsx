@@ -176,6 +176,7 @@ type SaveState = {
   activeIds: string[]
   favoriteIds: string[]
   hiddenIds: string[]
+  discoveredIds: string[]
   customChallenges: Challenge[]
   dailyBoard: DailyBoardState
   plans: QuestPlan[]
@@ -205,6 +206,7 @@ const emptySave: SaveState = {
   activeIds: [],
   favoriteIds: [],
   hiddenIds: [],
+  discoveredIds: [],
   customChallenges: [],
   dailyBoard: { date: '', energy: 'normal', reroll: 0 },
   plans: [],
@@ -443,6 +445,52 @@ function getQuestEnergy(challenge: Challenge): DailyEnergy {
   return challenge.energyDemand ?? (challenge.tier <= 1 ? 'low' : challenge.tier >= 4 ? 'high' : 'normal')
 }
 
+type CategoryDiscovery = {
+  completed: number
+  discovered: number
+  maxTier: number
+  nextMilestone: number | null
+  total: number
+}
+
+const categoryTierMilestones = [0, 0, 1, 3, 10]
+
+function getCategoryMaxTier(completed: number) {
+  if (completed >= categoryTierMilestones[4]) return 4
+  if (completed >= categoryTierMilestones[3]) return 3
+  if (completed >= categoryTierMilestones[2]) return 2
+  return 1
+}
+
+function buildDiscoveryState(challenges: Challenge[], save: Pick<SaveState, 'activeIds' | 'completions' | 'discoveredIds' | 'favoriteIds' | 'hiddenIds'>, globalLevel: number) {
+  const discovered = new Set(save.discoveredIds ?? [])
+  const interacted = new Set([...save.activeIds, ...save.favoriteIds, ...save.hiddenIds, ...save.completions.map((item) => item.challengeId)])
+  challenges.filter((item) => item.custom).forEach((item) => discovered.add(item.id))
+  interacted.forEach((id) => discovered.add(id))
+  const summaries: Record<string, CategoryDiscovery> = {}
+  const categories = new Map<string, Challenge[]>()
+  challenges.filter((item) => !item.custom).forEach((item) => categories.set(item.category, [...(categories.get(item.category) ?? []), item]))
+
+  categories.forEach((items, category) => {
+    const itemIds = new Set(items.map((item) => item.id))
+    const completed = new Set(save.completions.filter((item) => itemIds.has(item.challengeId)).map((item) => item.challengeId)).size
+    const sealed = save.hiddenIds.filter((id) => itemIds.has(id)).length
+    const maxTier = getCategoryMaxTier(completed)
+    const target = Math.min(items.length, 4 + completed * 2 + sealed)
+    let discoveredCount = items.filter((item) => discovered.has(item.id)).length
+    for (const item of items) {
+      if (discoveredCount >= target) break
+      if (item.level > globalLevel || item.tier > maxTier || discovered.has(item.id)) continue
+      discovered.add(item.id)
+      discoveredCount += 1
+    }
+    const nextMilestone = [1, 3, 10].find((value) => value > completed) ?? null
+    summaries[category] = { completed, discovered: items.filter((item) => discovered.has(item.id)).length, maxTier, nextMilestone, total: items.length }
+  })
+
+  return { discovered, summaries }
+}
+
 function App() {
   const [challenges, setChallenges] = useState<Challenge[]>([])
   const [save, setSave] = useState<SaveState>(emptySave)
@@ -551,7 +599,7 @@ function App() {
     return [...challenges, ...(personalContentVisible ? save.customChallenges.filter((item) => !originalIds.has(item.id)) : [])]
   }, [challenges, personalContentVisible, save.customChallenges])
   const challengeMap = useMemo(() => new Map(allChallenges.map((item) => [item.id, item])), [allChallenges])
-  const detailChallenge = detailChallengeId ? challengeMap.get(detailChallengeId) ?? null : null
+  const requestedDetailChallenge = detailChallengeId ? challengeMap.get(detailChallengeId) ?? null : null
   const completedChallenges = save.completions
     .map((completion) => ({ completion, challenge: challengeMap.get(completion.challengeId) }))
     .filter((item): item is { completion: Completion; challenge: Challenge } => Boolean(item.challenge))
@@ -569,6 +617,16 @@ function App() {
     },
     { STR: 0, CUL: 0, ENV: 0, CHA: 0, TAL: 0, INT: 0 } as Record<StatKey, number>,
   )
+  const discoveryState = useMemo(() => buildDiscoveryState(allChallenges, save, level.level), [allChallenges, level.level, save])
+  const discoveredIds = discoveryState.discovered
+  const detailChallenge = requestedDetailChallenge && discoveredIds.has(requestedDetailChallenge.id) ? requestedDetailChallenge : null
+
+  useEffect(() => {
+    if (!ready) return
+    const next = [...discoveredIds]
+    if (next.length === save.discoveredIds.length && next.every((id) => save.discoveredIds.includes(id))) return
+    setSave((current) => ({ ...current, discoveredIds: [...new Set([...current.discoveredIds, ...next])] }))
+  }, [discoveredIds, ready, save.discoveredIds])
 
   const completedPlanStepIds = useMemo(() => new Set(save.plans.flatMap((plan) => plan.stepIds.filter((stepId) => save.completions.some((completion) => completion.challengeId === stepId && completion.completedAt >= plan.createdAt)))), [save.completions, save.plans])
   const lockedPlanStepIds = useMemo(() => {
@@ -585,7 +643,7 @@ function App() {
   const equippedTheme = collectionItems.find((item) => item.id === (settings.collectionFeatures ? save.cosmetics.themeId : 'theme-camp') && item.unlocked) ?? collectionItems.find((item) => item.id === 'theme-camp')!
   useEffect(() => { document.documentElement.dataset.theme = equippedTheme.id }, [equippedTheme.id])
 
-  const unlockedChallenges = allChallenges.filter((item) => item.level <= level.level && !lockedPlanStepIds.has(item.id))
+  const unlockedChallenges = allChallenges.filter((item) => discoveredIds.has(item.id) && item.level <= level.level && !lockedPlanStepIds.has(item.id))
   const recommendationPool = unlockedChallenges.filter((item) => !save.hiddenIds.includes(item.id))
   const availableChallenges = recommendationPool.filter((item) => !getCooldownLabel(item, save.completions, settings.language))
   const dailyPool = availableChallenges.length ? availableChallenges : recommendationPool
@@ -630,23 +688,20 @@ function App() {
 
   const visibleChallenges = useMemo(() => {
     const query = search.trim().toLowerCase()
-    const categoryPool = allChallenges.filter((item) => !lockedPlanStepIds.has(item.id) && (category === '全部任务' || item.category === category))
+    const categoryPool = allChallenges.filter((item) => discoveredIds.has(item.id) && !lockedPlanStepIds.has(item.id) && (category === '全部任务' || item.category === category))
     const visibilityPool = categoryPool.filter((item) => showSealed ? save.hiddenIds.includes(item.id) : !save.hiddenIds.includes(item.id))
     if (query) {
       return visibilityPool.filter(
-        (item) => (showSealed || item.level <= level.level) && ([item.title, item.titleOriginal, item.category, item.categoryOriginal].some((value) => value.toLowerCase().includes(query))),
+        (item) => [item.title, item.titleOriginal, item.category, item.categoryOriginal].some((value) => value.toLowerCase().includes(query)),
       )
     }
-    if (showSealed) return visibilityPool
-    const unlocked = visibilityPool.filter((item) => item.level <= level.level)
-    if (category === '全部任务') return unlocked
-    const nextLocked = visibilityPool.filter((item) => item.level > level.level).sort((a, b) => a.level - b.level).slice(0, 5)
-    return [...unlocked, ...nextLocked]
-  }, [allChallenges, category, level.level, lockedPlanStepIds, save.hiddenIds, search, showSealed])
+    return visibilityPool
+  }, [allChallenges, category, discoveredIds, lockedPlanStepIds, save.hiddenIds, search, showSealed])
 
-  const selectedCategoryPool = allChallenges.filter((item) => (category === '全部任务' || item.category === category) && !save.hiddenIds.includes(item.id))
-  const selectedLockedCount = selectedCategoryPool.filter((item) => item.level > level.level).length
-  const hiddenLockedCount = category === '全部任务' ? selectedLockedCount : Math.max(0, selectedLockedCount - 5)
+  const undiscoveredChallenges = allChallenges.filter((item) => !item.custom && !discoveredIds.has(item.id) && (category === '全部任务' || item.category === category))
+  const fogPreviewChallenges = [...undiscoveredChallenges].sort((a, b) => a.level - b.level || a.tier - b.tier).slice(0, category === '全部任务' ? 3 : 5)
+  const hiddenLockedCount = Math.max(0, undiscoveredChallenges.length - fogPreviewChallenges.length)
+  const selectedDiscovery = category === '全部任务' ? null : discoveryState.summaries[category]
 
   const activeChallenges = save.activeIds.filter((id) => !save.hiddenIds.includes(id)).map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
   const favoriteChallenges = save.favoriteIds.filter((id) => !save.hiddenIds.includes(id)).map((id) => challengeMap.get(id)).filter(Boolean) as Challenge[]
@@ -681,7 +736,8 @@ function App() {
   }, [ready, settings.collectionFeatures, view])
 
   function toggleActive(id: string) {
-    if (lockedPlanStepIds.has(id)) return
+    const challenge = challengeMap.get(id)
+    if (!challenge || !discoveredIds.has(id) || challenge.level > level.level || lockedPlanStepIds.has(id)) return
     setSave((current) => ({
       ...current,
       activeIds: current.activeIds.includes(id)
@@ -766,7 +822,7 @@ function App() {
 
   function completeQuest(attachments: Attachment[] = []) {
     if (!selected) return
-    if (energy <= 0 || selected.level > level.level || lockedPlanStepIds.has(selected.id) || getCooldownLabel(selected, save.completions, settings.language)) return
+    if (energy <= 0 || !discoveredIds.has(selected.id) || selected.level > level.level || lockedPlanStepIds.has(selected.id) || getCooldownLabel(selected, save.completions, settings.language)) return
     const oldLevel = level.level
     const completion: Completion = {
       id: `${selected.id}-${Date.now()}`,
@@ -777,12 +833,19 @@ function App() {
       reward: { xp: selected.xp, stats: selected.stats },
     }
     const newLevel = getLevel(totalXp + selected.xp).level
+    const nextSave = {
+      ...save,
+      activeIds: save.activeIds.filter((id) => id !== selected.id),
+      completions: [completion, ...save.completions],
+    }
+    const nextDiscovered = buildDiscoveryState(allChallenges, nextSave, newLevel).discovered
+    const unlockedCount = [...nextDiscovered].filter((id) => !discoveredIds.has(id)).length
     setSave((current) => ({
       ...current,
       activeIds: current.activeIds.filter((id) => id !== selected.id),
       completions: [completion, ...current.completions],
+      discoveredIds: [...new Set([...current.discoveredIds, ...nextDiscovered])],
     }))
-    const unlockedCount = newLevel > oldLevel ? allChallenges.filter((item) => item.level > oldLevel && item.level <= newLevel).length : 0
     setReward({ challenge: selected, levelUp: newLevel > oldLevel, unlockedCount })
     setSelected(null)
     setNote('')
@@ -790,6 +853,7 @@ function App() {
   }
 
   function openChallenge(challenge: Challenge) {
+    if (!discoveredIds.has(challenge.id)) return
     const path = `/quests/${encodeURIComponent(challenge.id)}`
     setDetailChallengeId(challenge.id)
     if (window.location.pathname !== path) window.history.pushState({ lvluplife: true, lvluplifeDetail: true }, '', path)
@@ -906,10 +970,11 @@ function App() {
           favoriteIds={save.favoriteIds}
           hiddenIds={save.hiddenIds}
           hiddenLockedCount={hiddenLockedCount}
+          fogPreviewChallenges={fogPreviewChallenges}
           level={level.level}
+          categoryDiscovery={selectedDiscovery}
           totalChallenges={challenges.length}
-          unlockedTotal={challenges.filter((item) => item.level <= level.level).length}
-          nextLevel={Math.min(...challenges.filter((item) => item.level > level.level).map((item) => item.level))}
+          unlockedTotal={challenges.filter((item) => discoveredIds.has(item.id)).length}
           onCategory={setCategory}
           onComplete={setSelected}
           onCreate={settings.customFeatures ? () => setCustomEditor('new') : undefined}
@@ -1047,7 +1112,7 @@ function App() {
           <div className="reward-icon"><Sparkles /></div>
           <div>
             <span>{reward.levelUp ? text('等级提升！', 'Level up!') : text('任务完成', 'Quest complete')}</span>
-            <strong>{text('获得', 'Earned')} {reward.challenge.xp} {text('经验', 'XP')}{reward.levelUp ? text(` · 解锁 ${reward.unlockedCount} 项新成就`, ` · ${reward.unlockedCount} new achievements unlocked`) : ''}</strong>
+            <strong>{text('获得', 'Earned')} {reward.challenge.xp} {text('经验', 'XP')}{reward.unlockedCount > 0 ? text(` · 发现 ${reward.unlockedCount} 项新成就`, ` · ${reward.unlockedCount} new achievements discovered`) : ''}</strong>
           </div>
         </div>
       )}
@@ -1254,14 +1319,15 @@ function CollectionGallery({ equipped, items, onEquip }: { equipped: CosmeticSta
   return <><div className="page-heading collection-heading"><p className="eyebrow">{text('私人收藏馆', 'Private collection')}</p><h1>{text('把真实成长变成', 'Turn real growth into')}<em>{text('可以珍藏的东西。', ' something worth keeping.')}</em></h1><p>{text('称号、徽章、头像框、营地主题和纪念物只记录你的真实行动。', 'Titles, badges, frames, themes, and keepsakes record your real actions.')}</p></div><section className="collection-overview"><div><Gem size={28} /><span>{text('已解锁收藏', 'Unlocked')}</span><strong>{unlocked} / {items.length}</strong></div><div className="collection-overview-progress"><i><b style={{ width: `${unlocked / items.length * 100}%` }} /></i><span>{Math.round(unlocked / items.length * 100)}%</span></div><p>{text('所有进度都来自私人存档中的完成记录、属性、任务链与附件。', 'All progress comes from your private completions, stats, plans, and attachments.')}</p></section><section className="collection-toolbar"><label className="collection-search"><Search size={15} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={text('搜索称号、收藏描述或纪念语', 'Search titles and collectibles')} /></label><label><span>{text('解锁状态', 'Status')}</span><select value={status} onChange={(event) => setStatus(event.target.value as typeof status)}><option value="all">{text('全部状态', 'All statuses')}</option><option value="unlocked">{text('已解锁', 'Unlocked')}</option><option value="locked">{text('未解锁', 'Locked')}</option><option value="equipped">{text('使用中', 'Equipped')}</option></select></label><label><span>{text('排序方式', 'Sort')}</span><select value={sort} onChange={(event) => setSort(event.target.value as typeof sort)}><option value="default">{text('默认顺序', 'Default')}</option><option value="unlocked">{text('已解锁优先', 'Unlocked first')}</option><option value="progress">{text('完成度从高到低', 'Progress high to low')}</option><option value="closest">{text('距离解锁最近', 'Closest to unlock')}</option><option value="title">{text('按名称排序', 'By title')}</option></select></label></section><div className="collection-filters">{(['all', 'title', 'badge', 'frame', 'theme', 'keepsake'] as const).map((value) => <button key={value} className={filter === value ? 'active' : ''} onClick={() => setFilter(value)}>{value === 'all' ? text('全部收藏', 'All') : kindLabels[value]}</button>)}<span>{text(`显示 ${visible.length} 项`, `${visible.length} shown`)}</span></div>{visible.length ? <div className="collection-gallery-grid">{visible.map((item) => { const Icon = item.icon; const equippedNow = isEquipped(item); const equippable = ['title', 'frame', 'theme'].includes(item.kind); return <article className={`collection-card ${item.unlocked ? 'unlocked' : 'locked'} ${equippedNow ? 'equipped' : ''}`} key={item.id}><div className={`collection-card-icon ${item.kind === 'frame' ? `cosmetic-frame ${item.id}` : ''}`}><Icon size={27} /></div><div className="collection-card-kind">{kindLabels[item.kind]}{equippedNow && <b>{text('使用中', 'Equipped')}</b>}</div><h2>{item.title}</h2><p>{item.description}</p><blockquote>{item.flavor}</blockquote><div className="collection-progress"><div><span>{item.unlocked ? text('已解锁', 'Unlocked') : text('解锁进度', 'Progress')}</span><strong>{item.progress} / {item.target}</strong></div><i><b style={{ width: `${item.progress / item.target * 100}%` }} /></i></div><div className="collection-card-actions">{equippable && <button disabled={!item.unlocked || equippedNow} onClick={() => onEquip(item)}>{equippedNow ? text('正在使用', 'Equipped') : item.unlocked ? text('装备收藏', 'Equip') : text('尚未解锁', 'Locked')}</button>}{item.unlocked && <button className="download-keepsake" onClick={() => downloadCard(item)}><Download size={14} /> {text('纪念卡', 'Card')}</button>}</div></article>})}</div> : <EmptyState compact icon={Search} title={text('没有符合条件的收藏', 'No matching collectibles')} text={text('尝试清除搜索词或切换筛选条件。', 'Clear the search or change the filters.')} />}</>
 }
 
-function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds, hiddenLockedCount, level, nextLevel, onCategory, onComplete, onCreate, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
+function ExploreView({ activeIds, category, categoryDiscovery, completions, favoriteIds, fogPreviewChallenges, hiddenIds, hiddenLockedCount, level, onCategory, onComplete, onCreate, onFavorite, onOpen, onSeal, onShowSealed, onStart, search, sealedCount, setSearch, showSealed, totalChallenges, unlockedTotal, visibleChallenges }: QuestActions & {
   category: string
+  categoryDiscovery: CategoryDiscovery | null
+  fogPreviewChallenges: Challenge[]
   hiddenIds: string[]
   hiddenLockedCount: number
   level: number
   totalChallenges: number
   unlockedTotal: number
-  nextLevel: number
   onCategory: (value: string) => void
   onCreate?: () => void
   onSeal: (id: string) => void
@@ -1274,10 +1340,12 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds,
 }) {
   const { language, text } = useLanguage()
   const categories = ['全部任务', ...Object.keys(categoryMeta)]
+  const availableCount = visibleChallenges.filter((item) => item.level <= level).length
+  const stageLabels = [text('初识', 'Starter'), text('见习', 'Apprentice'), text('熟练', 'Skilled'), text('大师', 'Master')]
   return (
     <>
       <div className="page-heading page-heading--actions"><div><p className="eyebrow">{text('任务公会', 'Quest Guild')}</p><h1>{text('寻找下一场', 'Find your next')}<em>{text('胜利。', ' victory.')}</em></h1><p>{text(onCreate ? `完整收录 ${totalChallenges} 项原版挑战，也可以创建只属于你的个人任务。` : `完整收录 ${totalChallenges} 项原版挑战。个人创作功能当前已关闭。`, onCreate ? `All ${totalChallenges} original challenges, plus personal quests of your own.` : `All ${totalChallenges} original challenges. Personal creation is disabled.`)}</p></div>{onCreate && <button className="primary-button create-quest-button" onClick={onCreate}><Plus size={17} /> {text('创建任务', 'Create quest')}</button>}</div>
-      <div className="unlock-banner"><div className="unlock-emblem"><LockKeyhole size={22} /></div><div><span>{text('冒险者等级', 'Adventurer level')} {level}</span><strong>{text('已发现', 'Discovered')} {unlockedTotal} / {totalChallenges}</strong></div><div className="unlock-progress"><i style={{ width: `${totalChallenges ? (unlockedTotal / totalChallenges) * 100 : 0}%` }} /></div><small>{text('下一批成就将在等级', 'Next achievements unlock at level')} {Number.isFinite(nextLevel) ? nextLevel : '—'}</small></div>
+      <div className="unlock-banner"><div className="unlock-emblem"><LockKeyhole size={22} /></div><div><span>{text('冒险者等级', 'Adventurer level')} {level}</span><strong>{text('已发现', 'Discovered')} {unlockedTotal} / {totalChallenges}</strong></div><div className="unlock-progress"><i style={{ width: `${totalChallenges ? (unlockedTotal / totalChallenges) * 100 : 0}%` }} /></div><small>{text('总等级决定领取资格，分类探索决定发现范围。', 'Global level controls eligibility; category exploration controls discovery.')}</small></div>
       <div className="filter-bar">
         <label className="search-field"><Search size={19} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={text('搜索已解锁的任务……', 'Search unlocked quests…')} /></label>
         <label className="select-field"><select value={category} onChange={(event) => onCategory(event.target.value)}>{categories.map((item) => <option key={item} value={item}>{item === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? item : categoryMeta[item].labelEn}</option>)}</select><ChevronDown size={17} /></label>
@@ -1285,13 +1353,15 @@ function ExploreView({ activeIds, category, completions, favoriteIds, hiddenIds,
       <div className="category-strip">
         {categories.map((item) => <button key={item} className={category === item ? 'active' : ''} onClick={() => onCategory(item)}>{item === '全部任务' ? <Sparkles size={17} /> : (() => { const Icon = categoryMeta[item].icon; return <Icon size={17} /> })()}<span>{item === '全部任务' ? text('全部任务', 'All') : language === 'zh' ? categoryMeta[item].short : categoryMeta[item].shortEn}</span></button>)}
       </div>
-      <div className="result-toolbar"><div className="result-meta"><strong>{showSealed ? visibleChallenges.length : visibleChallenges.filter((item) => item.level <= level).length}</strong> {showSealed ? text('项封印任务', 'sealed quests') : text('项可领取任务', 'available quests')} <span>•</span> {showSealed ? text('封印库', 'Sealed vault') : category === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? category : categoryMeta[category].labelEn}</div><button className={`sealed-filter ${showSealed ? 'active' : ''}`} onClick={onShowSealed}><LockKeyhole size={14} /> {showSealed ? text('返回任务', 'Back to quests') : text('封印库', 'Sealed vault')} {sealedCount > 0 && <b>{sealedCount}</b>}</button></div>
+      {!showSealed && <section className="category-discovery"><div><Compass size={20} /><span>{categoryDiscovery ? text('分类探索', 'Category exploration') : text('探索规则', 'Discovery rules')}</span><strong>{categoryDiscovery ? `${stageLabels[categoryDiscovery.maxTier - 1]} · ${categoryDiscovery.discovered}/${categoryDiscovery.total}` : text('每个分类都从少量入门任务开始', 'Every category begins with a small starter set')}</strong></div><p>{categoryDiscovery ? categoryDiscovery.nextMilestone ? text(`已完成 ${categoryDiscovery.completed} 个不同任务；再完成 ${categoryDiscovery.nextMilestone - categoryDiscovery.completed} 个，将开放更高阶任务。`, `${categoryDiscovery.completed} unique completions; ${categoryDiscovery.nextMilestone - categoryDiscovery.completed} more unlock the next tier.`) : text('该分类的全部稀有度已经开放，继续完成或封印任务可发现更多内容。', 'All tiers are open; completing or sealing quests reveals more.') : text('完成不同任务会提升该分类阶段并发现新任务；循环完成同一任务不会重复计算。', 'Unique completions raise category mastery and reveal new quests; repeats do not count twice.')}</p></section>}
+      <div className="result-toolbar"><div className="result-meta"><strong>{showSealed ? visibleChallenges.length : availableCount}</strong> {showSealed ? text('项封印任务', 'sealed quests') : text('项可领取任务', 'available quests')} {!showSealed && <><span>•</span> {visibleChallenges.length} {text('项已发现', 'discovered')}</>} <span>•</span> {showSealed ? text('封印库', 'Sealed vault') : category === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? category : categoryMeta[category].labelEn}</div><button className={`sealed-filter ${showSealed ? 'active' : ''}`} onClick={onShowSealed}><LockKeyhole size={14} /> {showSealed ? text('返回任务', 'Back to quests') : text('封印库', 'Sealed vault')} {sealedCount > 0 && <b>{sealedCount}</b>}</button></div>
       {visibleChallenges.length > 0 ? <div className="quest-list">
         {visibleChallenges.slice(0, 80).map((challenge) => !showSealed && challenge.level > level
-          ? <LockedQuestRow key={challenge.id} challenge={challenge} />
+          ? <LockedQuestRow key={challenge.id} challenge={challenge} discovered onOpen={onOpen} />
           : <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} sealed={hiddenIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onSeal={onSeal} onStart={onStart} />)}
       </div> : showSealed ? <EmptyState compact icon={LockKeyhole} title={text('封印库还是空的', 'The sealed vault is empty')} text={text('在不想再看到的任务详情中选择“封印任务”，它们会收纳在这里。', 'Seal quests you no longer want to see and they will be stored here.')} /> : null}
-      {!showSealed && hiddenLockedCount > 0 && !search && <div className="hidden-quests"><LockKeyhole size={17} /><strong>{text(`还有 ${hiddenLockedCount} 项成就隐藏在迷雾中`, `${hiddenLockedCount} achievements remain hidden in the fog`)}</strong><span>{text('继续获得经验并提升等级后，它们才会显露名称。', 'Earn XP and level up to reveal their names.')}</span></div>}
+      {!showSealed && !search && fogPreviewChallenges.length > 0 && <div className="quest-list discovery-fog-list">{fogPreviewChallenges.map((challenge) => <LockedQuestRow key={challenge.id} challenge={challenge} />)}</div>}
+      {!showSealed && hiddenLockedCount > 0 && !search && <div className="hidden-quests"><LockKeyhole size={17} /><strong>{text(`还有 ${hiddenLockedCount} 项成就隐藏在迷雾中`, `${hiddenLockedCount} achievements remain hidden in the fog`)}</strong><span>{text('完成不同任务、封印不适合的任务，或提升总等级后会继续发现。', 'Complete unique quests, seal unsuitable ones, or raise your global level to discover more.')}</span></div>}
       {visibleChallenges.length > 80 && <p className="result-note">{text('当前显示前 80 项结果，请使用搜索或分类继续缩小范围。', 'Showing the first 80 results. Search or filter to narrow the list.')}</p>}
     </>
   )
@@ -1386,14 +1456,14 @@ function QuestRow({ active, challenge, completions, favorite, onComplete, onFavo
   )
 }
 
-function LockedQuestRow({ challenge }: { challenge: Challenge }) {
-  const { text } = useLanguage()
+function LockedQuestRow({ challenge, discovered = false, onOpen }: { challenge: Challenge; discovered?: boolean; onOpen?: (challenge: Challenge) => void }) {
+  const { category, language, text, title } = useLanguage()
   return (
-    <article className="quest-row quest-row--locked" aria-disabled="true">
+    <article className={`quest-row quest-row--locked ${discovered ? 'quest-row--discovered' : ''}`} aria-disabled={!discovered} onClick={() => discovered && onOpen?.(challenge)} onKeyDown={(event) => { if (discovered && event.key === 'Enter') onOpen?.(challenge) }} role={discovered ? 'button' : undefined} tabIndex={discovered ? 0 : undefined}>
       <div className="category-icon"><LockKeyhole size={20} /></div>
-      <div className="quest-row-copy"><span>{text('未知成就 · 尚未发现', 'Unknown achievement · Undiscovered')}</span><h3>{text('被迷雾遮蔽的任务', 'A quest hidden by the fog')}</h3><div className="quest-rewards"><em>{text(`达到等级 ${challenge.level} 后显露名称与奖励`, `Reach level ${challenge.level} to reveal its name and rewards`)}</em></div></div>
-      <div className="lock-runes" aria-hidden="true">???</div>
-      <button className="cooldown-button" disabled><LockKeyhole size={15} /> {text('尚未解锁', 'Locked')}</button>
+      <div className="quest-row-copy">{discovered ? <><span>{category(challenge)} · {text('已发现', 'Discovered')}</span><h3>{title(challenge)}</h3><div className="quest-rewards"><span><Zap size={13} /> {challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}</div></> : <><span>{text('未知成就 · 尚未发现', 'Unknown achievement · Undiscovered')}</span><h3>{text('被迷雾遮蔽的任务', 'A quest hidden by the fog')}</h3><div className="quest-rewards"><em>{text('继续探索该分类后显露名称与奖励', 'Explore this category to reveal its name and rewards')}</em></div></>}</div>
+      <div className="lock-runes" aria-hidden="true">{discovered ? challenge.level : '???'}</div>
+      <button className="cooldown-button" disabled><LockKeyhole size={15} /> {discovered ? text(`等级 ${challenge.level} 可领取`, `Available at level ${challenge.level}`) : text('尚未发现', 'Undiscovered')}</button>
     </article>
   )
 }
@@ -1422,7 +1492,7 @@ function QuestDetailView({ active, allowCustomEditing, challenge, completions, f
   const cooldown = getCooldownLabel(challenge, completions, language)
   const history = completions.filter((item) => item.challengeId === challenge.id)
   const levelRestricted = challenge.level > level
-  const locked = levelRestricted && history.length === 0 && !sealed
+  const locked = false
   const repeatable = challenge.cadence !== '终身一次'
 
   return (
@@ -1620,7 +1690,7 @@ function LevelHelpModal({ levelInfo, onClose, totalXp }: { levelInfo: ReturnType
         <div className="level-rule-list">
           <div><span>01</span><p>{text('每个任务有固定经验奖励，记录完成后立即计入总经验。', 'Each quest has a fixed XP reward that is added when you record a completion.')}</p></div>
           <div><span>02</span><p>{text('从等级 1 升到 2 需要 500 经验；之后每一级比前一级多需要 180 经验。', 'Level 1 to 2 requires 500 XP; every following level requires 180 more XP than the previous one.')}</p></div>
-          <div><span>03</span><p>{text('升级后会解锁更高等级的任务；撤销完成记录会扣回经验，等级也可能下降。', 'Leveling reveals higher-level quests. Undoing a completion removes its XP and can lower your level.')}</p></div>
+          <div><span>03</span><p>{text('总等级决定可以领取的任务等级；完成不同分类任务会扩大该分类的发现范围。撤销记录会扣回经验，但已经发现的任务不会重新变成迷雾。', 'Global level controls quest eligibility, while unique category completions expand discovery. Undoing removes XP, but discovered quests stay revealed.')}</p></div>
         </div>
         <div className="character-help-value"><span>{text('累计总经验', 'Lifetime XP')}</span><strong>{totalXp}</strong></div>
       </section>
@@ -1709,7 +1779,7 @@ function AboutView() {
         <div><RotateCcw size={23} /><strong>{text('允许反复与回头', 'Room to return')}</strong><p>{text('任务可以循环、取消接取、撤销完成或暂时封印。离开一段时间后回来，也仍然算冒险。', 'Quests can repeat, be abandoned, undone, or sealed. Returning after time away still counts.')}</p></div>
       </section>
       <div className="about-grid">
-        <section className="about-card"><div className="about-card-heading"><Zap size={21} /><div><span>01</span><h2>{text('经验、等级与迷雾', 'XP, levels, and fog')}</h2></div></div><p>{text('完成任务会获得固定经验。等级提升后，任务公会中更高等级的成就才会从迷雾中显现；迷雾任务无法提前查看。撤销完成会扣回对应经验。', 'Completing quests grants fixed XP. Higher-level achievements emerge from fog as you level up, and undoing a completion removes its XP.')}</p></section>
+        <section className="about-card"><div className="about-card-heading"><Zap size={21} /><div><span>01</span><h2>{text('经验、等级与迷雾', 'XP, levels, and fog')}</h2></div></div><p>{text('总等级决定任务是否具备领取资格，分类探索决定具体发现哪些任务。每个新分类只显示少量入门内容；完成不同任务或封印不适合的任务会继续发现，循环刷同一任务不会重复推进。', 'Global level controls eligibility, while category exploration controls discovery. New categories begin with a small starter set; unique completions and sealing reveal more, while repeats do not advance mastery twice.')}</p></section>
         <section className="about-card"><div className="about-card-heading"><Sparkles size={21} /><div><span>02</span><h2>{text('六项现实属性', 'Six real-life stats')}</h2></div></div><p>{text('力量代表身体与执行，文化代表审美与人文，环境代表空间与自然，魅力代表连接与影响，才能代表创造与技巧，智慧代表学习与判断。属性只描述成长方向，不评价人的价值。', 'Strength, Culture, Environment, Charisma, Talent, and Intelligence describe directions of growth, never a person’s worth.')}</p></section>
         <section className="about-card"><div className="about-card-heading"><Heart size={21} /><div><span>03</span><h2>{text('行动力与推荐', 'Energy and recommendations')}</h2></div></div><p>{text('行动力是防止短时间集中刷取奖励的节奏限制，不是生命值，也不会惩罚你。每日冒险板会结合当前精力、属性短板、收藏和已接任务给出建议。', 'Energy prevents reward grinding in a short burst. It is not health and never punishes you. Daily recommendations consider your energy, lower stats, saved quests, and active quests.')}</p></section>
         <section className="about-card"><div className="about-card-heading"><Target size={21} /><div><span>04</span><h2>{text('自定义任务奖励', 'Custom quest rewards')}</h2></div></div><p>{text('自动奖励根据任务等级、所需精力、重复周期、分类和主要属性计算，不再假设任务需要多少分钟。你也可以切换到手动模式调整稀有度、经验和属性点。', 'Automatic rewards use level, energy demand, cadence, category, and primary stat without guessing duration. Manual reward tuning remains available.')}</p></section>
