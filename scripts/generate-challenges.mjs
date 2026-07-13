@@ -21,7 +21,7 @@ const categoryStats = {
   Mental: { zh: '心智与情绪', stats: ['INT', 'STR'], seed: [1, 1, 2, 2, 3] },
   Outdoors: { zh: '户外', stats: ['ENV', 'STR'], seed: [1, 1, 2, 2, 3] },
   Reading: { zh: '阅读', stats: ['INT', 'CUL'], seed: [1, 2, 3, 4, 4] },
-  'Top 150': { zh: '经典书单', stats: ['INT', 'CUL'], seed: [1, 1, 1, 1, 1], divisor: 5 },
+  'Top 150': { zh: '经典书单', stats: ['INT', 'CUL'], seed: [1], fixedLevel: 1, fixedTier: 2, fixedCadence: '终身一次', fixedEnergyDemand: 'normal' },
   'School & Learning': { zh: '学习与成长', stats: ['INT', 'TAL'], seed: [1, 2, 2, 3, 3] },
   Social: { zh: '社交', stats: ['CHA', 'CUL'], seed: [1, 1, 2, 2, 3] },
   Travel: { zh: '旅行', stats: ['ENV', 'CUL'], seed: [1, 2, 2, 4, 6] },
@@ -178,13 +178,14 @@ for (const [category, items] of categoryItems) {
   if (!categoryStats[category]) throw new Error(`Missing category config: ${category}`)
   items.forEach((title, index) => {
     const progress = items.length === 1 ? 0 : index / (items.length - 1)
-    const tier = progress < 0.42 ? 1 : progress < 0.72 ? 2 : progress < 0.9 ? 3 : 4
     const config = categoryStats[category]
+    const tier = config.fixedTier ?? (progress < 0.42 ? 1 : progress < 0.72 ? 2 : progress < 0.9 ? 3 : 4)
     const divisor = config.divisor ?? 2
-    const projectedLevel = Math.ceil((index + 1) / divisor) + (config.seed[4] - Math.ceil(5 / divisor))
-    const level = index < config.seed.length ? config.seed[index] : Math.max(config.seed[4], projectedLevel)
-    const cadence = getCadence(title, category, tier)
-    const energyDemand = inferQuestEnergy(tier)
+    const lastSeed = config.seed.at(-1)
+    const projectedLevel = Math.ceil((index + 1) / divisor) + (lastSeed - Math.ceil(config.seed.length / divisor))
+    const level = config.fixedLevel ?? (index < config.seed.length ? config.seed[index] : Math.max(lastSeed, projectedLevel))
+    const cadence = config.fixedCadence ?? getCadence(title, category, tier)
+    const energyDemand = config.fixedEnergyDemand ?? inferQuestEnergy(tier)
     const reward = calculateReward({ level, tier, cadence, energyDemand, primaryStat: config.stats[0], secondaryStat: config.stats[1] })
     const id = `${slugify(category)}-${String(index + 1).padStart(3, '0')}`
     const descriptions = getDescriptions({ id, title: translations[id], titleOriginal: title, category, tier })

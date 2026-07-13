@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "data:generate": "node scripts/generate-challenges.mjs",
+    "data:audit": "node scripts/audit-challenges.mjs",
     "data:translate": "node scripts/translate-challenges.mjs",
     "data:migrate:neon": "node --disable-warning=ExperimentalWarning scripts/migrate-sqlite-to-neon.mjs",
     "reward:validate": "node scripts/validate-reward-rules.mjs",

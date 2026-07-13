@@ -1601,7 +1601,7 @@
   },
   {
     "id": "career-finances-003",
-    "title": "清理您的电子邮件收件箱或社交媒体资料。",
+    "title": "清理你的电子邮件收件箱或社交媒体资料。",
     "titleOriginal": "Clean up your email inbox or social media profile.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1618,12 +1618,12 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 清理您的电子邮件收件箱或社交媒体资料。不追求一夜暴富，只完成一个能让生活系统更稳的小升级。",
+    "description": "新手委托 · 清理你的电子邮件收件箱或社交媒体资料。不追求一夜暴富，只完成一个能让生活系统更稳的小升级。",
     "descriptionOriginal": "Starter quest — Clean up your email inbox or social media profile. Skip overnight riches; make one small upgrade to a steadier life system."
   },
   {
     "id": "career-finances-004",
-    "title": "将您的其中一份账单切换为无纸化/在线。",
+    "title": "将一份账单改为无纸化或在线账单。",
     "titleOriginal": "Switch one of your bills to paperless/online.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1640,7 +1640,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 将您的其中一份账单切换为无纸化/在线。这是一次现实装备维护：完成它，让未来的选择多一点余地。",
+    "description": "新手委托 · 将一份账单改为无纸化或在线账单。这是一次现实装备维护：完成它，让未来的选择多一点余地。",
     "descriptionOriginal": "Starter quest — Switch one of your bills to paperless/online. Treat this as real-life gear maintenance and give your future self more options."
   },
   {
@@ -1667,7 +1667,7 @@
   },
   {
     "id": "career-finances-006",
-    "title": "为您最新的薪水制定预算。",
+    "title": "为你最新的薪水制定预算。",
     "titleOriginal": "Plan a budget for your latest paycheck.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1684,12 +1684,12 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 为您最新的薪水制定预算。不追求一夜暴富，只完成一个能让生活系统更稳的小升级。",
+    "description": "新手委托 · 为你最新的薪水制定预算。不追求一夜暴富，只完成一个能让生活系统更稳的小升级。",
     "descriptionOriginal": "Starter quest — Plan a budget for your latest paycheck. Skip overnight riches; make one small upgrade to a steadier life system."
   },
   {
     "id": "career-finances-007",
-    "title": "列出您的短期和长期目标。",
+    "title": "列出你的短期和长期目标。",
     "titleOriginal": "Make a list of your goals, short term and long term.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1706,12 +1706,12 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 列出您的短期和长期目标。这是一次现实装备维护：完成它，让未来的选择多一点余地。",
+    "description": "新手委托 · 列出你的短期和长期目标。这是一次现实装备维护：完成它，让未来的选择多一点余地。",
     "descriptionOriginal": "Starter quest — Make a list of your goals, short term and long term. Treat this as real-life gear maintenance and give your future self more options."
   },
   {
     "id": "career-finances-008",
-    "title": "列出 5 家您将来想为之工作的公司。",
+    "title": "列出 5 家你将来想为之工作的公司。",
     "titleOriginal": "Make a list of 5 companies you’d like to someday work for.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1728,7 +1728,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 列出 5 家您将来想为之工作的公司。把一个拖延中的现实事项变成已结算状态，降低后台持续占用。",
+    "description": "新手委托 · 列出 5 家你将来想为之工作的公司。把一个拖延中的现实事项变成已结算状态，降低后台持续占用。",
     "descriptionOriginal": "Starter quest — Make a list of 5 companies you’d like to someday work for. Turn one delayed practical matter into a settled one and clear some background load."
   },
   {
@@ -1833,7 +1833,7 @@
   },
   {
     "id": "career-finances-013",
-    "title": "找出您的信用评分。",
+    "title": "找出你的信用评分。",
     "titleOriginal": "Find out your credit score.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1854,12 +1854,12 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 找出您的信用评分。这是一次现实装备维护：完成它，让未来的选择多一点余地。",
+    "description": "支线任务 · 找出你的信用评分。这是一次现实装备维护：完成它，让未来的选择多一点余地。",
     "descriptionOriginal": "Side quest — Find out your credit score. Treat this as real-life gear maintenance and give your future self more options."
   },
   {
     "id": "career-finances-014",
-    "title": "为潜在雇主更新您的在线简历。",
+    "title": "为潜在雇主更新你的在线简历。",
     "titleOriginal": "Update your online resume or CV for potential employers.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1880,12 +1880,12 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 为潜在雇主更新您的在线简历。把一个拖延中的现实事项变成已结算状态，降低后台持续占用。",
+    "description": "支线任务 · 为潜在雇主更新你的在线简历。把一个拖延中的现实事项变成已结算状态，降低后台持续占用。",
     "descriptionOriginal": "Side quest — Update your online resume or CV for potential employers. Turn one delayed practical matter into a settled one and clear some background load."
   },
   {
     "id": "career-finances-015",
-    "title": "创建或更新网站以宣传您的技能和工作。",
+    "title": "创建或更新网站以宣传你的技能和工作。",
     "titleOriginal": "Create or update a website to promote your skills and work.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1906,7 +1906,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 创建或更新网站以宣传您的技能和工作。不追求一夜暴富，只完成一个能让生活系统更稳的小升级。",
+    "description": "支线任务 · 创建或更新网站以宣传你的技能和工作。不追求一夜暴富，只完成一个能让生活系统更稳的小升级。",
     "descriptionOriginal": "Side quest — Create or update a website to promote your skills and work. Skip overnight riches; make one small upgrade to a steadier life system."
   },
   {
@@ -1937,7 +1937,7 @@
   },
   {
     "id": "career-finances-017",
-    "title": "完成您自己的所得税。",
+    "title": "完成你自己的所得税。",
     "titleOriginal": "Complete your own income taxes.",
     "category": "事业与财务",
     "categoryOriginal": "Career & Finances",
@@ -1958,7 +1958,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 完成您自己的所得税。把一个拖延中的现实事项变成已结算状态，降低后台持续占用。",
+    "description": "进阶远征 · 完成你自己的所得税。把一个拖延中的现实事项变成已结算状态，降低后台持续占用。",
     "descriptionOriginal": "Advanced expedition — Complete your own income taxes. Turn one delayed practical matter into a settled one and clear some background load."
   },
   {
@@ -2609,7 +2609,7 @@
   },
   {
     "id": "fitness-health-023",
-    "title": "举起您可以安全举起的最重重量的十次。",
+    "title": "举起你可以安全举起的最重重量的十次。",
     "titleOriginal": "Lift ten reps of the heaviest amount of weight you can safely lift.",
     "category": "健身与健康",
     "categoryOriginal": "Fitness & Health",
@@ -2630,7 +2630,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 举起您可以安全举起的最重重量的十次。身体是冒险者的长期装备，今天为它完成一次保养或强化。",
+    "description": "支线任务 · 举起你可以安全举起的最重重量的十次。身体是冒险者的长期装备，今天为它完成一次保养或强化。",
     "descriptionOriginal": "Side quest — Lift ten reps of the heaviest amount of weight you can safely lift. Your body is long-term adventuring gear—maintain or strengthen it today."
   },
   {
@@ -2843,7 +2843,7 @@
   },
   {
     "id": "fitness-health-032",
-    "title": "达到您的理想体重目标。",
+    "title": "达到你的理想体重目标。",
     "titleOriginal": "Reach your ideal weight goal.",
     "category": "健身与健康",
     "categoryOriginal": "Fitness & Health",
@@ -2864,7 +2864,7 @@
     ],
     "energyDemand": "high",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 达到您的理想体重目标。身体是冒险者的长期装备，今天为它完成一次保养或强化。",
+    "description": "传奇挑战 · 达到你的理想体重目标。身体是冒险者的长期装备，今天为它完成一次保养或强化。",
     "descriptionOriginal": "Legendary challenge — Reach your ideal weight goal. Your body is long-term adventuring gear—maintain or strengthen it today."
   },
   {
@@ -3437,7 +3437,7 @@
   },
   {
     "id": "food-cooking-008",
-    "title": "为您的父母或其他家庭成员做饭。",
+    "title": "为你的父母或其他家庭成员做饭。",
     "titleOriginal": "Cook a meal for your parents or other family members.",
     "category": "美食与烹饪",
     "categoryOriginal": "Food & Cooking",
@@ -3454,7 +3454,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 为您的父母或其他家庭成员做饭。用味觉完成一次探索，看看简单的食物能不能变成今天的小事件。",
+    "description": "新手委托 · 为你的父母或其他家庭成员做饭。用味觉完成一次探索，看看简单的食物能不能变成今天的小事件。",
     "descriptionOriginal": "Starter quest — Cook a meal for your parents or other family members. Explore through taste and turn simple food into a small event."
   },
   {
@@ -4283,7 +4283,7 @@
   },
   {
     "id": "household-diy-015",
-    "title": "为您的家创造新的工艺品或装饰品。",
+    "title": "为你的家创造新的工艺品或装饰品。",
     "titleOriginal": "Create a new craft or decoration for your home.",
     "category": "家务与手作",
     "categoryOriginal": "Household & DIY",
@@ -4304,7 +4304,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 为您的家创造新的工艺品或装饰品。今天不讨伐巨龙，先处理那个每天都在悄悄消耗你的细节。",
+    "description": "支线任务 · 为你的家创造新的工艺品或装饰品。今天不讨伐巨龙，先处理那个每天都在悄悄消耗你的细节。",
     "descriptionOriginal": "Side quest — Create a new craft or decoration for your home. No dragons today—deal with the detail that quietly drains you every day."
   },
   {
@@ -4819,7 +4819,7 @@
   },
   {
     "id": "humanity-010",
-    "title": "捐赠、赠送或出售您不需要的物品。",
+    "title": "捐赠、赠送或出售你不需要的物品。",
     "titleOriginal": "Donate, give away or sell items you don’t need.",
     "category": "善意与公益",
     "categoryOriginal": "Humanity",
@@ -4836,7 +4836,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 捐赠、赠送或出售您不需要的物品。把“我在乎”从想法变成动作，哪怕它只改变了一个很小的瞬间。",
+    "description": "新手委托 · 捐赠、赠送或出售你不需要的物品。把“我在乎”从想法变成动作，哪怕它只改变了一个很小的瞬间。",
     "descriptionOriginal": "Starter quest — Donate, give away or sell items you don’t need. Turn “I care” from an idea into an action, even for one small moment."
   },
   {
@@ -5381,7 +5381,7 @@
   },
   {
     "id": "mental-008",
-    "title": "写下您对未来期待的事情的清单。",
+    "title": "写下你对未来期待的事情的清单。",
     "titleOriginal": "Write a list of things you are looking forward to in the future.",
     "category": "心智与情绪",
     "categoryOriginal": "Mental",
@@ -5398,7 +5398,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 写下您对未来期待的事情的清单。把自动驾驶暂停片刻，主动选择一个更适合今天的行动。",
+    "description": "新手委托 · 写下你对未来期待的事情的清单。把自动驾驶暂停片刻，主动选择一个更适合今天的行动。",
     "descriptionOriginal": "Starter quest — Write a list of things you are looking forward to in the future. Pause autopilot and choose one action that fits today better."
   },
   {
@@ -5835,7 +5835,7 @@
   },
   {
     "id": "mental-027",
-    "title": "优先考虑您的心理健康。",
+    "title": "优先考虑你的心理健康。",
     "titleOriginal": "Prioritize your mental health.",
     "category": "心智与情绪",
     "categoryOriginal": "Mental",
@@ -5856,7 +5856,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 优先考虑您的心理健康。这是一次内在状态检查：不必表现完美，只要诚实地照顾当下的自己。",
+    "description": "支线任务 · 优先考虑你的心理健康。这是一次内在状态检查：不必表现完美，只要诚实地照顾当下的自己。",
     "descriptionOriginal": "Side quest — Prioritize your mental health. Run an inner status check; perfection is unnecessary, honest care is enough."
   },
   {
@@ -6243,7 +6243,7 @@
   },
   {
     "id": "outdoors-003",
-    "title": "探索您所在地区的小径或路径。",
+    "title": "探索你所在地区的小径或路径。",
     "titleOriginal": "Explore a trail or path in your area.",
     "category": "户外",
     "categoryOriginal": "Outdoors",
@@ -6260,7 +6260,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 探索您所在地区的小径或路径。让现实世界刷新视野，完成一次和自然或城市户外的直接接触。",
+    "description": "新手委托 · 探索你所在地区的小径或路径。让现实世界刷新视野，完成一次和自然或城市户外的直接接触。",
     "descriptionOriginal": "Starter quest — Explore a trail or path in your area. Refresh your view with direct contact with nature or the city outdoors."
   },
   {
@@ -6563,7 +6563,7 @@
   },
   {
     "id": "outdoors-017",
-    "title": "种植一些您所在地的原生花卉。",
+    "title": "种植一些你所在地的原生花卉。",
     "titleOriginal": "Plant some flowers that are native to your location.",
     "category": "户外",
     "categoryOriginal": "Outdoors",
@@ -6584,7 +6584,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 种植一些您所在地的原生花卉。离开室内地图，去读取一次风、光线、植物或地形发来的消息。",
+    "description": "支线任务 · 种植一些你所在地的原生花卉。离开室内地图，去读取一次风、光线、植物或地形发来的消息。",
     "descriptionOriginal": "Side quest — Plant some flowers that are native to your location. Leave the indoor map and read what wind, light, plants, or terrain are saying."
   },
   {
@@ -6975,7 +6975,7 @@
   },
   {
     "id": "reading-002",
-    "title": "阅读有关激励您的人的故事。",
+    "title": "阅读有关激励你的人的故事。",
     "titleOriginal": "Read about somebody that inspires you.",
     "category": "阅读",
     "categoryOriginal": "Reading",
@@ -6992,7 +6992,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 阅读有关激励您的人的故事。翻开书页，让注意力在另一个人的思想世界里停留一会儿。",
+    "description": "新手委托 · 阅读有关激励你的人的故事。翻开书页，让注意力在另一个人的思想世界里停留一会儿。",
     "descriptionOriginal": "Starter quest — Read about somebody that inspires you. Open the pages and let your attention stay inside another mind for a while."
   },
   {
@@ -7176,20 +7176,24 @@
     "category": "经典书单",
     "categoryOriginal": "Top 150",
     "level": 1,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 45,
-    "cadence": "每日",
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完刘易斯·卡罗尔的《爱丽丝梦游仙境》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Alice’s Adventures in Wonderland by Lewis Carroll. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完刘易斯·卡罗尔的《爱丽丝梦游仙境》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Alice’s Adventures in Wonderland by Lewis Carroll. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-002",
@@ -7198,20 +7202,24 @@
     "category": "经典书单",
     "categoryOriginal": "Top 150",
     "level": 1,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 45,
-    "cadence": "每日",
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完威廉·戈尔丁的《蝇王》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Lord of the Flies by William Golding. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完威廉·戈尔丁的《蝇王》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Lord of the Flies by William Golding. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-003",
@@ -7220,20 +7228,24 @@
     "category": "经典书单",
     "categoryOriginal": "Top 150",
     "level": 1,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 45,
-    "cadence": "每日",
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完杰克·伦敦的《野性的呼唤》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Call of the Wild by Jack London. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完杰克·伦敦的《野性的呼唤》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Call of the Wild by Jack London. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-004",
@@ -7242,20 +7254,24 @@
     "category": "经典书单",
     "categoryOriginal": "Top 150",
     "level": 1,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 45,
-    "cadence": "每日",
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完C·S·刘易斯的《狮子、女巫和魔衣橱》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Lion, The Witch and the Wardrobe by C.S. Lewis. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完C·S·刘易斯的《狮子、女巫和魔衣橱》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Lion, The Witch and the Wardrobe by C.S. Lewis. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-005",
@@ -7264,20 +7280,24 @@
     "category": "经典书单",
     "categoryOriginal": "Top 150",
     "level": 1,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 45,
-    "cadence": "每日",
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完罗伯特·路易斯·史蒂文森的《化身博士》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Dr Jekyll and Mr Hyde by Robert Louis Stevenson. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完罗伯特·路易斯·史蒂文森的《化身博士》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Dr Jekyll and Mr Hyde by Robert Louis Stevenson. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-006",
@@ -7285,21 +7305,25 @@
     "titleOriginal": "The Time Machine by H.G. Wells.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 2,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完H.G.威尔斯的《时间机器》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Time Machine by H.G. Wells. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完H.G.威尔斯的《时间机器》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Time Machine by H.G. Wells. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-007",
@@ -7307,21 +7331,25 @@
     "titleOriginal": "The Giver by Lois Lowry.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 2,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完洛伊丝·洛瑞的《给予者》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Giver by Lois Lowry. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完洛伊丝·洛瑞的《给予者》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Giver by Lois Lowry. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-008",
@@ -7329,21 +7357,25 @@
     "titleOriginal": "To Kill a Mockingbird by Harper Lee.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 2,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完哈珀·李的《杀死一只知更鸟》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading To Kill a Mockingbird by Harper Lee. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完哈珀·李的《杀死一只知更鸟》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading To Kill a Mockingbird by Harper Lee. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-009",
@@ -7351,21 +7383,25 @@
     "titleOriginal": "Animal Farm by George Orwell.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 2,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完乔治·奥威尔的《动物农场》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Animal Farm by George Orwell. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完乔治·奥威尔的《动物农场》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Animal Farm by George Orwell. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-010",
@@ -7373,21 +7409,25 @@
     "titleOriginal": "Heart of Darkness by Joseph Conrad.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 2,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完约瑟夫·康拉德的《黑暗之心》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Heart of Darkness by Joseph Conrad. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完约瑟夫·康拉德的《黑暗之心》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Heart of Darkness by Joseph Conrad. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-011",
@@ -7395,21 +7435,25 @@
     "titleOriginal": "Of Mice and Men by John Steinbeck.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 3,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完约翰·斯坦贝克的《人鼠之间》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Of Mice and Men by John Steinbeck. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完约翰·斯坦贝克的《人鼠之间》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Of Mice and Men by John Steinbeck. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-012",
@@ -7417,21 +7461,25 @@
     "titleOriginal": "The Old Man and the Sea by Ernest Hemingway.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 3,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完欧内斯特·海明威的《老人与海》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Old Man and the Sea by Ernest Hemingway. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完欧内斯特·海明威的《老人与海》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Old Man and the Sea by Ernest Hemingway. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-013",
@@ -7439,21 +7487,25 @@
     "titleOriginal": "The Postman Always Rings Twice by James M. Cain.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 3,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完詹姆斯·M·凯恩的《邮差总按两遍铃》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Postman Always Rings Twice by James M. Cain. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完詹姆斯·M·凯恩的《邮差总按两遍铃》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Postman Always Rings Twice by James M. Cain. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-014",
@@ -7461,21 +7513,25 @@
     "titleOriginal": "The Stranger by Albert Camus.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 3,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完阿尔贝·加缪的《局外人》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Stranger by Albert Camus. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完阿尔贝·加缪的《局外人》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Stranger by Albert Camus. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-015",
@@ -7483,21 +7539,25 @@
     "titleOriginal": "Candide by Voltaire.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 3,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完伏尔泰的《老实人》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Candide by Voltaire. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完伏尔泰的《老实人》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Candide by Voltaire. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-016",
@@ -7505,21 +7565,25 @@
     "titleOriginal": "The Great Gatsby by F. Scott Fitzgerald.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 4,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完F·斯科特·菲茨杰拉德的《了不起的盖茨比》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Great Gatsby by F. Scott Fitzgerald. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完F·斯科特·菲茨杰拉德的《了不起的盖茨比》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Great Gatsby by F. Scott Fitzgerald. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-017",
@@ -7527,21 +7591,25 @@
     "titleOriginal": "The Invisible Man by H.G. Wells.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 4,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完H.G.威尔斯的《隐形人》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Invisible Man by H.G. Wells. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完H.G.威尔斯的《隐形人》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Invisible Man by H.G. Wells. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-018",
@@ -7549,21 +7617,25 @@
     "titleOriginal": "The Art of War by Sun Tzu.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 4,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完孙子兵法。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Art of War by Sun Tzu. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完孙子兵法。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Art of War by Sun Tzu. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-019",
@@ -7571,21 +7643,25 @@
     "titleOriginal": "Harry Potter and the Philosopher’s Stone by J.K. Rowling.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 4,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完哈利·波特与魔法石 J.K.罗琳。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Harry Potter and the Philosopher’s Stone by J.K. Rowling. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完哈利·波特与魔法石 J.K.罗琳。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Harry Potter and the Philosopher’s Stone by J.K. Rowling. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-020",
@@ -7593,21 +7669,25 @@
     "titleOriginal": "The Golden Compass/Northern Lights by Philip Pullman.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 4,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完菲利普·普尔曼的《黄金罗盘/北极光》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Golden Compass/Northern Lights by Philip Pullman. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完菲利普·普尔曼的《黄金罗盘/北极光》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Golden Compass/Northern Lights by Philip Pullman. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-021",
@@ -7615,21 +7695,25 @@
     "titleOriginal": "Tom Sawyer by Mark Twain.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 5,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完马克吐温的《汤姆索亚历险记》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Tom Sawyer by Mark Twain. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完马克吐温的《汤姆索亚历险记》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Tom Sawyer by Mark Twain. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-022",
@@ -7637,21 +7721,25 @@
     "titleOriginal": "Leaves of Grass by Walt Whitman.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 5,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完沃尔特·惠特曼的《草叶集》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Leaves of Grass by Walt Whitman. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完沃尔特·惠特曼的《草叶集》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Leaves of Grass by Walt Whitman. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-023",
@@ -7659,21 +7747,25 @@
     "titleOriginal": "The Outsiders by S.E. Hinton.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 5,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完《局外人》作者：S.E.辛顿。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Outsiders by S.E. Hinton. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完《局外人》作者：S.E.辛顿。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Outsiders by S.E. Hinton. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-024",
@@ -7681,21 +7773,25 @@
     "titleOriginal": "The Alchemist by Paulo Coelho.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 5,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完保罗·科埃略的《炼金术士》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Alchemist by Paulo Coelho. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完保罗·科埃略的《炼金术士》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Alchemist by Paulo Coelho. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-025",
@@ -7703,21 +7799,25 @@
     "titleOriginal": "The War of the Worlds by H.G. Wells.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 5,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完H.G.威尔斯的《世界大战》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The War of the Worlds by H.G. Wells. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完H.G.威尔斯的《世界大战》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The War of the Worlds by H.G. Wells. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-026",
@@ -7725,21 +7825,25 @@
     "titleOriginal": "Siddhartha by Hermann Hesse.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 6,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完赫尔曼·黑塞的《悉达多》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Siddhartha by Hermann Hesse. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完赫尔曼·黑塞的《悉达多》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Siddhartha by Hermann Hesse. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-027",
@@ -7747,21 +7851,25 @@
     "titleOriginal": "Cannery Row by John Steinbeck.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 6,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完约翰·斯坦贝克的罐头厂街。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Cannery Row by John Steinbeck. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完约翰·斯坦贝克的罐头厂街。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Cannery Row by John Steinbeck. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-028",
@@ -7769,21 +7877,25 @@
     "titleOriginal": "The Hound of the Baskervilles by Sir Arthur Conan Doyle.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 6,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完阿瑟·柯南·道尔爵士的《巴斯克维尔猎犬》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Hound of the Baskervilles by Sir Arthur Conan Doyle. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完阿瑟·柯南·道尔爵士的《巴斯克维尔猎犬》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Hound of the Baskervilles by Sir Arthur Conan Doyle. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-029",
@@ -7791,21 +7903,25 @@
     "titleOriginal": "Treasure Island by Robert Louis Stevenson.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 6,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完罗伯特·路易斯·史蒂文森的《金银岛》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Treasure Island by Robert Louis Stevenson. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完罗伯特·路易斯·史蒂文森的《金银岛》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Treasure Island by Robert Louis Stevenson. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-030",
@@ -7813,21 +7929,25 @@
     "titleOriginal": "The Day of The Locust by Nathanael West.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 6,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完纳撒尼尔·韦斯特的《蝗虫日》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Day of The Locust by Nathanael West. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完纳撒尼尔·韦斯特的《蝗虫日》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Day of The Locust by Nathanael West. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-031",
@@ -7835,21 +7955,25 @@
     "titleOriginal": "The Five People You Meet in Heaven by Mitch Albom.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 7,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完米奇·阿尔博姆在天堂遇到的五个人。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Five People You Meet in Heaven by Mitch Albom. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完米奇·阿尔博姆在天堂遇到的五个人。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Five People You Meet in Heaven by Mitch Albom. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-032",
@@ -7857,21 +7981,25 @@
     "titleOriginal": "A Clockwork Orange by Anthony Burgess.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 7,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完安东尼·伯吉斯的《发条橙》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading A Clockwork Orange by Anthony Burgess. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完安东尼·伯吉斯的《发条橙》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading A Clockwork Orange by Anthony Burgess. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-033",
@@ -7879,21 +8007,25 @@
     "titleOriginal": "Fear and Loathing in Las Vegas by Hunter S. Thompson.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 7,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完亨特·S·汤普森的《恐惧拉斯维加斯》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Fear and Loathing in Las Vegas by Hunter S. Thompson. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完亨特·S·汤普森的《恐惧拉斯维加斯》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Fear and Loathing in Las Vegas by Hunter S. Thompson. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-034",
@@ -7901,21 +8033,25 @@
     "titleOriginal": "The Metamorphosis by Franz Kafka.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 7,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完弗兰兹·卡夫卡的《变形记》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Metamorphosis by Franz Kafka. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完弗兰兹·卡夫卡的《变形记》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Metamorphosis by Franz Kafka. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-035",
@@ -7923,21 +8059,25 @@
     "titleOriginal": "Frankenstein by Mary Shelley.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 7,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完玛丽·雪莱的《弗兰肯斯坦》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Frankenstein by Mary Shelley. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完玛丽·雪莱的《弗兰肯斯坦》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Frankenstein by Mary Shelley. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-036",
@@ -7945,21 +8085,25 @@
     "titleOriginal": "Tuesdays with Morrie by Mitch Albom.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 8,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完米奇·阿尔博姆的《星期二与莫里》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Tuesdays with Morrie by Mitch Albom. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完米奇·阿尔博姆的《星期二与莫里》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Tuesdays with Morrie by Mitch Albom. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-037",
@@ -7967,21 +8111,25 @@
     "titleOriginal": "At the Mountains of Madness by H.P. Lovecraft.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 8,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完《在疯狂之山》作者：H.P.洛夫克拉夫特。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading At the Mountains of Madness by H.P. Lovecraft. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完《在疯狂之山》作者：H.P.洛夫克拉夫特。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading At the Mountains of Madness by H.P. Lovecraft. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-038",
@@ -7989,21 +8137,25 @@
     "titleOriginal": "Fight Club by Chuck Palahniuk.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 8,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完查克·帕拉尼克的《搏击俱乐部》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Fight Club by Chuck Palahniuk. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完查克·帕拉尼克的《搏击俱乐部》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Fight Club by Chuck Palahniuk. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-039",
@@ -8011,21 +8163,25 @@
     "titleOriginal": "The Maltese Falcon by Dashiell Hammett.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 8,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完达希尔·哈米特的《马耳他之鹰》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Maltese Falcon by Dashiell Hammett. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完达希尔·哈米特的《马耳他之鹰》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Maltese Falcon by Dashiell Hammett. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-040",
@@ -8033,21 +8189,25 @@
     "titleOriginal": "Slaughter-House Five by Kurt Vonnegut.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 8,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完库尔特·冯内古特的《五号屠宰场》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Slaughter-House Five by Kurt Vonnegut. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完库尔特·冯内古特的《五号屠宰场》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Slaughter-House Five by Kurt Vonnegut. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-041",
@@ -8055,21 +8215,25 @@
     "titleOriginal": "The Scarlet Letter by Nathaniel Hawthorne.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 9,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完纳撒尼尔·霍桑的《红字》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Scarlet Letter by Nathaniel Hawthorne. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完纳撒尼尔·霍桑的《红字》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Scarlet Letter by Nathaniel Hawthorne. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-042",
@@ -8077,21 +8241,25 @@
     "titleOriginal": "A Brief History of Time by Stephen Hawking.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 9,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完史蒂芬·霍金的《时间简史》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading A Brief History of Time by Stephen Hawking. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完史蒂芬·霍金的《时间简史》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading A Brief History of Time by Stephen Hawking. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-043",
@@ -8099,21 +8267,25 @@
     "titleOriginal": "Mrs Dalloway by Virginia Woolf.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 9,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完弗吉尼亚·伍尔夫的《达洛维夫人》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Mrs Dalloway by Virginia Woolf. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完弗吉尼亚·伍尔夫的《达洛维夫人》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Mrs Dalloway by Virginia Woolf. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-044",
@@ -8121,21 +8293,25 @@
     "titleOriginal": "Fahrenheit 451 by Ray Bradbury.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 9,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完雷·布拉德伯里的《华氏 451》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Fahrenheit 451 by Ray Bradbury. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完雷·布拉德伯里的《华氏 451》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Fahrenheit 451 by Ray Bradbury. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-045",
@@ -8143,21 +8319,25 @@
     "titleOriginal": "The Big Sleep by Raymond Chandler.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 9,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完雷蒙德·钱德勒的《长眠不醒》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Big Sleep by Raymond Chandler. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完雷蒙德·钱德勒的《长眠不醒》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Big Sleep by Raymond Chandler. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-046",
@@ -8165,21 +8345,25 @@
     "titleOriginal": "The Picture of Dorian Gray by Oscar Wilde.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 10,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完奥斯卡·王尔德的《道林·格雷的画像》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading The Picture of Dorian Gray by Oscar Wilde. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完奥斯卡·王尔德的《道林·格雷的画像》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Picture of Dorian Gray by Oscar Wilde. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-047",
@@ -8187,21 +8371,25 @@
     "titleOriginal": "The Wind in the Willows by Kenneth Grahame.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 10,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完肯尼思·格雷厄姆的《柳林风声》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Wind in the Willows by Kenneth Grahame. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完肯尼思·格雷厄姆的《柳林风声》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Wind in the Willows by Kenneth Grahame. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-048",
@@ -8209,21 +8397,25 @@
     "titleOriginal": "The Catcher in the Rye by J.D. Salinger.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 10,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完J.D.塞林格的《麦田里的守望者》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Catcher in the Rye by J.D. Salinger. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完J.D.塞林格的《麦田里的守望者》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Catcher in the Rye by J.D. Salinger. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-049",
@@ -8231,21 +8423,25 @@
     "titleOriginal": "Childhood’s End by Arthur C Clarke.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 10,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完阿瑟·C·克拉克的《童年的终结》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Childhood’s End by Arthur C Clarke. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完阿瑟·C·克拉克的《童年的终结》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Childhood’s End by Arthur C Clarke. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-050",
@@ -8253,21 +8449,25 @@
     "titleOriginal": "Notes From Underground by Fyodor Dostoyevsky.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 10,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 50,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完费奥多尔·陀思妥耶夫斯基的《地下笔记》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Notes From Underground by Fyodor Dostoyevsky. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完费奥多尔·陀思妥耶夫斯基的《地下笔记》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Notes From Underground by Fyodor Dostoyevsky. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-051",
@@ -8275,21 +8475,25 @@
     "titleOriginal": "The Hobbit by J.R.R. Tolkien.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 11,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完J.R.R. 的《霍比特人》托尔金。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading The Hobbit by J.R.R. Tolkien. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完J.R.R. 的《霍比特人》托尔金。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Hobbit by J.R.R. Tolkien. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-052",
@@ -8297,21 +8501,25 @@
     "titleOriginal": "Gulliver's Travels by Jonathan Swift.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 11,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完乔纳森·斯威夫特的《格列佛游记》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Gulliver's Travels by Jonathan Swift. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完乔纳森·斯威夫特的《格列佛游记》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Gulliver's Travels by Jonathan Swift. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-053",
@@ -8319,21 +8527,25 @@
     "titleOriginal": "As I Lay Dying by William Faulkner.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 11,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完威廉·福克纳《当我弥留之际》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading As I Lay Dying by William Faulkner. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完威廉·福克纳《当我弥留之际》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading As I Lay Dying by William Faulkner. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-054",
@@ -8341,21 +8553,25 @@
     "titleOriginal": "Brave New World by Aldous Huxley.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 11,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完奥尔德斯·赫胥黎的《美丽新世界》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Brave New World by Aldous Huxley. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完奥尔德斯·赫胥黎的《美丽新世界》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Brave New World by Aldous Huxley. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-055",
@@ -8363,21 +8579,25 @@
     "titleOriginal": "Starship Troopers by Robert Heinlein.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 11,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完罗伯特·海因莱因的《星河战队》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Starship Troopers by Robert Heinlein. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完罗伯特·海因莱因的《星河战队》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Starship Troopers by Robert Heinlein. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-056",
@@ -8385,21 +8605,25 @@
     "titleOriginal": "The Sun Also Rises by Ernest Hemingway.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 12,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完《太阳照常升起》作者：欧内斯特·海明威。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Sun Also Rises by Ernest Hemingway. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完《太阳照常升起》作者：欧内斯特·海明威。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Sun Also Rises by Ernest Hemingway. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-057",
@@ -8407,21 +8631,25 @@
     "titleOriginal": "1984 by George Orwell.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 12,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完1984 年，乔治·奥威尔。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading 1984 by George Orwell. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完1984 年，乔治·奥威尔。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading 1984 by George Orwell. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-058",
@@ -8429,21 +8657,25 @@
     "titleOriginal": "Do Androids Dream of Electric Sheep by Phillip K. Dick.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 12,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完菲利普·K·迪克的《仿生人会梦见电子羊吗？》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Do Androids Dream of Electric Sheep by Phillip K. Dick. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完菲利普·K·迪克的《仿生人会梦见电子羊吗？》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Do Androids Dream of Electric Sheep by Phillip K. Dick. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-059",
@@ -8451,21 +8683,25 @@
     "titleOriginal": "The Hitchhiker's Guide to the Galaxy by Douglas Adams.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 12,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完道格拉斯·亚当斯的《银河系漫游指南》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading The Hitchhiker's Guide to the Galaxy by Douglas Adams. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完道格拉斯·亚当斯的《银河系漫游指南》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Hitchhiker's Guide to the Galaxy by Douglas Adams. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-060",
@@ -8473,21 +8709,25 @@
     "titleOriginal": "Cat’s Cradle by Kurt Vonnegut.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 12,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完库尔特·冯内古特的《猫的摇篮》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading Cat’s Cradle by Kurt Vonnegut. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完库尔特·冯内古特的《猫的摇篮》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Cat’s Cradle by Kurt Vonnegut. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-061",
@@ -8495,21 +8735,25 @@
     "titleOriginal": "Naked Lunch by William S. Burroughs.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 13,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完威廉·S·巴勒斯的《裸体午餐》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Starter quest — Finish reading Naked Lunch by William S. Burroughs. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完威廉·S·巴勒斯的《裸体午餐》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Naked Lunch by William S. Burroughs. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-062",
@@ -8517,21 +8761,25 @@
     "titleOriginal": "Something Wicked This Way Comes by Ray Bradbury.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 13,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完雷·布拉德伯里的《邪恶之事悄然来临》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Starter quest — Finish reading Something Wicked This Way Comes by Ray Bradbury. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完雷·布拉德伯里的《邪恶之事悄然来临》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Something Wicked This Way Comes by Ray Bradbury. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-063",
@@ -8539,21 +8787,25 @@
     "titleOriginal": "A Farewell to Arms by Ernest Hemingway.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 13,
-    "tier": 1,
-    "tierName": "轻松一胜",
-    "xp": 55,
-    "cadence": "每日",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
         "points": 2
       }
     ],
-    "energyDemand": "low",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 读完欧内斯特·海明威的《永别了武器》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Starter quest — Finish reading A Farewell to Arms by Ernest Hemingway. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完欧内斯特·海明威的《永别了武器》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading A Farewell to Arms by Ernest Hemingway. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-064",
@@ -8561,19 +8813,19 @@
     "titleOriginal": "Darkness at Noon by Arthur Koestler.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 13,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8587,19 +8839,19 @@
     "titleOriginal": "The Moon is a Harsh Mistress by Robert Heinlein.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 13,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8613,19 +8865,19 @@
     "titleOriginal": "The Road by Cormac McCarthy.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 14,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8639,19 +8891,19 @@
     "titleOriginal": "How to Win Friends and Influence People by Dale Carnegie.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 14,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8665,19 +8917,19 @@
     "titleOriginal": "Robinson Crusoe by Daniel Defoe.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 14,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8691,19 +8943,19 @@
     "titleOriginal": "To The Lighthouse by Virginia Woolf.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 14,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8717,19 +8969,19 @@
     "titleOriginal": "Breakfast of Champions by Kurt Vonnegut.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 14,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8743,19 +8995,19 @@
     "titleOriginal": "The Trial by Franz Kafka.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 15,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8769,19 +9021,19 @@
     "titleOriginal": "Trustee From The Toolroom by Nevil Shute.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 15,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8795,19 +9047,19 @@
     "titleOriginal": "Flowers For Algernon by Daniel Keyes.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 15,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8821,19 +9073,19 @@
     "titleOriginal": "Neuromancer by William Gibson.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 15,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8847,19 +9099,19 @@
     "titleOriginal": "Adventures of Huckleberry Finn by Mark Twain.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 15,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8873,19 +9125,19 @@
     "titleOriginal": "A Portrait of the Artist as a Young Man by James Joyce.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 16,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8899,19 +9151,19 @@
     "titleOriginal": "Wuthering Heights by Emily Bronte.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 16,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8925,19 +9177,19 @@
     "titleOriginal": "On The Beach by Nevil Shute.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 16,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8951,19 +9203,19 @@
     "titleOriginal": "On the Road by Jack Kerouac.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 16,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -8977,19 +9229,19 @@
     "titleOriginal": "One Flew Over the Cuckoo's Nest by Ken Kesey.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 16,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 125,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9003,19 +9255,19 @@
     "titleOriginal": "Beloved by Toni Morrison.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 17,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9029,19 +9281,19 @@
     "titleOriginal": "Ender’s Game by Orson Scott Card.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 17,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9055,19 +9307,19 @@
     "titleOriginal": "In Cold Blood by Truman Capote.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 17,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9081,19 +9333,19 @@
     "titleOriginal": "Bluebeard by Kurt Vonnegut.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 17,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9107,19 +9359,19 @@
     "titleOriginal": "Interview with the Vampire by Anne Rice.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 17,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9133,19 +9385,19 @@
     "titleOriginal": "Life of Pi by Yann Martel.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 18,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9159,19 +9411,19 @@
     "titleOriginal": "The Jungle by Upton Sinclair.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 18,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9185,19 +9437,19 @@
     "titleOriginal": "The Sound and the Fury by William Faulkner.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 18,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9211,19 +9463,19 @@
     "titleOriginal": "Dracula by Bram Stoker.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 18,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9237,19 +9489,19 @@
     "titleOriginal": "On the Origin of Species by Charles Darwin.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 18,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9263,19 +9515,19 @@
     "titleOriginal": "The Fellowship of The Ring by J.R.R. Tolkien.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 19,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9289,19 +9541,19 @@
     "titleOriginal": "A Passage to India by E.M. Forster.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 19,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9315,19 +9567,19 @@
     "titleOriginal": "Pride and Prejudice by Jane Austen.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 19,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9341,19 +9593,19 @@
     "titleOriginal": "The Odyssey by Homer.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 19,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9367,19 +9619,19 @@
     "titleOriginal": "The Swiss Family Robinson by Johann D. Wyss.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 19,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9393,19 +9645,19 @@
     "titleOriginal": "The Iliad by Homer.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 20,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9419,19 +9671,19 @@
     "titleOriginal": "Cosmos by Carl Sagan.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 20,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9445,19 +9697,19 @@
     "titleOriginal": "Hamlet by William Shakespeare.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 20,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9471,19 +9723,19 @@
     "titleOriginal": "A Tale Of Two Cities by Charles Dickens.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 20,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9497,19 +9749,19 @@
     "titleOriginal": "Lolita by Vladimir Nabokov.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 20,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 130,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9523,19 +9775,19 @@
     "titleOriginal": "Memoirs of a Geisha by Arthur Golden.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 21,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9549,19 +9801,19 @@
     "titleOriginal": "Dune by Frank Herbert.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 21,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9575,19 +9827,19 @@
     "titleOriginal": "The Stand by Stephen King.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 21,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9601,19 +9853,19 @@
     "titleOriginal": "The Unbearable Lightness of Being by Milan Kundera.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 21,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9627,19 +9879,19 @@
     "titleOriginal": "American Psycho by Bret Easton Ellis.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 21,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9653,19 +9905,19 @@
     "titleOriginal": "Little Women by Louisa May Alcott.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 22,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9679,19 +9931,19 @@
     "titleOriginal": "The Grapes of Wrath by John Steinbeck.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 22,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9705,19 +9957,19 @@
     "titleOriginal": "Crime and Punishment by Fyodor Dostoevsky.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 22,
+    "level": 1,
     "tier": 2,
     "tierName": "支线任务",
-    "xp": 135,
-    "cadence": "每周",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 4
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 1
+        "points": 2
       }
     ],
     "energyDemand": "normal",
@@ -9731,25 +9983,25 @@
     "titleOriginal": "Finnegans Wake by James Joyce.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 22,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 260,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完詹姆斯·乔伊斯的《芬尼根守灵夜》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Finnegans Wake by James Joyce. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完詹姆斯·乔伊斯的《芬尼根守灵夜》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Finnegans Wake by James Joyce. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-110",
@@ -9757,25 +10009,25 @@
     "titleOriginal": "I, Claudius by Robert Graves.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 22,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 260,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完《我，克劳狄斯》作者：罗伯特·格雷夫斯。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading I, Claudius by Robert Graves. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完《我，克劳狄斯》作者：罗伯特·格雷夫斯。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading I, Claudius by Robert Graves. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-111",
@@ -9783,25 +10035,25 @@
     "titleOriginal": "The Omnivore’s Dilemma by Michael Pollan.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 23,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 260,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完迈克尔·波伦的《杂食动物的困境》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading The Omnivore’s Dilemma by Michael Pollan. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完迈克尔·波伦的《杂食动物的困境》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Omnivore’s Dilemma by Michael Pollan. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-112",
@@ -9809,25 +10061,25 @@
     "titleOriginal": "A Hundred Years of Solitude by Gabriel Garcia Marquez.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 23,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 285,
-    "cadence": "每年",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 7
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完加夫列尔·加西亚·马尔克斯的《一百年孤独》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading A Hundred Years of Solitude by Gabriel Garcia Marquez. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完加夫列尔·加西亚·马尔克斯的《一百年孤独》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading A Hundred Years of Solitude by Gabriel Garcia Marquez. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-113",
@@ -9835,25 +10087,25 @@
     "titleOriginal": "Guns, Germs, and Steel by Jared Diamond.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 23,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 260,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完贾里德·戴蒙德的《枪炮、病菌与钢铁》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Guns, Germs, and Steel by Jared Diamond. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完贾里德·戴蒙德的《枪炮、病菌与钢铁》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Guns, Germs, and Steel by Jared Diamond. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-114",
@@ -9861,25 +10113,25 @@
     "titleOriginal": "Zen and The Art of Motorcycle Maintenance by R. Pirsig.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 23,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 260,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完罗伯特·M·波西格的《禅与摩托车维修艺术》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Zen and The Art of Motorcycle Maintenance by R. Pirsig. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完罗伯特·M·波西格的《禅与摩托车维修艺术》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Zen and The Art of Motorcycle Maintenance by R. Pirsig. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-115",
@@ -9887,25 +10139,25 @@
     "titleOriginal": "Emma by Jane Austen.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 23,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 260,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完简·奥斯汀的《艾玛》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Emma by Jane Austen. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完简·奥斯汀的《艾玛》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Emma by Jane Austen. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-116",
@@ -9913,25 +10165,25 @@
     "titleOriginal": "For Whom the Bell Tolls by Ernest Hemingway.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 24,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完丧钟为谁而鸣 欧内斯特·海明威。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading For Whom the Bell Tolls by Ernest Hemingway. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完丧钟为谁而鸣 欧内斯特·海明威。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading For Whom the Bell Tolls by Ernest Hemingway. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-117",
@@ -9939,25 +10191,25 @@
     "titleOriginal": "Catch-22 by Joseph Heller.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 24,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完约瑟夫·海勒的《第二十二条军规》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Catch-22 by Joseph Heller. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完约瑟夫·海勒的《第二十二条军规》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Catch-22 by Joseph Heller. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-118",
@@ -9965,25 +10217,25 @@
     "titleOriginal": "The Bourne Identity by Robert Ludlum.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 24,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完罗伯特·勒德鲁姆的《谍影重重》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading The Bourne Identity by Robert Ludlum. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完罗伯特·勒德鲁姆的《谍影重重》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The Bourne Identity by Robert Ludlum. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-119",
@@ -9991,25 +10243,25 @@
     "titleOriginal": "Lies My Teacher Told Me by James Loewen.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 24,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完詹姆斯·洛文《老师告诉我的谎言》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Lies My Teacher Told Me by James Loewen. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完詹姆斯·洛文《老师告诉我的谎言》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Lies My Teacher Told Me by James Loewen. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-120",
@@ -10017,25 +10269,25 @@
     "titleOriginal": "Snow Crash by Neal Stephenson.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 24,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完尼尔·史蒂芬森的《雪崩》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Snow Crash by Neal Stephenson. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完尼尔·史蒂芬森的《雪崩》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Snow Crash by Neal Stephenson. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-121",
@@ -10043,25 +10295,25 @@
     "titleOriginal": "Stranger in a Strange Land by Robert A. Heinlein.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 25,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完罗伯特·A·海因莱因《异乡的陌生人》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Stranger in a Strange Land by Robert A. Heinlein. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完罗伯特·A·海因莱因《异乡的陌生人》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Stranger in a Strange Land by Robert A. Heinlein. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-122",
@@ -10069,25 +10321,25 @@
     "titleOriginal": "Nostromo by Joseph Conrad.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 25,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完约瑟夫·康拉德的《诺斯特罗莫》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Nostromo by Joseph Conrad. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完约瑟夫·康拉德的《诺斯特罗莫》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Nostromo by Joseph Conrad. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-123",
@@ -10095,25 +10347,25 @@
     "titleOriginal": "Midnight’s Children by Salman Rushdie.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 25,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完萨尔曼·拉什迪的《午夜之子》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Midnight’s Children by Salman Rushdie. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完萨尔曼·拉什迪的《午夜之子》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Midnight’s Children by Salman Rushdie. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-124",
@@ -10121,25 +10373,25 @@
     "titleOriginal": "East of Eden by John Steinbeck.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 25,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完约翰·斯坦贝克的《伊甸园以东》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading East of Eden by John Steinbeck. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完约翰·斯坦贝克的《伊甸园以东》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading East of Eden by John Steinbeck. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-125",
@@ -10147,25 +10399,25 @@
     "titleOriginal": "Moby-Dick by Herman Melville.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 25,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 265,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完赫尔曼·梅尔维尔的《白鲸》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Moby-Dick by Herman Melville. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完赫尔曼·梅尔维尔的《白鲸》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Moby-Dick by Herman Melville. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-126",
@@ -10173,25 +10425,25 @@
     "titleOriginal": "Great Expectations by Charles Dickens.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 26,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完查尔斯·狄更斯的《远大前程》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Great Expectations by Charles Dickens. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完查尔斯·狄更斯的《远大前程》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Great Expectations by Charles Dickens. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-127",
@@ -10199,25 +10451,25 @@
     "titleOriginal": "Collapse by Jared Diamond.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 26,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完贾里德·戴蒙德的《崩溃》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Collapse by Jared Diamond. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完贾里德·戴蒙德的《崩溃》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Collapse by Jared Diamond. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-128",
@@ -10225,25 +10477,25 @@
     "titleOriginal": "A Short History of Nearly Everything by Bill Bryson.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 26,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完比尔·布莱森的《万物简史》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading A Short History of Nearly Everything by Bill Bryson. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完比尔·布莱森的《万物简史》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading A Short History of Nearly Everything by Bill Bryson. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-129",
@@ -10251,25 +10503,25 @@
     "titleOriginal": "The Divine Comedy by Dante Alighieri.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 26,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完但丁·阿利吉耶里的《神曲》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading The Divine Comedy by Dante Alighieri. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完但丁·阿利吉耶里的《神曲》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Divine Comedy by Dante Alighieri. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-130",
@@ -10277,25 +10529,25 @@
     "titleOriginal": "Bonfire of the Vanities by Tom Wolfe.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 26,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完汤姆·沃尔夫的《虚荣之火》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading Bonfire of the Vanities by Tom Wolfe. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完汤姆·沃尔夫的《虚荣之火》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Bonfire of the Vanities by Tom Wolfe. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-131",
@@ -10303,25 +10555,25 @@
     "titleOriginal": "The Three Musketeers by Alexandre Dumas.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 27,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完大仲马的《三个火枪手》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading The Three Musketeers by Alexandre Dumas. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完大仲马的《三个火枪手》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Three Musketeers by Alexandre Dumas. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-132",
@@ -10329,25 +10581,25 @@
     "titleOriginal": "V. by Thomas Pynchon.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 27,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完托马斯·品钦的《V.》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading V. by Thomas Pynchon. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完托马斯·品钦的《V.》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading V. by Thomas Pynchon. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-133",
@@ -10355,25 +10607,25 @@
     "titleOriginal": "The World According to Garp by John Irving.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 27,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完约翰·欧文的《盖普眼中的世界》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Advanced expedition — Finish reading The World According to Garp by John Irving. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完约翰·欧文的《盖普眼中的世界》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading The World According to Garp by John Irving. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-134",
@@ -10381,25 +10633,25 @@
     "titleOriginal": "American Gods by Neil Gaiman.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 27,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完尼尔·盖曼的《美国众神》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Advanced expedition — Finish reading American Gods by Neil Gaiman. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完尼尔·盖曼的《美国众神》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading American Gods by Neil Gaiman. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-135",
@@ -10407,25 +10659,25 @@
     "titleOriginal": "The Foundation Saga by Isaac Asimov.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 27,
-    "tier": 3,
-    "tierName": "进阶挑战",
-    "xp": 270,
-    "cadence": "每月",
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
+    "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 6
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 3
+        "points": 2
       }
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 读完艾萨克·阿西莫夫的《基金会传奇》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Advanced expedition — Finish reading The Foundation Saga by Isaac Asimov. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完艾萨克·阿西莫夫的《基金会传奇》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Foundation Saga by Isaac Asimov. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-136",
@@ -10433,25 +10685,25 @@
     "titleOriginal": "Don Quixote by Miguel de Cervantes.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 28,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 645,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完米格尔·德·塞万提斯的《堂吉诃德》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Legendary challenge — Finish reading Don Quixote by Miguel de Cervantes. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完米格尔·德·塞万提斯的《堂吉诃德》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Don Quixote by Miguel de Cervantes. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-137",
@@ -10459,25 +10711,25 @@
     "titleOriginal": "The Complete Tales and Poems of Edgar Allen Poe.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 28,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 645,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完埃德加·爱伦·坡的故事与诗歌全集。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Legendary challenge — Finish reading The Complete Tales and Poems of Edgar Allen Poe. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完埃德加·爱伦·坡的故事与诗歌全集。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Complete Tales and Poems of Edgar Allen Poe. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-138",
@@ -10485,25 +10737,25 @@
     "titleOriginal": "The Naked and the Dead by Norman Mailer.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 28,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 645,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完诺曼·梅勒的《裸者与死者》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Legendary challenge — Finish reading The Naked and the Dead by Norman Mailer. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完诺曼·梅勒的《裸者与死者》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading The Naked and the Dead by Norman Mailer. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-139",
@@ -10511,25 +10763,25 @@
     "titleOriginal": "Ulysses by James Joyce.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 28,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 645,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完詹姆斯·乔伊斯的《尤利西斯》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Legendary challenge — Finish reading Ulysses by James Joyce. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完詹姆斯·乔伊斯的《尤利西斯》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Ulysses by James Joyce. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-140",
@@ -10537,25 +10789,25 @@
     "titleOriginal": "The Brothers Karamazov by Fyodor Dostoevsky.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 28,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 645,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完陀思妥耶夫斯基的《卡拉马佐夫兄弟》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Legendary challenge — Finish reading The Brothers Karamazov by Fyodor Dostoevsky. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完陀思妥耶夫斯基的《卡拉马佐夫兄弟》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Brothers Karamazov by Fyodor Dostoevsky. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-141",
@@ -10563,25 +10815,25 @@
     "titleOriginal": "House of Leaves by Mark Z. Danielewski.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 29,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 650,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完马克·Z·丹尼尔夫斯基的《叶之屋》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Legendary challenge — Finish reading House of Leaves by Mark Z. Danielewski. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完马克·Z·丹尼尔夫斯基的《叶之屋》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading House of Leaves by Mark Z. Danielewski. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-142",
@@ -10589,25 +10841,25 @@
     "titleOriginal": "Gravity’s Rainbow by Thomas Pynchon.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 29,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 650,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完托马斯·品钦的《万有引力彩虹》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Legendary challenge — Finish reading Gravity’s Rainbow by Thomas Pynchon. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完托马斯·品钦的《万有引力彩虹》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading Gravity’s Rainbow by Thomas Pynchon. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-143",
@@ -10615,25 +10867,25 @@
     "titleOriginal": "The Count of Monte Cristo by Alexandre Dumas.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 29,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 650,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完大仲马的《基督山伯爵》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Legendary challenge — Finish reading The Count of Monte Cristo by Alexandre Dumas. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完大仲马的《基督山伯爵》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading The Count of Monte Cristo by Alexandre Dumas. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-144",
@@ -10641,25 +10893,25 @@
     "titleOriginal": "Atlas Shrugged by Ayn Rand.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 29,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 650,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完《阿特拉斯耸耸肩》作者：艾因·兰德。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Legendary challenge — Finish reading Atlas Shrugged by Ayn Rand. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完《阿特拉斯耸耸肩》作者：艾因·兰德。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Atlas Shrugged by Ayn Rand. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-145",
@@ -10667,25 +10919,25 @@
     "titleOriginal": "It by Stephen King.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 29,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 650,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完斯蒂芬·金的作品。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Legendary challenge — Finish reading It by Stephen King. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完斯蒂芬·金的作品。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading It by Stephen King. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-146",
@@ -10693,25 +10945,25 @@
     "titleOriginal": "Les Miserables by Victor Hugo.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 30,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 655,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完维克多·雨果的《悲惨世界》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Legendary challenge — Finish reading Les Miserables by Victor Hugo. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完维克多·雨果的《悲惨世界》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Les Miserables by Victor Hugo. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-147",
@@ -10719,25 +10971,25 @@
     "titleOriginal": "War and Peace by Leo Tolstoy.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 30,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 655,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完列夫·托尔斯泰的《战争与和平》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Legendary challenge — Finish reading War and Peace by Leo Tolstoy. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完列夫·托尔斯泰的《战争与和平》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading War and Peace by Leo Tolstoy. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "top-150-148",
@@ -10745,25 +10997,25 @@
     "titleOriginal": "A Game of Thrones by George RR Martin.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 30,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 655,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完乔治·R·R·马丁的《权力的游戏》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
-    "descriptionOriginal": "Legendary challenge — Finish reading A Game of Thrones by George RR Martin. Allow confusion and rereading—the achievement is completing the whole journey."
+    "description": "支线任务 · 读完乔治·R·R·马丁的《权力的游戏》。允许难懂、走神和重读；真正的成就是完整走过这趟文字远征。",
+    "descriptionOriginal": "Side quest — Finish reading A Game of Thrones by George RR Martin. Allow confusion and rereading—the achievement is completing the whole journey."
   },
   {
     "id": "top-150-149",
@@ -10771,25 +11023,25 @@
     "titleOriginal": "Infinite Jest by David Foster Wallace.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 30,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 655,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完大卫·福斯特·华莱士的《无限玩笑》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
-    "descriptionOriginal": "Legendary challenge — Finish reading Infinite Jest by David Foster Wallace. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
+    "description": "支线任务 · 读完大卫·福斯特·华莱士的《无限玩笑》。不必竞速通关，留意一个让你停下来思考的段落，并为它留下一句路标。",
+    "descriptionOriginal": "Side quest — Finish reading Infinite Jest by David Foster Wallace. Do not speedrun it; notice one passage that stops you and leave a note as a trail marker."
   },
   {
     "id": "top-150-150",
@@ -10797,25 +11049,25 @@
     "titleOriginal": "Gone With the Wind by Margaret Mitchell.",
     "category": "经典书单",
     "categoryOriginal": "Top 150",
-    "level": 30,
-    "tier": 4,
-    "tierName": "史诗任务",
-    "xp": 655,
+    "level": 1,
+    "tier": 2,
+    "tierName": "支线任务",
+    "xp": 145,
     "cadence": "终身一次",
     "stats": [
       {
         "key": "INT",
-        "points": 12
+        "points": 5
       },
       {
         "key": "CUL",
-        "points": 6
+        "points": 2
       }
     ],
-    "energyDemand": "high",
+    "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 读完玛格丽特·米切尔的《乱世佳人》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
-    "descriptionOriginal": "Legendary challenge — Finish reading Gone With the Wind by Margaret Mitchell. Treat it as a conversation across time and notice your own response."
+    "description": "支线任务 · 读完玛格丽特·米切尔的《乱世佳人》。把它当作一段跨越时代的对话：读完，也听听自己产生了什么回应。",
+    "descriptionOriginal": "Side quest — Finish reading Gone With the Wind by Margaret Mitchell. Treat it as a conversation across time and notice your own response."
   },
   {
     "id": "school-learning-001",
@@ -10841,7 +11093,7 @@
   },
   {
     "id": "school-learning-002",
-    "title": "阅读一篇有关您不太了解的内容的文章。",
+    "title": "阅读一篇有关你不太了解的内容的文章。",
     "titleOriginal": "Read an article on something you don’t know much about.",
     "category": "学习与成长",
     "categoryOriginal": "School & Learning",
@@ -10858,7 +11110,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 阅读一篇有关您不太了解的内容的文章。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
+    "description": "新手委托 · 阅读一篇有关你不太了解的内容的文章。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
     "descriptionOriginal": "Starter quest — Read an article on something you don’t know much about. Do not merely bookmark the entrance—go in and bring back one discovery."
   },
   {
@@ -10973,7 +11225,7 @@
   },
   {
     "id": "school-learning-008",
-    "title": "按时完成您的作业或项目。",
+    "title": "按时完成你的作业或项目。",
     "titleOriginal": "Complete your assignment or project on time.",
     "category": "学习与成长",
     "categoryOriginal": "School & Learning",
@@ -10990,7 +11242,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 按时完成您的作业或项目。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
+    "description": "新手委托 · 按时完成你的作业或项目。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
     "descriptionOriginal": "Starter quest — Complete your assignment or project on time. Do not merely bookmark the entrance—go in and bring back one discovery."
   },
   {
@@ -11017,7 +11269,7 @@
   },
   {
     "id": "school-learning-010",
-    "title": "比您需要的更深入地了解某个主题。",
+    "title": "比你需要的更深入地了解某个主题。",
     "titleOriginal": "Learn in-depth about a topic more than you need to.",
     "category": "学习与成长",
     "categoryOriginal": "School & Learning",
@@ -11038,7 +11290,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 比您需要的更深入地了解某个主题。开启求知支线：带着一个问题出发，并确保结束时能说出新知道了什么。",
+    "description": "支线任务 · 比你需要的更深入地了解某个主题。开启求知支线：带着一个问题出发，并确保结束时能说出新知道了什么。",
     "descriptionOriginal": "Side quest — Learn in-depth about a topic more than you need to. Begin a learning side quest with one question and return able to name what you learned."
   },
   {
@@ -11199,7 +11451,7 @@
   },
   {
     "id": "school-learning-017",
-    "title": "提高您的编码/编程技能。",
+    "title": "提高你的编码/编程技能。",
     "titleOriginal": "Improve your skills at coding/programming.",
     "category": "学习与成长",
     "categoryOriginal": "School & Learning",
@@ -11220,7 +11472,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 提高您的编码/编程技能。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
+    "description": "进阶远征 · 提高你的编码/编程技能。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
     "descriptionOriginal": "Advanced expedition — Improve your skills at coding/programming. Do not merely bookmark the entrance—go in and bring back one discovery."
   },
   {
@@ -11251,7 +11503,7 @@
   },
   {
     "id": "school-learning-019",
-    "title": "改善您与不同语言的沟通。",
+    "title": "改善你与不同语言的沟通。",
     "titleOriginal": "Improve your communication with a different language.",
     "category": "学习与成长",
     "categoryOriginal": "School & Learning",
@@ -11272,12 +11524,12 @@
     ],
     "energyDemand": "high",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 改善您与不同语言的沟通。开启求知支线：带着一个问题出发，并确保结束时能说出新知道了什么。",
+    "description": "传奇挑战 · 改善你与不同语言的沟通。开启求知支线：带着一个问题出发，并确保结束时能说出新知道了什么。",
     "descriptionOriginal": "Legendary challenge — Improve your communication with a different language. Begin a learning side quest with one question and return able to name what you learned."
   },
   {
     "id": "school-learning-020",
-    "title": "通过手语改善您的沟通。",
+    "title": "通过手语改善你的沟通。",
     "titleOriginal": "Improve your communication with sign language.",
     "category": "学习与成长",
     "categoryOriginal": "School & Learning",
@@ -11298,7 +11550,7 @@
     ],
     "energyDemand": "high",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 通过手语改善您的沟通。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
+    "description": "传奇挑战 · 通过手语改善你的沟通。不要只收藏知识入口，真正走进去，带回一个可复述的新发现。",
     "descriptionOriginal": "Legendary challenge — Improve your communication with sign language. Do not merely bookmark the entrance—go in and bring back one discovery."
   },
   {
@@ -11605,7 +11857,7 @@
   },
   {
     "id": "social-013",
-    "title": "为您关心的人准备一份礼物。",
+    "title": "为你关心的人准备一份礼物。",
     "titleOriginal": "Prepare a gift to someone you care about.",
     "category": "社交",
     "categoryOriginal": "Social",
@@ -11626,7 +11878,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 为您关心的人准备一份礼物。关系需要现实中的互动来续航；为一段连接补充一点新鲜能量。",
+    "description": "支线任务 · 为你关心的人准备一份礼物。关系需要现实中的互动来续航；为一段连接补充一点新鲜能量。",
     "descriptionOriginal": "Side quest — Prepare a gift to someone you care about. Relationships need real interaction—add a little fresh energy to one connection."
   },
   {
@@ -11931,7 +12183,7 @@
   },
   {
     "id": "travel-004",
-    "title": "参观您从未去过的城镇或城市。",
+    "title": "参观你从未去过的城镇或城市。",
     "titleOriginal": "Visit a town or city you’ve never been to.",
     "category": "旅行",
     "categoryOriginal": "Travel",
@@ -11948,12 +12200,12 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 参观您从未去过的城镇或城市。开启短途远征模式：观察、绕路，并带回一段值得记住的现场感。",
+    "description": "新手委托 · 参观你从未去过的城镇或城市。开启短途远征模式：观察、绕路，并带回一段值得记住的现场感。",
     "descriptionOriginal": "Starter quest — Visit a town or city you’ve never been to. Enter expedition mode: observe, detour, and bring back a vivid memory."
   },
   {
     "id": "travel-005",
-    "title": "参观您一直想去的地方。",
+    "title": "参观你一直想去的地方。",
     "titleOriginal": "Visit somewhere you’ve always wanted to go.",
     "category": "旅行",
     "categoryOriginal": "Travel",
@@ -11970,7 +12222,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 参观您一直想去的地方。把熟悉地图撕开一道口子，去收集一个新路线、新地点或新故事。",
+    "description": "新手委托 · 参观你一直想去的地方。把熟悉地图撕开一道口子，去收集一个新路线、新地点或新故事。",
     "descriptionOriginal": "Starter quest — Visit somewhere you’ve always wanted to go. Open a gap in the familiar map and collect a new route, place, or story."
   },
   {
@@ -12341,7 +12593,7 @@
   },
   {
     "id": "travel-021",
-    "title": "记录您的旅行冒险视频。",
+    "title": "记录你的旅行冒险视频。",
     "titleOriginal": "Document a video of your travel adventure.",
     "category": "旅行",
     "categoryOriginal": "Travel",
@@ -12362,7 +12614,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 记录您的旅行冒险视频。别只抵达目的地，给沿途的意外和细节留一个物品栏位置。",
+    "description": "进阶远征 · 记录你的旅行冒险视频。别只抵达目的地，给沿途的意外和细节留一个物品栏位置。",
     "descriptionOriginal": "Advanced expedition — Document a video of your travel adventure. Do more than arrive; save inventory space for surprises along the way."
   },
   {
@@ -12471,7 +12723,7 @@
   },
   {
     "id": "destinations-001",
-    "title": "参见自由女神像。",
+    "title": "亲眼看看自由女神像。",
     "titleOriginal": "See the Statue of Liberty.",
     "category": "一生必去",
     "categoryOriginal": "Destinations",
@@ -12488,7 +12740,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 参见自由女神像。把愿望清单上的地名变成脚下的现实，并为这次远征留下一份私人证据。",
+    "description": "新手委托 · 亲眼看看自由女神像。把愿望清单上的地名变成脚下的现实，并为这次远征留下一份私人证据。",
     "descriptionOriginal": "Starter quest — See the Statue of Liberty. Turn a wishlist name into ground beneath your feet and keep private proof of the expedition."
   },
   {
@@ -12625,7 +12877,7 @@
   },
   {
     "id": "destinations-008",
-    "title": "参见加拉帕戈斯群岛。",
+    "title": "亲眼看看加拉帕戈斯群岛。",
     "titleOriginal": "See the Galapagos Islands.",
     "category": "一生必去",
     "categoryOriginal": "Destinations",
@@ -12642,7 +12894,7 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 参见加拉帕戈斯群岛。传奇地点不会自动变成传奇回忆；慢下来，为它保存一个属于你的瞬间。",
+    "description": "新手委托 · 亲眼看看加拉帕戈斯群岛。传奇地点不会自动变成传奇回忆；慢下来，为它保存一个属于你的瞬间。",
     "descriptionOriginal": "Starter quest — See the Galapagos Islands. A legendary place does not automatically make a legendary memory; save one moment of your own."
   },
   {
@@ -12691,7 +12943,7 @@
   },
   {
     "id": "destinations-011",
-    "title": "参见巨石阵。",
+    "title": "亲眼看看巨石阵。",
     "titleOriginal": "See Stonehenge.",
     "category": "一生必去",
     "categoryOriginal": "Destinations",
@@ -12708,12 +12960,12 @@
     ],
     "energyDemand": "low",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "新手委托 · 参见巨石阵。传奇地点不会自动变成传奇回忆；慢下来，为它保存一个属于你的瞬间。",
+    "description": "新手委托 · 亲眼看看巨石阵。传奇地点不会自动变成传奇回忆；慢下来，为它保存一个属于你的瞬间。",
     "descriptionOriginal": "Starter quest — See Stonehenge. A legendary place does not automatically make a legendary memory; save one moment of your own."
   },
   {
     "id": "destinations-012",
-    "title": "参见复活节岛。",
+    "title": "亲眼看看复活节岛。",
     "titleOriginal": "See Easter Island.",
     "category": "一生必去",
     "categoryOriginal": "Destinations",
@@ -12734,7 +12986,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 参见复活节岛。这是一枚远方坐标。抵达时别急着证明来过，先真正看见它、感受它。",
+    "description": "支线任务 · 亲眼看看复活节岛。这是一枚远方坐标。抵达时别急着证明来过，先真正看见它、感受它。",
     "descriptionOriginal": "Side quest — See Easter Island. This is a faraway coordinate. When you arrive, do not rush to prove it—truly see and feel it."
   },
   {
@@ -12869,7 +13121,7 @@
   },
   {
     "id": "destinations-018",
-    "title": "参见日本东京的府慈山。",
+    "title": "亲眼看看日本的富士山。",
     "titleOriginal": "See Mt. Fuci in Tokyo, Japan.",
     "category": "一生必去",
     "categoryOriginal": "Destinations",
@@ -12890,12 +13142,12 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "支线任务 · 参见日本东京的府慈山。这是一枚远方坐标。抵达时别急着证明来过，先真正看见它、感受它。",
+    "description": "支线任务 · 亲眼看看日本的富士山。这是一枚远方坐标。抵达时别急着证明来过，先真正看见它、感受它。",
     "descriptionOriginal": "Side quest — See Mt. Fuci in Tokyo, Japan. This is a faraway coordinate. When you arrive, do not rush to prove it—truly see and feel it."
   },
   {
     "id": "destinations-019",
-    "title": "参见埃及金字塔。",
+    "title": "亲眼看看埃及金字塔。",
     "titleOriginal": "See the Pyramids of Egypt.",
     "category": "一生必去",
     "categoryOriginal": "Destinations",
@@ -12916,7 +13168,7 @@
     ],
     "energyDemand": "normal",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "进阶远征 · 参见埃及金字塔。把愿望清单上的地名变成脚下的现实，并为这次远征留下一份私人证据。",
+    "description": "进阶远征 · 亲眼看看埃及金字塔。把愿望清单上的地名变成脚下的现实，并为这次远征留下一份私人证据。",
     "descriptionOriginal": "Advanced expedition — See the Pyramids of Egypt. Turn a wishlist name into ground beneath your feet and keep private proof of the expedition."
   },
   {
@@ -13025,7 +13277,7 @@
   },
   {
     "id": "destinations-024",
-    "title": "参见乞力马扎罗山。",
+    "title": "亲眼看看乞力马扎罗山。",
     "titleOriginal": "See Mt. Kilimanjaro.",
     "category": "一生必去",
     "categoryOriginal": "Destinations",
@@ -13046,7 +13298,7 @@
     ],
     "energyDemand": "high",
     "source": "LvlUpLife 挑战列表备份",
-    "description": "传奇挑战 · 参见乞力马扎罗山。这是一枚远方坐标。抵达时别急着证明来过，先真正看见它、感受它。",
+    "description": "传奇挑战 · 亲眼看看乞力马扎罗山。这是一枚远方坐标。抵达时别急着证明来过，先真正看见它、感受它。",
     "descriptionOriginal": "Legendary challenge — See Mt. Kilimanjaro. This is a faraway coordinate. When you arrive, do not rush to prove it—truly see and feel it."
   },
   {

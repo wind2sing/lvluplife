@@ -450,11 +450,13 @@ type CategoryDiscovery = {
   completed: number
   discovered: number
   maxTier: number
+  mode: 'exploration' | 'catalog'
   nextMilestone: number | null
   total: number
 }
 
 const categoryTierMilestones = [0, 0, 1, 3, 10]
+const catalogCategories = new Set(['经典书单'])
 
 function getCategoryMaxTier(completed: number) {
   if (completed >= categoryTierMilestones[4]) return 4
@@ -475,6 +477,11 @@ function buildDiscoveryState(challenges: Challenge[], save: Pick<SaveState, 'act
   categories.forEach((items, category) => {
     const itemIds = new Set(items.map((item) => item.id))
     const completed = new Set(save.completions.filter((item) => itemIds.has(item.challengeId)).map((item) => item.challengeId)).size
+    if (catalogCategories.has(category)) {
+      items.forEach((item) => discovered.add(item.id))
+      summaries[category] = { completed, discovered: items.length, maxTier: 4, mode: 'catalog', nextMilestone: null, total: items.length }
+      return
+    }
     const sealed = save.hiddenIds.filter((id) => itemIds.has(id)).length
     const maxTier = getCategoryMaxTier(completed)
     const target = Math.min(items.length, 4 + completed * 2 + sealed)
@@ -486,7 +493,7 @@ function buildDiscoveryState(challenges: Challenge[], save: Pick<SaveState, 'act
       discoveredCount += 1
     }
     const nextMilestone = [1, 3, 10].find((value) => value > completed) ?? null
-    summaries[category] = { completed, discovered: items.filter((item) => discovered.has(item.id)).length, maxTier, nextMilestone, total: items.length }
+    summaries[category] = { completed, discovered: items.filter((item) => discovered.has(item.id)).length, maxTier, mode: 'exploration', nextMilestone, total: items.length }
   })
 
   return { discovered, summaries }
@@ -645,7 +652,7 @@ function App() {
   useEffect(() => { document.documentElement.dataset.theme = equippedTheme.id }, [equippedTheme.id])
 
   const unlockedChallenges = allChallenges.filter((item) => discoveredIds.has(item.id) && item.level <= level.level && !lockedPlanStepIds.has(item.id))
-  const recommendationPool = unlockedChallenges.filter((item) => !save.hiddenIds.includes(item.id))
+  const recommendationPool = unlockedChallenges.filter((item) => !save.hiddenIds.includes(item.id) && (!catalogCategories.has(item.category) || save.activeIds.includes(item.id) || save.favoriteIds.includes(item.id)))
   const availableChallenges = recommendationPool.filter((item) => !getCooldownLabel(item, save.completions, settings.language))
   const dailyPool = availableChallenges.length ? availableChallenges : recommendationPool
   const todayKey = getTodayKey()
@@ -1354,16 +1361,16 @@ function ExploreView({ activeIds, category, categoryDiscovery, completions, favo
       <div className="category-strip">
         {categories.map((item) => <button key={item} className={category === item ? 'active' : ''} onClick={() => onCategory(item)}>{item === '全部任务' ? <Sparkles size={17} /> : (() => { const Icon = categoryMeta[item].icon; return <Icon size={17} /> })()}<span>{item === '全部任务' ? text('全部任务', 'All') : language === 'zh' ? categoryMeta[item].short : categoryMeta[item].shortEn}</span></button>)}
       </div>
-      {!showSealed && <section className="category-discovery"><div><Compass size={20} /><span>{categoryDiscovery ? text('分类探索', 'Category exploration') : text('探索规则', 'Discovery rules')}</span><strong>{categoryDiscovery ? `${stageLabels[categoryDiscovery.maxTier - 1]} · ${categoryDiscovery.discovered}/${categoryDiscovery.total}` : text('每个分类都从少量入门任务开始', 'Every category begins with a small starter set')}</strong></div><p>{categoryDiscovery ? categoryDiscovery.nextMilestone ? text(`已完成 ${categoryDiscovery.completed} 个不同任务；再完成 ${categoryDiscovery.nextMilestone - categoryDiscovery.completed} 个，将开放更高阶任务。`, `${categoryDiscovery.completed} unique completions; ${categoryDiscovery.nextMilestone - categoryDiscovery.completed} more unlock the next tier.`) : text('该分类的全部稀有度已经开放，继续完成或封印任务可发现更多内容。', 'All tiers are open; completing or sealing quests reveals more.') : text('完成不同任务会提升该分类阶段并发现新任务；循环完成同一任务不会重复计算。', 'Unique completions raise category mastery and reveal new quests; repeats do not count twice.')}</p></section>}
+      {!showSealed && <section className="category-discovery"><div><Compass size={20} /><span>{categoryDiscovery?.mode === 'catalog' ? text('公开图鉴', 'Open catalog') : categoryDiscovery ? text('分类探索', 'Category exploration') : text('探索规则', 'Discovery rules')}</span><strong>{categoryDiscovery?.mode === 'catalog' ? text(`已读 ${categoryDiscovery.completed} / ${categoryDiscovery.total}`, `${categoryDiscovery.completed} / ${categoryDiscovery.total} completed`) : categoryDiscovery ? `${stageLabels[categoryDiscovery.maxTier - 1]} · ${categoryDiscovery.discovered}/${categoryDiscovery.total}` : text('每个分类都从少量入门任务开始', 'Every category begins with a small starter set')}</strong></div><p>{categoryDiscovery?.mode === 'catalog' ? text('经典书单从等级 1 起完整开放，每本都是终身一次成就。它不会用迷雾隐藏，也不会自动挤占每日推荐；收藏或接取后才可能被推荐。', 'The classic reading list is fully open from level 1. Every book is a lifetime achievement, never hidden by fog, and only enters daily recommendations after being saved or started.') : categoryDiscovery ? categoryDiscovery.nextMilestone ? text(`已完成 ${categoryDiscovery.completed} 个不同任务；再完成 ${categoryDiscovery.nextMilestone - categoryDiscovery.completed} 个，将开放更高阶任务。`, `${categoryDiscovery.completed} unique completions; ${categoryDiscovery.nextMilestone - categoryDiscovery.completed} more unlock the next tier.`) : text('该分类的全部稀有度已经开放，继续完成或封印任务可发现更多内容。', 'All tiers are open; completing or sealing quests reveals more.') : text('完成不同任务会提升该分类阶段并发现新任务；循环完成同一任务不会重复计算。', 'Unique completions raise category mastery and reveal new quests; repeats do not count twice.')}</p></section>}
       <div className="result-toolbar"><div className="result-meta"><strong>{showSealed ? visibleChallenges.length : availableCount}</strong> {showSealed ? text('项封印任务', 'sealed quests') : text('项可领取任务', 'available quests')} {!showSealed && <><span>•</span> {visibleChallenges.length} {text('项已发现', 'discovered')}</>} <span>•</span> {showSealed ? text('封印库', 'Sealed vault') : category === '全部任务' ? text('全部任务', 'All quests') : language === 'zh' ? category : categoryMeta[category].labelEn}</div><button className={`sealed-filter ${showSealed ? 'active' : ''}`} onClick={onShowSealed}><LockKeyhole size={14} /> {showSealed ? text('返回任务', 'Back to quests') : text('封印库', 'Sealed vault')} {sealedCount > 0 && <b>{sealedCount}</b>}</button></div>
       {visibleChallenges.length > 0 ? <div className="quest-list">
-        {visibleChallenges.slice(0, 80).map((challenge) => !showSealed && challenge.level > level
+        {visibleChallenges.slice(0, categoryDiscovery?.mode === 'catalog' ? 200 : 80).map((challenge) => !showSealed && challenge.level > level
           ? <LockedQuestRow key={challenge.id} challenge={challenge} discovered onOpen={onOpen} />
           : <QuestRow key={challenge.id} challenge={challenge} completions={completions} active={activeIds.includes(challenge.id)} favorite={favoriteIds.includes(challenge.id)} sealed={hiddenIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onSeal={onSeal} onStart={onStart} />)}
       </div> : showSealed ? <EmptyState compact icon={LockKeyhole} title={text('封印库还是空的', 'The sealed vault is empty')} text={text('在不想再看到的任务详情中选择“封印任务”，它们会收纳在这里。', 'Seal quests you no longer want to see and they will be stored here.')} /> : null}
       {!showSealed && !search && fogPreviewChallenges.length > 0 && <div className="quest-list discovery-fog-list">{fogPreviewChallenges.map((challenge) => <LockedQuestRow key={challenge.id} challenge={challenge} />)}</div>}
       {!showSealed && hiddenLockedCount > 0 && !search && <div className="hidden-quests"><LockKeyhole size={17} /><strong>{text(`还有 ${hiddenLockedCount} 项成就隐藏在迷雾中`, `${hiddenLockedCount} achievements remain hidden in the fog`)}</strong><span>{text('完成不同任务、封印不适合的任务，或提升总等级后会继续发现。', 'Complete unique quests, seal unsuitable ones, or raise your global level to discover more.')}</span></div>}
-      {visibleChallenges.length > 80 && <p className="result-note">{text('当前显示前 80 项结果，请使用搜索或分类继续缩小范围。', 'Showing the first 80 results. Search or filter to narrow the list.')}</p>}
+      {categoryDiscovery?.mode !== 'catalog' && visibleChallenges.length > 80 && <p className="result-note">{text('当前显示前 80 项结果，请使用搜索或分类继续缩小范围。', 'Showing the first 80 results. Search or filter to narrow the list.')}</p>}
     </>
   )
 }
@@ -1783,7 +1790,7 @@ function AboutView() {
         <div><RotateCcw size={23} /><strong>{text('允许反复与回头', 'Room to return')}</strong><p>{text('任务可以循环、取消接取、撤销完成或暂时封印。离开一段时间后回来，也仍然算冒险。', 'Quests can repeat, be abandoned, undone, or sealed. Returning after time away still counts.')}</p></div>
       </section>
       <section className="about-rule-panel">
-        <div className="about-section-heading"><div><p className="eyebrow">{text('迷雾与探索', 'Fog and discovery')}</p><h2>{text('任务不是按总等级一次性全部解锁', 'Quests do not all unlock from global level')}</h2></div><p>{text('领取一项任务必须同时通过“总等级资格”和“分类探索阶段”两道门槛。这样即使角色等级很高，第一次进入新分类时仍会从少量入门挑战开始。', 'Taking a quest requires both global-level eligibility and category discovery. Even a high-level character starts a new category with a small starter set.')}</p></div>
+        <div className="about-section-heading"><div><p className="eyebrow">{text('迷雾与探索', 'Fog and discovery')}</p><h2>{text('大多数任务不会按总等级一次性全部解锁', 'Most quests do not all unlock from global level')}</h2></div><p>{text('探索型分类必须同时通过“总等级资格”和“分类探索阶段”两道门槛。经典书单是图鉴型例外：150 本全部为等级 1，并从一开始完整开放。', 'Exploration categories require both global-level eligibility and category discovery. The classic reading list is a catalog exception: all 150 books are level 1 and open from the start.')}</p></div>
         <div className="about-rule-table" role="table" aria-label={text('分类探索规则', 'Category discovery rules')}>
           <div className="about-rule-row about-rule-row--head" role="row"><span>{text('机制', 'Rule')}</span><span>{text('作用', 'Purpose')}</span><span>{text('精确规则', 'Exact behavior')}</span></div>
           <div className="about-rule-row" role="row"><strong>{text('总等级', 'Global level')}</strong><span>{text('领取资格', 'Eligibility')}</span><code>{text('任务等级 ≤ 当前等级', 'quest level ≤ current level')}</code></div>
@@ -1791,6 +1798,7 @@ function AboutView() {
           <div className="about-rule-row" role="row"><strong>{text('不同完成', 'Unique completions')}</strong><span>{text('扩大候选', 'Expand choices')}</span><code>{text('每项 +2 个发现名额', '+2 reveal slots each')}</code></div>
           <div className="about-rule-row" role="row"><strong>{text('封印补位', 'Sealed replacement')}</strong><span>{text('避免被卡住', 'Avoid dead ends')}</span><code>{text('每项 +1 个发现名额', '+1 reveal slot each')}</code></div>
           <div className="about-rule-row" role="row"><strong>{text('分类阶段', 'Category tiers')}</strong><span>{text('开放更深任务', 'Open deeper quests')}</span><code>{text('不同完成 1 / 3 / 10 项 → Tier 2 / 3 / 4', '1 / 3 / 10 unique completions → Tier 2 / 3 / 4')}</code></div>
+          <div className="about-rule-row" role="row"><strong>{text('图鉴目录', 'Catalog category')}</strong><span>{text('完整公开', 'Fully open')}</span><code>{text('经典书单：150 项均为 Lv.1 / 终身一次', 'Classic books: all 150 are Lv.1 / lifetime')}</code></div>
           <div className="about-rule-row" role="row"><strong>{text('永久发现', 'Permanent discovery')}</strong><span>{text('保留探索成果', 'Keep exploration')}</span><code>discoveredIds</code></div>
         </div>
         <p className="about-formula"><span>{text('发现目标数', 'Reveal target')}</span><strong>{text('4 + 不同任务完成数 × 2 + 当前分类封印数', '4 + unique completions × 2 + sealed quests in category')}</strong><small>{text('实际结果仍受分类 Tier、任务总等级和分类任务总数限制，并按原挑战顺序发现。', 'The result is still capped by category tier, quest level, and category size, following original quest order.')}</small></p>
