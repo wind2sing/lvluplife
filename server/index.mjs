@@ -45,6 +45,7 @@ if (!settingsColumns.includes('hide_personal_content')) db.exec('ALTER TABLE set
 if (!settingsColumns.includes('collection_features')) db.exec('ALTER TABLE settings ADD COLUMN collection_features INTEGER NOT NULL DEFAULT 1 CHECK (collection_features IN (0, 1))')
 
 const challengeSeed = JSON.parse(readFileSync(join(root, 'src/data/challenges.json'), 'utf8'))
+const challengeSeedMap = new Map(challengeSeed.map((challenge) => [challenge.id, challenge]))
 const upsertChallenge = db.prepare(`
   INSERT INTO challenges (
     id, title_zh, title_en, category_zh, category_en, level, tier,
@@ -150,6 +151,8 @@ function getBootstrap() {
       id: item.id,
       title: item.title_zh,
       titleOriginal: item.title_en,
+      description: challengeSeedMap.get(item.id)?.description,
+      descriptionOriginal: challengeSeedMap.get(item.id)?.descriptionOriginal,
       category: item.category_zh,
       categoryOriginal: item.category_en,
       level: item.level,

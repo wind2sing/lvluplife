@@ -120,6 +120,7 @@ type Challenge = {
   source: string
   custom?: boolean
   description?: string
+  descriptionOriginal?: string
   completionPrompt?: string
   energyDemand?: DailyEnergy
   contexts?: string[]
@@ -692,7 +693,7 @@ function App() {
     const visibilityPool = categoryPool.filter((item) => showSealed ? save.hiddenIds.includes(item.id) : !save.hiddenIds.includes(item.id))
     if (query) {
       return visibilityPool.filter(
-        (item) => [item.title, item.titleOriginal, item.category, item.categoryOriginal].some((value) => value.toLowerCase().includes(query)),
+        (item) => [item.title, item.titleOriginal, item.category, item.categoryOriginal, item.description, item.descriptionOriginal].some((value) => value?.toLowerCase().includes(query)),
       )
     }
     return visibilityPool
@@ -1523,7 +1524,7 @@ function QuestDetailView({ active, allowCustomEditing, challenge, completions, f
       <div className="quest-detail-grid">
         <section className="detail-panel">
           <div className="detail-panel-heading"><Repeat2 size={19} /><div><span>{text('重复规则', 'Repeat rule')}</span><strong>{language === 'zh' ? challenge.cadence : cadenceLabels[challenge.cadence]}</strong></div></div>
-          <p>{locked ? text('达到所需等级后，任务详情与奖励会完整显露。', 'Reach the required level to reveal the full quest and its rewards.') : challenge.description || (language === 'zh' ? cadenceDescriptions[challenge.cadence] : cadenceDescriptionsEn[challenge.cadence])}</p>
+          <p>{locked ? text('达到所需等级后，任务详情与奖励会完整显露。', 'Reach the required level to reveal the full quest and its rewards.') : (language === 'zh' ? challenge.description : challenge.descriptionOriginal) || challenge.description || (language === 'zh' ? cadenceDescriptions[challenge.cadence] : cadenceDescriptionsEn[challenge.cadence])}</p>
           {!locked && <div className={`repeat-status ${repeatable ? 'repeat-status--yes' : ''}`}><Repeat2 size={15} /> {repeatable ? text('这是可循环任务', 'This quest is repeatable') : text('这是终身成就', 'This is a lifetime achievement')}</div>}
           {cooldown && <div className="detail-cooldown"><History size={16} /> {cooldown}</div>}
           {!locked && Boolean(challenge.contexts?.length) && <div className="context-tags">{challenge.contexts?.map((context) => <span key={context}>{context}</span>)}</div>}
