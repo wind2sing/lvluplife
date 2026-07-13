@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import { upload } from '@vercel/blob/client'
 import type { LucideIcon } from 'lucide-react'
 import { calculateReward, CATEGORY_REWARD_STATS } from '../shared/reward-rules.mjs'
+import { CADENCE_OPTIONS, getNextAvailableAt } from '../shared/cooldown-rules.mjs'
 import {
   ArrowLeft,
   ArrowRight,
@@ -286,35 +287,32 @@ const statLabels: Record<StatKey, string> = {
   INT: '智慧',
 }
 
-const cadenceDays: Record<string, number> = { 每日: 1, 每周: 7, 每月: 30, 每年: 365, 终身一次: Number.POSITIVE_INFINITY }
-
 function getCooldownLabel(challenge: Challenge, completions: Completion[], language: Language = 'zh') {
   const latest = completions.find((item) => item.challengeId === challenge.id)
   if (!latest) return ''
-  const days = cadenceDays[challenge.cadence]
-  if (!days) return ''
-  if (!Number.isFinite(days)) return language === 'zh' ? '已完成终身成就' : 'Lifetime achievement completed'
-  const readyAt = new Date(latest.completedAt).getTime() + days * 86400000
-  const remaining = readyAt - Date.now()
-  if (remaining <= 0) return ''
-  const hours = Math.ceil(remaining / 3600000)
-  if (language === 'en') return hours < 24 ? `Repeat in ${hours}h` : `Repeat in ${Math.ceil(hours / 24)}d`
-  return hours < 24 ? `${hours} 小时后可再次完成` : `${Math.ceil(hours / 24)} 天后可再次完成`
+  const readyAt = getNextAvailableAt(latest.completedAt, challenge.cadence)
+  if (!Number.isFinite(readyAt)) return language === 'zh' ? '已完成终身成就' : 'Lifetime achievement completed'
+  if (!readyAt || readyAt <= Date.now()) return ''
+  const ready = new Date(readyAt)
+  const today = new Date(); today.setHours(0, 0, 0, 0)
+  const calendarDays = Math.round((readyAt - today.getTime()) / 86400000)
+  if (language === 'en') return calendarDays === 1 ? 'Ready tomorrow at 00:00' : `Ready ${ready.toLocaleDateString('en', { month: 'short', day: 'numeric' })} at 00:00`
+  return calendarDays === 1 ? '明天 00:00 可再次完成' : `${ready.getMonth() + 1}月${ready.getDate()}日 00:00 可再次完成`
 }
 
 const cadenceDescriptions: Record<string, string> = {
-  每日: '完成后等待 1 天，即可再次领取奖励。',
-  每周: '完成后等待 7 天，即可再次领取奖励。',
-  每月: '完成后等待 30 天，即可再次领取奖励。',
-  每年: '完成后等待 365 天，即可再次领取奖励。',
+  每日: '每个自然日可以领取一次奖励，次日 00:00 刷新。',
+  每周: '每个自然周可以领取一次奖励，下周一 00:00 刷新。',
+  每月: '每个自然月可以领取一次奖励，下个月 1 日 00:00 刷新。',
+  每年: '每个自然年可以领取一次奖励，下一年 1 月 1 日 00:00 刷新。',
   终身一次: '这是人生清单成就，只能领取一次奖励。',
 }
 
 const cadenceDescriptionsEn: Record<string, string> = {
-  每日: 'Wait 1 day after completion to earn the reward again.',
-  每周: 'Wait 7 days after completion to earn the reward again.',
-  每月: 'Wait 30 days after completion to earn the reward again.',
-  每年: 'Wait 365 days after completion to earn the reward again.',
+  每日: 'Available once per calendar day; resets at 00:00 the next day.',
+  每周: 'Available once per calendar week; resets Monday at 00:00.',
+  每月: 'Available once per calendar month; resets on the first day at 00:00.',
+  每年: 'Available once per calendar year; resets January 1 at 00:00.',
   终身一次: 'This is a life-list achievement and can reward you only once.',
 }
 
@@ -1886,7 +1884,7 @@ function CustomQuestModal({ challenge, currentLevel, onClose, onSave }: { challe
           <label className="field-wide"><span>{text('任务名称', 'Quest title')}</span><input autoFocus value={titleValue} maxLength={120} onChange={(event) => setTitleValue(event.target.value)} placeholder={text('例如：整理本周的学习笔记', 'e.g. Organize this week’s study notes')} /></label>
           <label className="field-wide"><span>{text('任务说明', 'Description')}</span><textarea value={description} maxLength={600} onChange={(event) => setDescription(event.target.value)} placeholder={text('为什么要做、做到什么程度……', 'Why it matters and what done looks like…')} /></label>
           <label><span>{text('分类', 'Category')}</span><select value={categoryValue} onChange={(event) => { const value = event.target.value; setCategoryValue(value); setStatKey(CATEGORY_REWARD_STATS[value]?.[0] ?? 'INT') }}>{Object.keys(categoryMeta).map((item) => <option key={item}>{item}</option>)}</select></label>
-          <label><span>{text('重复周期', 'Cadence')}</span><select value={cadence} onChange={(event) => setCadence(event.target.value)}>{Object.keys(cadenceDays).map((item) => <option key={item}>{item}</option>)}</select></label>
+          <label><span>{text('重复周期', 'Cadence')}</span><select value={cadence} onChange={(event) => setCadence(event.target.value)}>{CADENCE_OPTIONS.map((item) => <option key={item}>{item}</option>)}</select></label>
           <label><span>{text('主要属性', 'Primary stat')}</span><select value={statKey} onChange={(event) => setStatKey(event.target.value as StatKey)}>{(Object.keys(statLabels) as StatKey[]).map((key) => <option key={key} value={key}>{statLabels[key]}</option>)}</select></label>
           <fieldset className="field-wide"><legend>{text('所需精力', 'Energy demand')}</legend><div className="form-segmented">{(['low', 'normal', 'high'] as DailyEnergy[]).map((value) => <button type="button" key={value} className={energyDemand === value ? 'active' : ''} onClick={() => setEnergyDemand(value)}>{text(value === 'low' ? '低精力' : value === 'high' ? '高精力' : '普通', value)}</button>)}</div></fieldset>
           <fieldset className="field-wide"><legend>{text('奖励计算方式', 'Reward calculation')}</legend><div className="form-segmented"><button type="button" className={rewardMode === 'auto' ? 'active' : ''} onClick={() => setRewardMode('auto')}>{text('自动计算（推荐）', 'Automatic')}</button><button type="button" className={rewardMode === 'manual' ? 'active' : ''} onClick={() => setRewardMode('manual')}>{text('手动调整', 'Manual')}</button></div></fieldset>
