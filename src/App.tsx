@@ -1404,13 +1404,26 @@ function PlanModal({ onClose, onSave }: { onClose: () => void; onSave: (input: {
 }
 
 function CollectionView({ active, activeIds, completions, favoriteIds, favorites, onComplete, onExplore, onFavorite, onOpen, onStart }: QuestActions & { active: Challenge[]; favorites: Challenge[]; onExplore: () => void }) {
-  const { text } = useLanguage()
+  const { language, text } = useLanguage()
+  const [showCooldown, setShowCooldown] = useState(true)
+  const cooling = active.filter((challenge) => Boolean(getCooldownLabel(challenge, completions, language)))
+  const actionable = active.filter((challenge) => !getCooldownLabel(challenge, completions, language))
   return (
     <>
       <div className="page-heading"><p className="eyebrow">{text('我的任务', 'My Quests')}</p><h1>{text('正在进行的', 'Adventures in')}<em>{text('冒险。', ' progress.')}</em></h1><p>{text('把真正想做的事留在眼前，等你在现实中完成它。', 'Keep what matters in sight until you make it real.')}</p></div>
       <section className="section-block">
-        <div className="section-heading"><div><p className="eyebrow">{text('进行中', 'In progress')}</p><h2>{text('当前任务', 'Active quests')} <span className="count-pill">{active.length}</span></h2></div></div>
-        {active.length ? <div className="quest-list">{active.map((challenge) => <QuestRow key={challenge.id} challenge={challenge} completions={completions} active favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}</div> : <EmptyState icon={Target} title={text('还没有进行中的任务', 'No active quests yet')} text={text('选一件足够小、但确实对你有意义的事。', 'Choose something small that genuinely matters to you.')} action={text('前往任务公会', 'Visit the quest guild')} onAction={onExplore} />}
+        <div className="section-heading"><div><p className="eyebrow">{text('进行中', 'In progress')}</p><h2>{text('当前任务', 'Active quests')} <span className="count-pill">{active.length}</span></h2>{active.length > 0 && <p className="active-quest-summary">{text(`${actionable.length} 项现在可行动 · ${cooling.length} 项正在冷却`, `${actionable.length} ready now · ${cooling.length} cooling down`)}</p>}</div></div>
+        {active.length ? <>
+          {actionable.length > 0 && <div className="quest-list">{actionable.map((challenge) => <QuestRow key={challenge.id} challenge={challenge} completions={completions} active favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}</div>}
+          {cooling.length > 0 && <section className={`cooldown-quest-group ${showCooldown ? 'is-open' : ''}`}>
+            <button className="cooldown-group-toggle" type="button" aria-expanded={showCooldown} aria-controls="cooldown-quest-list" onClick={() => setShowCooldown((value) => !value)}>
+              <span className="cooldown-group-icon"><Clock3 size={17} /></span>
+              <span><strong>{text('冷却中的任务', 'Cooling quests')} <b>{cooling.length}</b></strong><small>{text('仍在当前任务中；冷却结束后会自动恢复完成按钮', 'Still active; the complete button returns when cooldown ends')}</small></span>
+              <ChevronDown size={18} />
+            </button>
+            {showCooldown && <div className="quest-list cooldown-quest-list" id="cooldown-quest-list">{cooling.map((challenge) => <QuestRow key={challenge.id} challenge={challenge} completions={completions} active favorite={favoriteIds.includes(challenge.id)} onComplete={onComplete} onFavorite={onFavorite} onOpen={onOpen} onStart={onStart} />)}</div>}
+          </section>}
+        </> : <EmptyState icon={Target} title={text('还没有进行中的任务', 'No active quests yet')} text={text('选一件足够小、但确实对你有意义的事。', 'Choose something small that genuinely matters to you.')} action={text('前往任务公会', 'Visit the quest guild')} onAction={onExplore} />}
       </section>
       <section className="section-block collection-gap">
         <div className="section-heading"><div><p className="eyebrow">{text('任务书签', 'Quest bookmarks')}</p><h2>{text('以后再做', 'Saved for later')} <span className="count-pill">{favorites.length}</span></h2></div></div>
@@ -1465,7 +1478,7 @@ function QuestRow({ active, challenge, completions, favorite, onComplete, onFavo
   const Icon = meta.icon
   const cooldown = getCooldownLabel(challenge, completions, language)
   return (
-    <article className={`quest-row ${active ? 'quest-row--active' : ''}`} onClick={() => onOpen(challenge)} onKeyDown={(event) => { if (event.key === 'Enter') onOpen(challenge) }} role="button" tabIndex={0} style={{ '--category-color': meta.color } as React.CSSProperties}>
+    <article className={`quest-row ${active ? 'quest-row--active' : ''} ${cooldown ? 'quest-row--cooldown' : ''}`} onClick={() => onOpen(challenge)} onKeyDown={(event) => { if (event.key === 'Enter') onOpen(challenge) }} role="button" tabIndex={0} style={{ '--category-color': meta.color } as React.CSSProperties}>
       <div className="category-icon"><Icon size={21} /></div>
       <div className="quest-row-copy"><span>{category(challenge)} · {language === 'zh' ? challenge.tierName : tierLabels[challenge.tierName]}</span><h3>{title(challenge)}</h3><div className="quest-rewards"><span><Zap size={13} /> {challenge.xp} {text('经验', 'XP')}</span>{challenge.stats.map((stat) => <span key={stat.key}>{language === 'zh' ? statLabels[stat.key] : statLabelsEn[stat.key]} +{stat.points}</span>)}<em>{text('等级', 'Level')} {challenge.level}</em>{cooldown && <em className="cooldown-label">{cooldown}</em>}</div></div>
       <button className={`star-button ${favorite ? 'active' : ''}`} disabled={sealed} onClick={(event) => { event.stopPropagation(); onFavorite(challenge.id) }} aria-label={text('收藏任务', 'Save quest')}><Star size={18} fill={favorite ? 'currentColor' : 'none'} /></button>
