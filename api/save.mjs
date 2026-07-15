@@ -67,9 +67,12 @@ function normalizeSave(value) {
   return {
     activeIds: Array.isArray(value.activeIds) ? value.activeIds.filter((item) => typeof item === 'string') : [],
     activeTrackingVersion: Math.max(0, Math.round(Number(value.activeTrackingVersion) || 0)),
+    notificationTrackingVersion: Math.max(0, Math.round(Number(value.notificationTrackingVersion) || 0)),
     favoriteIds: Array.isArray(value.favoriteIds) ? value.favoriteIds.filter((item) => typeof item === 'string') : [],
     hiddenIds: Array.isArray(value.hiddenIds) ? value.hiddenIds.filter((item) => typeof item === 'string') : [],
     discoveredIds: Array.isArray(value.discoveredIds) ? value.discoveredIds.filter((item) => typeof item === 'string').slice(0, 2000) : [],
+    seenChallengeIds: Array.isArray(value.seenChallengeIds) ? value.seenChallengeIds.filter((item) => typeof item === 'string').slice(0, 2000) : [],
+    seenCollectionIds: Array.isArray(value.seenCollectionIds) ? value.seenCollectionIds.filter((item) => typeof item === 'string').slice(0, 200) : [],
     customChallenges: Array.isArray(value.customChallenges) ? value.customChallenges.map(normalizeCustomChallenge).filter(Boolean).slice(0, 500) : [],
     dailyBoard: {
       date: typeof dailyBoard.date === 'string' ? dailyBoard.date.slice(0, 10) : '',

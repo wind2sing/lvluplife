@@ -143,7 +143,7 @@ function getBootstrap() {
   })
   let dailyBoard = { date: '', energy: 'normal', reroll: 0 }
   try { dailyBoard = { ...dailyBoard, ...JSON.parse(selectDailyBoard.get()?.value ?? '{}') } } catch {}
-  let gameplayState = { plans: [], specialization: null, cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' }, discoveredIds: [], activeTrackingVersion: 0 }
+  let gameplayState = { plans: [], specialization: null, cosmetics: { titleId: 'title-solo', frameId: 'frame-basic', themeId: 'theme-camp' }, discoveredIds: [], activeTrackingVersion: 0, notificationTrackingVersion: 0, seenChallengeIds: [], seenCollectionIds: [] }
   try { gameplayState = { ...gameplayState, ...JSON.parse(selectGameplayState.get()?.value ?? '{}') } } catch {}
   return {
     initialized: Boolean(selectInitialized.get()),
@@ -174,6 +174,9 @@ function getBootstrap() {
       plans: gameplayState.plans,
       specialization: gameplayState.specialization,
       cosmetics: gameplayState.cosmetics,
+      notificationTrackingVersion: gameplayState.notificationTrackingVersion,
+      seenChallengeIds: gameplayState.seenChallengeIds,
+      seenCollectionIds: gameplayState.seenCollectionIds,
       completions,
     },
     settings: { language: settings.language, font: settings.font, customFeatures: Boolean(settings.custom_features), hidePersonalContentWhenDisabled: Boolean(settings.hide_personal_content), collectionFeatures: Boolean(settings.collection_features) },
@@ -186,6 +189,9 @@ function replaceSave(save) {
   const hiddenIds = new Set(Array.isArray(save.hiddenIds) ? save.hiddenIds : [])
   const discoveredIds = Array.isArray(save.discoveredIds) ? save.discoveredIds.filter((item) => typeof item === 'string').slice(0, 2000) : []
   const activeTrackingVersion = Math.max(0, Math.round(Number(save.activeTrackingVersion) || 0))
+  const notificationTrackingVersion = Math.max(0, Math.round(Number(save.notificationTrackingVersion) || 0))
+  const seenChallengeIds = Array.isArray(save.seenChallengeIds) ? save.seenChallengeIds.filter((item) => typeof item === 'string').slice(0, 2000) : []
+  const seenCollectionIds = Array.isArray(save.seenCollectionIds) ? save.seenCollectionIds.filter((item) => typeof item === 'string').slice(0, 200) : []
   const challengeIds = new Set([...activeIds, ...favoriteIds, ...hiddenIds])
   const completions = Array.isArray(save.completions) ? save.completions : []
   const customChallenges = Array.isArray(save.customChallenges) ? save.customChallenges.filter((item) => item?.id?.startsWith('custom-')).slice(0, 500) : []
@@ -211,7 +217,7 @@ function replaceSave(save) {
     for (const id of challengeIds) upsertQuestState.run(id, activeIds.has(id) ? 1 : 0, favoriteIds.has(id) ? 1 : 0, hiddenIds.has(id) ? 1 : 0)
     for (const item of completions) insertCompletion.run(item.id, item.challengeId, String(item.note ?? ''), item.completedAt, item.reward ? JSON.stringify(item.reward) : null)
     upsertDailyBoard.run(JSON.stringify(dailyBoard))
-    upsertGameplayState.run(JSON.stringify({ plans, specialization, cosmetics, discoveredIds, activeTrackingVersion }))
+    upsertGameplayState.run(JSON.stringify({ plans, specialization, cosmetics, discoveredIds, activeTrackingVersion, notificationTrackingVersion, seenChallengeIds, seenCollectionIds }))
     markInitialized.run()
     db.exec('COMMIT')
   } catch (error) {

@@ -17,7 +17,7 @@ export async function ensureSchema() {
       await sql`
         CREATE TABLE IF NOT EXISTS app_state (
           id SMALLINT PRIMARY KEY CHECK (id = 1),
-          save JSONB NOT NULL DEFAULT '{"activeIds":[],"activeTrackingVersion":0,"favoriteIds":[],"hiddenIds":[],"discoveredIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"plans":[],"specialization":null,"cosmetics":{"titleId":"title-solo","frameId":"frame-basic","themeId":"theme-camp"},"completions":[]}'::jsonb,
+          save JSONB NOT NULL DEFAULT '{"activeIds":[],"activeTrackingVersion":0,"notificationTrackingVersion":0,"favoriteIds":[],"hiddenIds":[],"discoveredIds":[],"seenChallengeIds":[],"seenCollectionIds":[],"customChallenges":[],"dailyBoard":{"date":"","energy":"normal","reroll":0},"plans":[],"specialization":null,"cosmetics":{"titleId":"title-solo","frameId":"frame-basic","themeId":"theme-camp"},"completions":[]}'::jsonb,
           settings JSONB NOT NULL DEFAULT '{"language":"zh","font":"noto","customFeatures":true,"hidePersonalContentWhenDisabled":true,"collectionFeatures":true}'::jsonb,
           initialized BOOLEAN NOT NULL DEFAULT FALSE,
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
