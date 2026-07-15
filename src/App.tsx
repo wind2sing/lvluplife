@@ -3,6 +3,7 @@ import { upload } from '@vercel/blob/client'
 import type { LucideIcon } from 'lucide-react'
 import { calculateReward, CATEGORY_REWARD_STATS } from '../shared/reward-rules.mjs'
 import { CADENCE_OPTIONS, getNextAvailableAt } from '../shared/cooldown-rules.mjs'
+import challengesUrl from './data/challenges.json?url'
 import {
   ArrowLeft,
   ArrowRight,
@@ -209,7 +210,6 @@ type AppSettings = {
 
 type BootstrapData = {
   initialized: boolean
-  challenges: Challenge[]
   save: SaveState
   settings: AppSettings
 }
@@ -591,7 +591,10 @@ function App() {
     setBootstrapError('')
     void (async () => {
       try {
-        const response = await fetch('/api/bootstrap', { headers: { Authorization: `Bearer ${accessKey}` } })
+        const [response, challengeResponse] = await Promise.all([
+          fetch('/api/bootstrap', { headers: { Authorization: `Bearer ${accessKey}` } }),
+          fetch(challengesUrl),
+        ])
         if (response.status === 401) {
           localStorage.removeItem(ACCESS_KEY_STORAGE)
           setAccessKey('')
@@ -599,7 +602,9 @@ function App() {
           return
         }
         if (!response.ok) throw new Error('Neon 云存档服务不可用')
+        if (!challengeResponse.ok) throw new Error('任务目录载入失败')
         const data = (await response.json()) as BootstrapData
+        const challengeCatalog = (await challengeResponse.json()) as Challenge[]
         let initialSave = { ...emptySave, ...data.save }
         if (!data.initialized) {
           initialSave = loadSave()
@@ -610,7 +615,7 @@ function App() {
           })
           if (!migration.ok) throw new Error('旧进度迁移失败')
         }
-        const bootstrapChallengeMap = new Map([...data.challenges, ...initialSave.customChallenges].map((item) => [item.id, item]))
+        const bootstrapChallengeMap = new Map([...challengeCatalog, ...initialSave.customChallenges].map((item) => [item.id, item]))
         initialSave = { ...initialSave, completions: initialSave.completions.map((completion) => completion.reward ? completion : { ...completion, reward: bootstrapChallengeMap.has(completion.challengeId) ? getLegacyReward(bootstrapChallengeMap.get(completion.challengeId)!) : undefined }) }
         if (initialSave.activeTrackingVersion < 1) {
           const migratedActiveIds = new Set(initialSave.activeIds)
@@ -621,7 +626,7 @@ function App() {
           initialSave = { ...initialSave, activeIds: [...migratedActiveIds], activeTrackingVersion: 1 }
         }
         if (initialSave.notificationTrackingVersion < 1) {
-          const migrationChallenges = [...data.challenges, ...initialSave.customChallenges]
+          const migrationChallenges = [...challengeCatalog, ...initialSave.customChallenges]
           const migrationChallengeMap = new Map(migrationChallenges.map((item) => [item.id, item]))
           const migrationCompleted = initialSave.completions.map((completion) => ({ completion, challenge: migrationChallengeMap.get(completion.challengeId) })).filter((item): item is { completion: Completion; challenge: Challenge } => Boolean(item.challenge))
           const migrationXp = migrationCompleted.reduce((sum, item) => sum + getEarnedReward(item.completion, item.challenge).xp, 0)
@@ -637,7 +642,7 @@ function App() {
           }
         }
         localStorage.removeItem(STORAGE_KEY)
-        setChallenges(data.challenges)
+        setChallenges(challengeCatalog)
         setSave(initialSave)
         setSettings({ ...defaultSettings, ...data.settings })
         setAccessError('')
@@ -1065,7 +1070,7 @@ function App() {
   }
 
   if (!ready) {
-    return <div className="boot-state"><div className="boot-icon boot-icon--loading"><Zap /></div><h1>正在载入冒险数据</h1><p>连接 Neon 云存档与 538 项挑战……</p></div>
+    return <div className="boot-state"><div className="boot-icon boot-icon--loading"><Zap /></div><h1>正在载入冒险数据</h1><p>正在并行同步云存档与任务目录……</p></div>
   }
 
   const mainContent = (() => {

@@ -1,11 +1,9 @@
 import { timingSafeEqual } from 'node:crypto'
-import { readFileSync } from 'node:fs'
 import { neon } from '@neondatabase/serverless'
 
-const challenges = JSON.parse(readFileSync(new URL('../src/data/challenges.json', import.meta.url), 'utf8'))
 let schemaReady
 
-function getSql() {
+export function getSql() {
   if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not configured')
   return neon(process.env.DATABASE_URL)
 }
@@ -48,10 +46,6 @@ export function authorize(request, response) {
     return false
   }
   return true
-}
-
-export function getChallenges() {
-  return challenges
 }
 
 export async function readBody(request) {

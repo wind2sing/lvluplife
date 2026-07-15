@@ -45,7 +45,6 @@ if (!settingsColumns.includes('hide_personal_content')) db.exec('ALTER TABLE set
 if (!settingsColumns.includes('collection_features')) db.exec('ALTER TABLE settings ADD COLUMN collection_features INTEGER NOT NULL DEFAULT 1 CHECK (collection_features IN (0, 1))')
 
 const challengeSeed = JSON.parse(readFileSync(join(root, 'src/data/challenges.json'), 'utf8'))
-const challengeSeedMap = new Map(challengeSeed.map((challenge) => [challenge.id, challenge]))
 const upsertChallenge = db.prepare(`
   INSERT INTO challenges (
     id, title_zh, title_en, category_zh, category_en, level, tier,
@@ -89,11 +88,6 @@ try {
   throw error
 }
 
-const selectChallenges = db.prepare(`
-  SELECT id, title_zh, title_en, category_zh, category_en, level, tier,
-    tier_name_zh, xp, cadence_zh, stats_json, source
-  FROM challenges WHERE source != 'custom' ORDER BY rowid
-`)
 const selectCustomChallenges = db.prepare("SELECT custom_json FROM challenges WHERE source = 'custom' AND custom_json IS NOT NULL ORDER BY rowid")
 const selectQuestState = db.prepare('SELECT challenge_id, active, favorite, hidden FROM quest_state')
 const selectCompletions = db.prepare('SELECT id, challenge_id, note, completed_at, reward_json FROM completions ORDER BY completed_at DESC')
@@ -147,22 +141,6 @@ function getBootstrap() {
   try { gameplayState = { ...gameplayState, ...JSON.parse(selectGameplayState.get()?.value ?? '{}') } } catch {}
   return {
     initialized: Boolean(selectInitialized.get()),
-    challenges: selectChallenges.all().map((item) => ({
-      id: item.id,
-      title: item.title_zh,
-      titleOriginal: item.title_en,
-      description: challengeSeedMap.get(item.id)?.description,
-      descriptionOriginal: challengeSeedMap.get(item.id)?.descriptionOriginal,
-      category: item.category_zh,
-      categoryOriginal: item.category_en,
-      level: item.level,
-      tier: item.tier,
-      tierName: item.tier_name_zh,
-      xp: item.xp,
-      cadence: item.cadence_zh,
-      stats: JSON.parse(item.stats_json),
-      source: item.source,
-    })),
     save: {
       activeIds: stateRows.filter((item) => item.active).map((item) => item.challenge_id),
       activeTrackingVersion: gameplayState.activeTrackingVersion,
