@@ -216,6 +216,7 @@ type BootstrapData = {
 
 const STORAGE_KEY = 'lvluplife-save-v1'
 const ACCESS_KEY_STORAGE = 'lvluplife-access-key-v1'
+const BOOTSTRAP_CACHE_STORAGE = 'lvluplife-bootstrap-cache-v1'
 const emptySave: SaveState = {
   activeIds: [],
   activeTrackingVersion: 0,
@@ -233,6 +234,19 @@ const emptySave: SaveState = {
   completions: [],
 }
 const defaultSettings: AppSettings = { language: 'zh', font: 'noto', customFeatures: true, hidePersonalContentWhenDisabled: true, collectionFeatures: true }
+
+type BootstrapCache = { accessKey: string; save: SaveState; settings: AppSettings }
+
+function loadBootstrapCache(accessKey: string): BootstrapCache | null {
+  if (!accessKey) return null
+  try {
+    const cached = JSON.parse(localStorage.getItem(BOOTSTRAP_CACHE_STORAGE) ?? 'null') as BootstrapCache | null
+    if (!cached || cached.accessKey !== accessKey || !cached.save || !cached.settings) return null
+    return { accessKey, save: { ...emptySave, ...cached.save }, settings: { ...defaultSettings, ...cached.settings } }
+  } catch {
+    return null
+  }
+}
 
 const LanguageContext = createContext<Language>('zh')
 const AccessKeyContext = createContext('')
@@ -556,13 +570,15 @@ function buildDiscoveryState(challenges: Challenge[], save: Pick<SaveState, 'act
 }
 
 function App() {
-  const [challenges, setChallenges] = useState<Challenge[]>([])
-  const [save, setSave] = useState<SaveState>(emptySave)
-  const [settings, setSettings] = useState<AppSettings>(defaultSettings)
-  const [ready, setReady] = useState(false)
+  const [accessKey, setAccessKey] = useState(() => localStorage.getItem(ACCESS_KEY_STORAGE) ?? '')
+  const [initialCache] = useState(() => loadBootstrapCache(localStorage.getItem(ACCESS_KEY_STORAGE) ?? ''))
+  const [challenges, setChallenges] = useState<Challenge[]>(() => challengeCatalogData as Challenge[])
+  const [save, setSave] = useState<SaveState>(() => initialCache?.save ?? emptySave)
+  const [settings, setSettings] = useState<AppSettings>(() => initialCache?.settings ?? defaultSettings)
+  const [ready, setReady] = useState(Boolean(initialCache))
+  const [cloudReady, setCloudReady] = useState(false)
   const [bootstrapError, setBootstrapError] = useState('')
   const bootstrapStarted = useRef('')
-  const [accessKey, setAccessKey] = useState(() => localStorage.getItem(ACCESS_KEY_STORAGE) ?? '')
   const [accessKeyDraft, setAccessKeyDraft] = useState('')
   const [accessError, setAccessError] = useState('')
   const [view, setView] = useState<View>(() => readBrowserRoute().view)
@@ -594,6 +610,9 @@ function App() {
         const response = await fetch('/api/bootstrap', { headers: { Authorization: `Bearer ${accessKey}` } })
         if (response.status === 401) {
           localStorage.removeItem(ACCESS_KEY_STORAGE)
+          localStorage.removeItem(BOOTSTRAP_CACHE_STORAGE)
+          setCloudReady(false)
+          setReady(false)
           setAccessKey('')
           setAccessError('访问密钥不正确')
           return
@@ -643,14 +662,20 @@ function App() {
         setSettings({ ...defaultSettings, ...data.settings })
         setAccessError('')
         setReady(true)
+        setCloudReady(true)
       } catch (error) {
-        setBootstrapError(error instanceof Error ? error.message : '载入失败')
+        if (initialCache?.accessKey !== accessKey) setBootstrapError(error instanceof Error ? error.message : '载入失败')
       }
     })()
-  }, [accessKey])
+  }, [accessKey, initialCache])
 
   useEffect(() => {
-    if (!ready) return
+    if (!cloudReady || !accessKey) return
+    localStorage.setItem(BOOTSTRAP_CACHE_STORAGE, JSON.stringify({ accessKey, save, settings } satisfies BootstrapCache))
+  }, [accessKey, cloudReady, save, settings])
+
+  useEffect(() => {
+    if (!cloudReady) return
     const timeout = window.setTimeout(() => {
       void fetch('/api/save', {
         method: 'PUT',
@@ -659,18 +684,18 @@ function App() {
       })
     }, 120)
     return () => window.clearTimeout(timeout)
-  }, [accessKey, ready, save])
+  }, [accessKey, cloudReady, save])
 
   useEffect(() => {
     document.documentElement.dataset.font = settings.font
     document.documentElement.lang = settings.language === 'zh' ? 'zh-CN' : 'en'
-    if (!ready) return
+    if (!cloudReady) return
     void fetch('/api/settings', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessKey}` },
       body: JSON.stringify(settings),
     })
-  }, [accessKey, ready, settings])
+  }, [accessKey, cloudReady, settings])
 
   useEffect(() => {
     function syncBrowserRoute() {
@@ -1052,6 +1077,7 @@ function App() {
   function unlockCloudSave() {
     const value = accessKeyDraft.trim()
     if (!value) return
+    localStorage.removeItem(BOOTSTRAP_CACHE_STORAGE)
     localStorage.setItem(ACCESS_KEY_STORAGE, value)
     setAccessError('')
     setAccessKey(value)
@@ -1062,7 +1088,7 @@ function App() {
   }
 
   if (bootstrapError) {
-    return <div className="boot-state"><div className="boot-icon"><X /></div><h1>无法连接云存档</h1><p>{bootstrapError}</p><button className="secondary-button" onClick={() => { localStorage.removeItem(ACCESS_KEY_STORAGE); setAccessKey(''); bootstrapStarted.current = '' }}>重新输入访问密钥</button></div>
+    return <div className="boot-state"><div className="boot-icon"><X /></div><h1>无法连接云存档</h1><p>{bootstrapError}</p><button className="secondary-button" onClick={() => { localStorage.removeItem(ACCESS_KEY_STORAGE); localStorage.removeItem(BOOTSTRAP_CACHE_STORAGE); setAccessKey(''); bootstrapStarted.current = '' }}>重新输入访问密钥</button></div>
   }
 
   if (!ready) {
@@ -1217,7 +1243,7 @@ function App() {
           <div><strong>{equippedTitle.title}</strong><span>{text('等级', 'Level')} {level.level}</span></div>
           <ArrowRight className="profile-arrow" size={15} />
         </button>
-        <button className="local-note" onClick={() => navigate('settings')}><ShieldCheck size={14} /> {cloud ? text('进度已同步至云端', 'Progress synced to cloud') : text('进度仅保存在本机', 'Progress stays on this device')}<Settings size={12} /></button>
+        <button className="local-note" onClick={() => navigate('settings')}><ShieldCheck size={14} /> {cloud ? cloudReady ? text('进度已同步至云端', 'Progress synced to cloud') : text('正在后台同步云存档', 'Syncing cloud save') : text('进度仅保存在本机', 'Progress stays on this device')}<Settings size={12} /></button>
       </aside>
 
       {mobileNav && <button className="nav-scrim" aria-label={text('关闭菜单', 'Close menu')} onClick={() => setMobileNav(false)} />}
