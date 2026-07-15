@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lvluplife-shell-v1'
+const CACHE_NAME = 'lvluplife-shell-v2'
 const CORE_ASSETS = ['/', '/manifest.webmanifest', '/favicon.svg', '/pwa-192.png', '/pwa-512.png', '/pwa-maskable-512.png', '/apple-touch-icon.png']
 
 self.addEventListener('install', (event) => {
