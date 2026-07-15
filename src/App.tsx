@@ -517,11 +517,16 @@ function App() {
   const [detailChallengeId, setDetailChallengeId] = useState<string | null>(() => readBrowserRoute().challengeId)
   const [undoTarget, setUndoTarget] = useState<{ completion: Completion; challenge: Challenge } | null>(null)
   const [note, setNote] = useState('')
-  const [reward, setReward] = useState<{ challenge: Challenge; levelUp: boolean; unlockedCount: number } | null>(null)
+  const [reward, setReward] = useState<{ challenge: Challenge; collectionUnlocks: CollectionItem[]; levelUp: boolean; unlockedCount: number } | null>(null)
+  const rewardTimer = useRef<number | null>(null)
   const [mobileNav, setMobileNav] = useState(false)
   const [energyHelp, setEnergyHelp] = useState(false)
   const [customEditor, setCustomEditor] = useState<Challenge | 'new' | null>(null)
   const [planEditor, setPlanEditor] = useState(false)
+
+  useEffect(() => () => {
+    if (rewardTimer.current !== null) window.clearTimeout(rewardTimer.current)
+  }, [])
 
   useEffect(() => {
     if (!accessKey || bootstrapStarted.current === accessKey) return
@@ -858,16 +863,27 @@ function App() {
     }
     const nextDiscovered = buildDiscoveryState(allChallenges, nextSave, newLevel).discovered
     const unlockedCount = [...nextDiscovered].filter((id) => !discoveredIds.has(id)).length
+    const nextCompletedChallenges = [{ completion, challenge: selected }, ...completedChallenges]
+    const nextStats = { ...stats }
+    selected.stats.forEach((stat) => { nextStats[stat.key] += stat.points })
+    const nextCollectionItems = buildCollection(nextCompletedChallenges, save.plans, nextStats, getStreak(nextCompletedChallenges.map((item) => item.completion)), totalXp + selected.xp)
+    const collectionUnlocks = settings.collectionFeatures
+      ? nextCollectionItems.filter((item) => item.unlocked && !collectionItems.find((current) => current.id === item.id)?.unlocked)
+      : []
     setSave((current) => ({
       ...current,
       activeIds: keepActive ? [...new Set([...current.activeIds, selected.id])] : current.activeIds.filter((id) => id !== selected.id),
       completions: [completion, ...current.completions],
       discoveredIds: [...new Set([...current.discoveredIds, ...nextDiscovered])],
     }))
-    setReward({ challenge: selected, levelUp: newLevel > oldLevel, unlockedCount })
+    setReward({ challenge: selected, collectionUnlocks, levelUp: newLevel > oldLevel, unlockedCount })
     setSelected(null)
     setNote('')
-    window.setTimeout(() => setReward(null), 4600)
+    if (rewardTimer.current !== null) window.clearTimeout(rewardTimer.current)
+    rewardTimer.current = window.setTimeout(() => {
+      setReward(null)
+      rewardTimer.current = null
+    }, collectionUnlocks.length > 0 ? 8500 : 4600)
   }
 
   function openChallenge(challenge: Challenge) {
@@ -1126,12 +1142,20 @@ function App() {
       {energyHelp && <EnergyHelpModal current={energy} max={maxEnergy} onClose={() => setEnergyHelp(false)} />}
 
       {reward && (
-        <div className="reward-toast" role="status">
-          <div className="reward-icon"><Sparkles /></div>
-          <div>
-            <span>{reward.levelUp ? text('等级提升！', 'Level up!') : text('任务完成', 'Quest complete')}</span>
-            <strong>{text('获得', 'Earned')} {reward.challenge.xp} {text('经验', 'XP')}{reward.unlockedCount > 0 ? text(` · 发现 ${reward.unlockedCount} 项新成就`, ` · ${reward.unlockedCount} new achievements discovered`) : ''}</strong>
+        <div className={`reward-toast ${reward.collectionUnlocks.length > 0 ? 'reward-toast--collection' : ''}`} role="status" aria-live="polite">
+          <div className="reward-summary">
+            <div className="reward-icon"><Sparkles /></div>
+            <div>
+              <span>{reward.levelUp ? text('等级提升！', 'Level up!') : text('任务完成', 'Quest complete')}</span>
+              <strong>{text('获得', 'Earned')} {reward.challenge.xp} {text('经验', 'XP')}{reward.unlockedCount > 0 ? text(` · 发现 ${reward.unlockedCount} 项新成就`, ` · ${reward.unlockedCount} new achievements discovered`) : ''}</strong>
+            </div>
           </div>
+          {reward.collectionUnlocks.length > 0 && <div className="collection-unlock-feedback">
+            <div className="collection-unlock-heading"><span className="collection-unlock-gem"><Gem size={19} /></span><div><span>{text('私人收藏解锁', 'Private collection unlocked')}</span><strong>{text(`获得 ${reward.collectionUnlocks.length} 件新收藏`, `${reward.collectionUnlocks.length} new collectible${reward.collectionUnlocks.length > 1 ? 's' : ''}`)}</strong></div></div>
+            <div className="collection-unlock-items">{reward.collectionUnlocks.slice(0, 3).map((item) => { const Icon = item.icon; return <div key={item.id}><Icon size={16} /><span><small>{text(item.kind === 'title' ? '称号' : item.kind === 'badge' ? '徽章' : item.kind === 'frame' ? '头像框' : item.kind === 'theme' ? '营地主题' : '纪念物', item.kind)}</small><strong>{item.title}</strong></span></div> })}</div>
+            {reward.collectionUnlocks.length > 3 && <small className="collection-unlock-more">{text(`以及另外 ${reward.collectionUnlocks.length - 3} 件收藏`, `Plus ${reward.collectionUnlocks.length - 3} more`)}</small>}
+            <button onClick={() => { setReward(null); navigate('collection') }}>{text('查看收藏馆', 'View collection')} <ArrowRight size={15} /></button>
+          </div>}
         </div>
       )}
     </div>
