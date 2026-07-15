@@ -3,7 +3,7 @@ import { upload } from '@vercel/blob/client'
 import type { LucideIcon } from 'lucide-react'
 import { calculateReward, CATEGORY_REWARD_STATS } from '../shared/reward-rules.mjs'
 import { CADENCE_OPTIONS, getNextAvailableAt } from '../shared/cooldown-rules.mjs'
-import challengesUrl from './data/challenges.json?url'
+import challengeCatalogData from './data/challenges.json'
 import {
   ArrowLeft,
   ArrowRight,
@@ -591,10 +591,7 @@ function App() {
     setBootstrapError('')
     void (async () => {
       try {
-        const [response, challengeResponse] = await Promise.all([
-          fetch('/api/bootstrap', { headers: { Authorization: `Bearer ${accessKey}` } }),
-          fetch(challengesUrl),
-        ])
+        const response = await fetch('/api/bootstrap', { headers: { Authorization: `Bearer ${accessKey}` } })
         if (response.status === 401) {
           localStorage.removeItem(ACCESS_KEY_STORAGE)
           setAccessKey('')
@@ -602,9 +599,8 @@ function App() {
           return
         }
         if (!response.ok) throw new Error('Neon 云存档服务不可用')
-        if (!challengeResponse.ok) throw new Error('任务目录载入失败')
         const data = (await response.json()) as BootstrapData
-        const challengeCatalog = (await challengeResponse.json()) as Challenge[]
+        const challengeCatalog = challengeCatalogData as Challenge[]
         let initialSave = { ...emptySave, ...data.save }
         if (!data.initialized) {
           initialSave = loadSave()
@@ -1070,7 +1066,7 @@ function App() {
   }
 
   if (!ready) {
-    return <div className="boot-state"><div className="boot-icon boot-icon--loading"><Zap /></div><h1>正在载入冒险数据</h1><p>正在并行同步云存档与任务目录……</p></div>
+    return <div className="boot-state"><div className="boot-icon boot-icon--loading"><Zap /></div><h1>正在载入冒险数据</h1><p>正在同步 Neon 云存档……</p></div>
   }
 
   const mainContent = (() => {
