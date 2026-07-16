@@ -10,6 +10,7 @@
 .main-nav button.active { color: var(--cream); background: #202d25; box-shadow: inset 3px 0 var(--green); }
 .main-nav button b { margin-left: auto; min-width: 21px; height: 21px; border-radius: 8px; display: grid; place-items: center; color: #132014; background: var(--green); font-size: 13px; }
 .new-content-badge { margin-left: 8px; padding: 3px 7px; border: 1px solid rgba(245,204,105,.45); border-radius: 999px; color: #f5d479; background: rgba(245,204,105,.1); font-family: var(--body-font); font-size: 11px; letter-spacing: 0; vertical-align: middle; }
+.quest-row .quest-rewards .cadence-label { display: inline-flex; align-items: center; gap: 4px; color: #93a39a; }
 .sidebar-spacer { flex: 1; }
 .mini-profile { width: 100%; display: flex; gap: 11px; align-items: center; border: 0; border-top: 1px solid var(--line); padding: 19px 8px 11px; color: inherit; background: transparent; cursor: pointer; text-align: left; }.mini-profile:hover { border-top-color: #3a5040; background: linear-gradient(180deg, transparent, rgba(144,227,109,.035)); }.profile-arrow { margin-left: auto; color: #526158; transition: transform .16s ease, color .16s ease; }.mini-profile:hover .profile-arrow { color: var(--green); transform: translateX(2px); }
 .avatar { width: 39px; height: 39px; border-radius: 8px; display: grid; place-items: center; color: var(--green); background: #243228; border: 1px solid #34483a; }
