@@ -22,7 +22,7 @@ function normalizeCustomChallenge(item) {
   const categoryStats = CATEGORY_REWARD_STATS[category] ?? ['INT', 'TAL']
   const primaryStat = stats[0]?.key ?? categoryStats[0]
   const secondaryStat = categoryStats.find((key) => key !== primaryStat)
-  const automaticReward = calculateReward({ level, energyDemand, cadence, primaryStat, secondaryStat })
+  const automaticReward = calculateReward({ tier, energyDemand, primaryStat, secondaryStat })
   const reward = rewardMode === 'auto' ? automaticReward : { tier, tierName: String(item.tierName ?? '支线任务').slice(0, 30), xp: Math.min(1500, Math.max(25, Math.round(Number(item.xp) || 70))), stats: stats.length ? stats : [{ key: 'INT', points: Math.min(Math.max(level * 3, tier * 3), 2) }] }
   return {
     id: item.id.slice(0, 120),

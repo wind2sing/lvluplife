@@ -6,7 +6,7 @@
 
 > 当前状态：单人可用版，持续开发中。生产环境使用 Vercel + Neon PostgreSQL + Vercel Blob；本地开发使用 SQLite。
 
-[在线使用](https://lvluplife.vercel.app/) · [玩法说明](docs/gameplay.md) · [开发与部署](docs/development.md) · [路线图](docs/roadmap.md) · [原站考古](docs/original-architecture.md)
+[在线使用](https://lvluplife.vercel.app/) · [玩法说明](docs/gameplay.md) · [奖励规范](docs/reward-balance.md) · [开发与部署](docs/development.md) · [路线图](docs/roadmap.md) · [原站考古](docs/original-architecture.md)
 
 ![升级人生首页](docs/research/current/home.png)
 

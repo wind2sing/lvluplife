@@ -1,11 +1,14 @@
 import { readFileSync, writeFileSync } from 'node:fs'
-import { calculateReward, inferQuestEnergy } from '../shared/reward-rules.mjs'
+import { TIER_NAMES } from '../shared/reward-rules.mjs'
 
 const sourcePath = new URL('../data/original-challenges.txt', import.meta.url)
 const outputPath = new URL('../src/data/challenges.json', import.meta.url)
 const translationsPath = new URL('../data/challenges-zh.json', import.meta.url)
+const balanceAuditPath = new URL('../data/challenge-balance-audit.json', import.meta.url)
 
 const translations = JSON.parse(readFileSync(translationsPath, 'utf8'))
+const balanceAudit = JSON.parse(readFileSync(balanceAuditPath, 'utf8'))
+const balanceAuditMap = new Map(balanceAudit.map((item) => [item.id, item]))
 
 const categoryStats = {
   'Arts & Creativity': { zh: '艺术与创意', stats: ['TAL', 'CUL'], seed: [1, 1, 2, 2, 3] },
@@ -156,39 +159,20 @@ for (const rawLine of raw.split('\n')) {
   }
 }
 
-const getCadence = (title, category, tier) => {
-  const value = title.toLowerCase()
-  if (/every day|each day|a day|daily|one day/.test(value)) return '每日'
-  if (/week|weekly/.test(value)) return '每周'
-  if (/month|monthly/.test(value)) return '每月'
-  if (/year|annual|birthday|holiday/.test(value)) return '每年'
-  if (
-    category === 'Destinations' ||
-    /graduate|license|passport|move to|quit smoking|never started|visit a country|travel to a different continent/.test(
-      value,
-    )
-  )
-    return '终身一次'
-  return ['每日', '每周', '每月', '终身一次'][tier - 1]
-}
-
 const challenges = []
 
 for (const [category, items] of categoryItems) {
   if (!categoryStats[category]) throw new Error(`Missing category config: ${category}`)
   items.forEach((title, index) => {
-    const progress = items.length === 1 ? 0 : index / (items.length - 1)
     const config = categoryStats[category]
-    const tier = config.fixedTier ?? (progress < 0.42 ? 1 : progress < 0.72 ? 2 : progress < 0.9 ? 3 : 4)
     const divisor = config.divisor ?? 2
     const lastSeed = config.seed.at(-1)
     const projectedLevel = Math.ceil((index + 1) / divisor) + (lastSeed - Math.ceil(config.seed.length / divisor))
     const level = config.fixedLevel ?? (index < config.seed.length ? config.seed[index] : Math.max(lastSeed, projectedLevel))
-    const cadence = config.fixedCadence ?? getCadence(title, category, tier)
-    const energyDemand = config.fixedEnergyDemand ?? inferQuestEnergy(tier)
-    const reward = calculateReward({ level, tier, cadence, energyDemand, primaryStat: config.stats[0], secondaryStat: config.stats[1] })
     const id = `${slugify(category)}-${String(index + 1).padStart(3, '0')}`
-    const descriptions = getDescriptions({ id, title: translations[id], titleOriginal: title, category, tier })
+    const reviewed = balanceAuditMap.get(id)
+    if (!reviewed) throw new Error(`Missing reviewed balance: ${id}`)
+    const descriptions = getDescriptions({ id, title: translations[id], titleOriginal: title, category, tier: reviewed.tier })
 
     challenges.push({
       id,
@@ -198,12 +182,12 @@ for (const [category, items] of categoryItems) {
       category: config.zh,
       categoryOriginal: category,
       level,
-      tier: reward.tier,
-      tierName: reward.tierName,
-      xp: reward.xp,
-      cadence,
-      stats: reward.stats,
-      energyDemand: reward.energyDemand,
+      tier: reviewed.tier,
+      tierName: TIER_NAMES[reviewed.tier],
+      xp: reviewed.xp,
+      cadence: reviewed.cadence,
+      stats: reviewed.stats,
+      energyDemand: reviewed.energyDemand,
       source: 'LvlUpLife 挑战列表备份',
     })
   })

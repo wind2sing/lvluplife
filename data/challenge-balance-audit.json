@@ -1,0 +1,9154 @@
+[
+  {
+    "id": "arts-creativity-001",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：去美术馆；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-002",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：亲手做一样东西；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-003",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每周：在家里摆放一些装饰性的东西；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "arts-creativity-004",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：去看现场音乐表演；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-005",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：画一个新的插图；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-006",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：给一些东西上色；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-007",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：看音乐剧或戏剧；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-008",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：阅读艺术家或设计师的传记；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-009",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：练习画人脸；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "arts-creativity-010",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：去看一些单口喜剧或即兴喜剧；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "arts-creativity-011",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：展示一些当地艺术家创作的艺术品；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "arts-creativity-012",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：模仿艺术家风格需较长创作与研究，可反复练习。"
+  },
+  {
+    "id": "arts-creativity-013",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：一周每天画一些东西；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "music-001",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：买一张新专辑；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "music-002",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：发现一个你喜欢的新乐队或音乐人；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "music-003",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：观看新乐队或音乐家的表演；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "music-004",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：购买黑胶唱片专辑；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "music-005",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：记住一首歌的歌词；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "music-006",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：阅读一位音乐家的传记；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "music-007",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：练习音阶；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "music-008",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：观看当地独立乐队或音乐家的表演；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "music-009",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每周：放一些你喜欢的音乐并大声唱歌；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "music-010",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：去听交响乐吧；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "music-011",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：看一场歌剧；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "music-012",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每周：创作一首新歌；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "music-013",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：制作音乐循环；按3级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "music-014",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：在网络上分享原创歌曲；按3级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "music-015",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：在派对、夜总会或活动中担任 DJ；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "music-016",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：用样本完成一首歌是多步骤创作，可重复挑战。"
+  },
+  {
+    "id": "music-017",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "完整现场演出需要排练、场地与观众协调，但可以按演出季重复，适合每年。"
+  },
+  {
+    "id": "photography-001",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：拍摄一些有趣的建筑照片；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-002",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：拍摄一系列黑白照片；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-003",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：打印一些照片；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-004",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：在音乐会上拍照；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-005",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：拍摄瀑布；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "photography-006",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每周：拍张照片；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "photography-007",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：拍摄宠物；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-008",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：拍摄日落或日出；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "photography-009",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：使用三脚架拍照；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-010",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：使用独脚架拍照；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-011",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "每年：极光受季节与天气制约，需远行等待和设备准备。"
+  },
+  {
+    "id": "photography-012",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：在弱光下拍摄曝光良好的照片；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-013",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：在照片中捕捉闪电；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "photography-014",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：拍摄一些自然风光；按3级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "photography-015",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "每年：银河拍摄受无月夜与天气窗口限制，需夜间出行。"
+  },
+  {
+    "id": "photography-016",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：一个月每天拍一张照片；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "photography-017",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "终身一次：卖掉你的摄影作品；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "writing-001",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：写一首诗；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-002",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：编辑维基百科文章；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-003",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：写一篇内容丰富的文章或报告；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-004",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：写一篇博文；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-005",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：为一部电影写评论；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-006",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：为新音乐专辑写评论；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-007",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：为电子游戏撰写评论；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-008",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：为一本书写评论；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-009",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：编写说明或操作方法文章；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-010",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：写一个短篇故事；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "writing-011",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每周：在网络论坛上发一篇帖子；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "writing-012",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：为自己的歌曲写歌词；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "writing-013",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：写一个属于你自己的小说的章节；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "writing-014",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：为新视频/电影编写剧本；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "writing-015",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：写完一部长篇小说；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "writing-016",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "终身一次：自费出书；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "writing-017",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "终身一次：出版一本专业的书；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-001",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：更新或完善你的简历；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-002",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：将工资的 10% 存入储蓄；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-003",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：清理你的电子邮件收件箱或社交媒体资料；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-004",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：将一份账单改为无纸化或在线账单；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-005",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：按时支付所有每月账单；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-006",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：为你最新的薪水制定预算；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-007",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：列出你的短期和长期目标；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-008",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：列出 5 家你将来想为之工作的公司；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-009",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：索取推荐信；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-010",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：就某事进行谈判，无论成功与否；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-011",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：还清信用卡上的余额；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-012",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：将钱投入投资或退休基金；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-013",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：找出你的信用评分；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-014",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：为潜在雇主更新你的在线简历；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-015",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：创建或更新网站以宣传你的技能和工作；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "career-finances-016",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：开始新的工作；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-017",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：完成你自己的所得税；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-018",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：辞掉一份你不满意的工作；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-019",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：要求加薪，无论你是否得到；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-020",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "终身一次：完成还清贷款或债务；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "career-finances-021",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "每月：买卖股票需研究与风险决策，不是一次性人生里程碑。"
+  },
+  {
+    "id": "career-finances-022",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "终身一次：创业；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "fitness-health-001",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：起床后立即行动，耗时不到10分钟，低摩擦习惯。"
+  },
+  {
+    "id": "fitness-health-002",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：提前就寝是短时作息调整，无需外部协调。"
+  },
+  {
+    "id": "fitness-health-003",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：15分钟锻炼，低门槛且适合稳定重复。"
+  },
+  {
+    "id": "fitness-health-004",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：全天姿势觉察是低摩擦习惯，不需预约。"
+  },
+  {
+    "id": "fitness-health-005",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：短时伸展可作为日常恢复习惯。"
+  },
+  {
+    "id": "fitness-health-006",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：散步通常10–30分钟，随时可完成。"
+  },
+  {
+    "id": "fitness-health-007",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "low",
+    "xp": 75,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "任务本身要求连续七天使用牙线，按一周结算而不是每天重复领取。"
+  },
+  {
+    "id": "fitness-health-008",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：饮水目标需当天持续执行，低摩擦。"
+  },
+  {
+    "id": "fitness-health-009",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：起床后锻炼为短时晨间习惯。"
+  },
+  {
+    "id": "fitness-health-010",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：去骑自行车吧；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "fitness-health-011",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：步行或骑自行车去学校或上班；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "fitness-health-012",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：一天内克制坏习惯，反馈周期为当天。"
+  },
+  {
+    "id": "fitness-health-013",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每日：瑜伽/有氧短时练习可重复。"
+  },
+  {
+    "id": "fitness-health-014",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每周：与伙伴约练需协调时间，适合每周。"
+  },
+  {
+    "id": "fitness-health-015",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "每周：早点起床；按1级难度评估，完成当日精力low。"
+  },
+  {
+    "id": "fitness-health-016",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：做仰卧起坐；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "fitness-health-017",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：去跑步或慢跑；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "fitness-health-018",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：游泳；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "fitness-health-019",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每年：就医预约是低频健康维护，需时间协调但非日常。"
+  },
+  {
+    "id": "fitness-health-020",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：做俯卧撑；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "fitness-health-021",
+    "cadence": "每月",
+    "tier": 4,
+    "energyDemand": "normal",
+    "xp": 450,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "完成30天训练挑战是跨整月的持续项目，奖励应体现长期坚持而非单次练习。"
+  },
+  {
+    "id": "fitness-health-022",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：连续做尽可能多的俯卧撑；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "fitness-health-023",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "安全完成接近个人上限的十次负重需要热身、保护和高体力投入，适合每周。"
+  },
+  {
+    "id": "fitness-health-024",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "短时呼吸练习低摩擦且有每日重复价值。"
+  },
+  {
+    "id": "fitness-health-025",
+    "cadence": "每周",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "任务要求连续一周抵抗坏习惯，应按每周结算并体现多日自律。"
+  },
+  {
+    "id": "fitness-health-026",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 7
+      }
+    ],
+    "rationale": "每月：打破你的个人纪录；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "fitness-health-027",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每周：健身房训练通常30–120分钟，需出行但可稳定重复。"
+  },
+  {
+    "id": "fitness-health-028",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每年：牙医检查通常按年度或半年安排，需预约出行。"
+  },
+  {
+    "id": "fitness-health-029",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每年：物理治疗评估属阶段性医疗安排，需预约。"
+  },
+  {
+    "id": "fitness-health-030",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "每月：尝试一项新练习有学习与适应成本，但可持续探索。"
+  },
+  {
+    "id": "fitness-health-031",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 12
+      }
+    ],
+    "rationale": "终身一次：戒烟，或者从未开始吸烟；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "fitness-health-032",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 12
+      }
+    ],
+    "rationale": "终身一次：达到你的理想体重目标；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "fitness-health-033",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 12
+      }
+    ],
+    "rationale": "终身一次：学习倒立；按4级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "sports-001",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：打羽毛球；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-002",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：打网球；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-003",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：加入一个团队；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-004",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：打排球；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-005",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：打棒球或垒球；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-006",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：参加团队训练；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-007",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：踢足球/橄榄球；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-008",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：玩终极飞盘；按2级难度评估，完成当日精力normal。"
+  },
+  {
+    "id": "sports-009",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：打篮球；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "sports-010",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：踢美式足球；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "sports-011",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "每周：打曲棍球；按2级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "sports-012",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：打长曲棍球；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "sports-013",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：踢澳大利亚足球；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "sports-014",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每月：打橄榄球；按3级难度评估，完成当日精力high。"
+  },
+  {
+    "id": "sports-015",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "每年：参加锦标赛需报名、训练和整日赛程，可年度重复。"
+  },
+  {
+    "id": "sports-016",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "每年：锦标赛夺冠是高难度结果型里程碑，通常按赛季重复。"
+  },
+  {
+    "id": "food-cooking-001",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "替换零食几乎无需准备，适合作为每日饮食习惯。"
+  },
+  {
+    "id": "food-cooking-002",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "收藏食谱耗时很短，但每周一次更有筛选价值。"
+  },
+  {
+    "id": "food-cooking-003",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "加一份健康配菜门槛低，适合每日重复。"
+  },
+  {
+    "id": "food-cooking-004",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "需要全天安排多份果蔬，但仍是可每日完成的基础习惯。"
+  },
+  {
+    "id": "food-cooking-005",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "备菜和烹饪通常需半小时以上，适合每周稳定重复。"
+  },
+  {
+    "id": "food-cooking-006",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "学习一道新料理需要选材、理解步骤和实际练习。"
+  },
+  {
+    "id": "food-cooking-007",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "按周规划膳食约需十到三十分钟，周期与任务内容一致。"
+  },
+  {
+    "id": "food-cooking-008",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "为家人做饭包含准备、烹饪和照顾关系，适合每周。"
+  },
+  {
+    "id": "food-cooking-009",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "尝鲜本身简单，但需采购或外出，不宜高频刷取。"
+  },
+  {
+    "id": "food-cooking-010",
+    "cadence": "每周",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "连续七天记录是多阶段自我观察，完成跨度整周。"
+  },
+  {
+    "id": "food-cooking-011",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "自制披萨需备料、揉制和烘烤，适合偶尔完成。"
+  },
+  {
+    "id": "food-cooking-012",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "更换一种果蔬成本低，每周尝试可保持多样性。"
+  },
+  {
+    "id": "food-cooking-013",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "新饮料通常涉及购买和探索，每月一次更合理。"
+  },
+  {
+    "id": "food-cooking-014",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "吃早餐是低摩擦且具有每日价值的健康习惯。"
+  },
+  {
+    "id": "food-cooking-015",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "连续一个月控制加盐需要长期自律和饮食判断。"
+  },
+  {
+    "id": "food-cooking-016",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "需要检索和比较本地商家，但通常半小时内可完成。"
+  },
+  {
+    "id": "food-cooking-017",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "自制冰淇淋需要配方、材料和冷冻流程。"
+  },
+  {
+    "id": "food-cooking-018",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "热饮准备简单，可作为每日生活仪式。"
+  },
+  {
+    "id": "food-cooking-019",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "整月避开冷冻食品需要持续采购、判断和替代安排。"
+  },
+  {
+    "id": "food-cooking-020",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "整月不吃快餐是持续性饮食管理，难度明显高于单次选择。"
+  },
+  {
+    "id": "food-cooking-021",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "烘焙需备料、操作和等待，通常占用一至两小时。"
+  },
+  {
+    "id": "food-cooking-022",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "自制冰沙步骤简单，但仍需准备食材和清洗设备。"
+  },
+  {
+    "id": "food-cooking-023",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "从零做面包含揉面、发酵和烘烤等多阶段流程。"
+  },
+  {
+    "id": "food-cooking-024",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "认真准备一顿可口饭菜通常需半小时以上，可每周重复。"
+  },
+  {
+    "id": "food-cooking-025",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "原创并分享一份新食谱需要开发、试做和表达，但可以按不同配方持续完成。"
+  },
+  {
+    "id": "food-cooking-026",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "带自制午餐需要提前准备，按周奖励可避免把普通用餐刷成每日高收益。"
+  },
+  {
+    "id": "food-cooking-027",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "从种植到入菜跨越生长周期，是季节性的多阶段成果。"
+  },
+  {
+    "id": "food-cooking-028",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "连续一个月素食需要持续规划、替代和自律。"
+  },
+  {
+    "id": "household-diy-001",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "更换灯泡是短时维护，会在不同房间再次发生，不应作为终身成就。"
+  },
+  {
+    "id": "household-diy-002",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "十分钟整理低门槛且每天都有实际价值。"
+  },
+  {
+    "id": "household-diy-003",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "替代一次性用品是随手可做的每日环保选择。"
+  },
+  {
+    "id": "household-diy-004",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "购入并持续养活一盆植物是一次明确的养护里程碑。"
+  },
+  {
+    "id": "household-diy-005",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "普通家务通常十到三十分钟，每周汇总更能避免碎片刷取。"
+  },
+  {
+    "id": "household-diy-006",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "按需关闭暖通设备是低摩擦的每日节能行为。"
+  },
+  {
+    "id": "household-diy-007",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "重新设计旧物用途需要一点创意和动手，但不必高频。"
+  },
+  {
+    "id": "household-diy-008",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "购买前研究比较约需十到三十分钟，随采购机会按月发生。"
+  },
+  {
+    "id": "household-diy-009",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "最困难待办通常需要集中精力和克服拖延，按周更合理。"
+  },
+  {
+    "id": "household-diy-010",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 1
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "墙面装饰是低频但可重复的空间整理，不属于一次性人生里程碑。"
+  },
+  {
+    "id": "household-diy-011",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "电子产品回收需整理和前往回收点，通常年度集中处理。"
+  },
+  {
+    "id": "household-diy-012",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "建立节电习惯需要观察、调整并维持一段时间。"
+  },
+  {
+    "id": "household-diy-013",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "晾晒衣物随洗衣周期重复，需少量额外操作。"
+  },
+  {
+    "id": "household-diy-014",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "洗衣是典型每周家务，操作门槛不高。"
+  },
+  {
+    "id": "household-diy-015",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "制作家居装饰需构思、材料和一至两小时动手。"
+  },
+  {
+    "id": "household-diy-016",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "low",
+    "xp": 75,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "凭自制作品获得认可需要先完成作品并展示，但可以随新作品重复。"
+  },
+  {
+    "id": "household-diy-017",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "鸟舍或喂鸟器需设计、制作和安装，项目较重但可按年度制作新的。"
+  },
+  {
+    "id": "household-diy-018",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "掌握缝纫基础是一次明确的技能入门里程碑。"
+  },
+  {
+    "id": "household-diy-019",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "修理物品需要诊断、工具和操作，按月奖励较稳健。"
+  },
+  {
+    "id": "household-diy-020",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "寻找回收或二手替代品需要采购协调和选择成本。"
+  },
+  {
+    "id": "household-diy-021",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "搬家是跨多日、体力与协调成本都很高的重大生活项目。"
+  },
+  {
+    "id": "household-diy-022",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "完成一件编织或钩编作品通常跨多次制作，但新作品可以持续完成。"
+  },
+  {
+    "id": "household-diy-023",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "制作可穿衣物需要量体、工艺和多阶段制作，但不应限制为一生一次。"
+  },
+  {
+    "id": "household-diy-024",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "玻璃容器类手作需要材料和完整制作流程，但可以按不同作品重复。"
+  },
+  {
+    "id": "household-diy-025",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "normal",
+    "xp": 450,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "购置车辆涉及高成本研究、决策和手续，是重大里程碑。"
+  },
+  {
+    "id": "household-diy-026",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "建造树屋是高安全要求、跨多日的复杂工程。"
+  },
+  {
+    "id": "household-diy-027",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "购房并入住涉及长期财务、手续和搬迁，是重大人生里程碑。"
+  },
+  {
+    "id": "humanity-001",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "主动帮助他人通常不需复杂准备，但不宜按日机械刷取。"
+  },
+  {
+    "id": "humanity-002",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "携带环保袋低摩擦，能随每日采购形成习惯。"
+  },
+  {
+    "id": "humanity-003",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "公平贸易消费随补货发生，每月记录足以体现选择。"
+  },
+  {
+    "id": "humanity-004",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "零钱捐赠几乎无执行难度，按月可避免小额反复刷取。"
+  },
+  {
+    "id": "humanity-005",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "食物捐赠需整理或采购并送到机构，存在协调成本。"
+  },
+  {
+    "id": "humanity-006",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "清理、打包和投递衣物适合年度集中完成。"
+  },
+  {
+    "id": "humanity-007",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "赞美陌生人耗时短但需要一定社交主动性。"
+  },
+  {
+    "id": "humanity-008",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "支持本地商店随采购机会发生，每月统计更自然。"
+  },
+  {
+    "id": "humanity-009",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "真诚赞美熟人低门槛且有每日关系价值。"
+  },
+  {
+    "id": "humanity-010",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "筛选、整理并转让闲置物通常需要一段集中处理时间。"
+  },
+  {
+    "id": "humanity-011",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "器官捐献登记是需要了解并作出决定的一次性里程碑。"
+  },
+  {
+    "id": "humanity-012",
+    "cadence": "每周",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "照顾孩子通常持续数小时并承担较高责任与精力消耗。"
+  },
+  {
+    "id": "humanity-013",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "对陌生人行善耗时可短，但需要观察和主动接触。"
+  },
+  {
+    "id": "humanity-014",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "匿名善举需要特意构思，按月保留真诚感。"
+  },
+  {
+    "id": "humanity-015",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "向收容所贡献时间或金钱通常涉及联络、出行或预算。"
+  },
+  {
+    "id": "humanity-016",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "一般环保行动可重复，但按周能要求一次较完整的实际行动。"
+  },
+  {
+    "id": "humanity-017",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "随机善举具有重复价值，但不宜成为每日机械打卡。"
+  },
+  {
+    "id": "humanity-018",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "公益捐款操作简单，按月与个人预算周期更匹配。"
+  },
+  {
+    "id": "humanity-019",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "献血需健康筛查、出行和恢复，受安全间隔限制。"
+  },
+  {
+    "id": "humanity-020",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "急救课程占用半天并需专业教学，技能也适合按年度复训。"
+  },
+  {
+    "id": "humanity-021",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "正式志愿服务往往需联络、出行并投入半天时间。"
+  },
+  {
+    "id": "humanity-022",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "定向捐款操作简单，适合按月预算执行。"
+  },
+  {
+    "id": "humanity-023",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "慈善步行或跑步需报名、训练和参赛，通常是年度活动。"
+  },
+  {
+    "id": "humanity-024",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "收养宠物包含筛选、手续和多年照护承诺，是重大里程碑。"
+  },
+  {
+    "id": "humanity-025",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "筹款活动是跨阶段、高协调项目，但公益行动可以每年组织新的活动。"
+  },
+  {
+    "id": "mental-001",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "短暂放松无需准备，适合作为每日心理维护。"
+  },
+  {
+    "id": "mental-002",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "基础仪容打理低门槛，可每日带来自我状态反馈。"
+  },
+  {
+    "id": "mental-003",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "写当日任务通常几分钟即可完成，适合作为每日规划。"
+  },
+  {
+    "id": "mental-004",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "早起并行动需要一定自律，但仍是典型每日习惯。"
+  },
+  {
+    "id": "mental-005",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "简短日记可在十到三十分钟内完成，具有每日反思价值。"
+  },
+  {
+    "id": "mental-006",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "短时离开屏幕无需外部准备，但需要主动控制注意力。"
+  },
+  {
+    "id": "mental-007",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "减少无意义耗时是每日注意力管理目标。"
+  },
+  {
+    "id": "mental-008",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "未来期待清单不需频繁重写，每月更新更有信息量。"
+  },
+  {
+    "id": "mental-009",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "维持一整天更自信的行为需要持续社交勇气和自我调节。"
+  },
+  {
+    "id": "mental-010",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "主动征询意见耗时不长，但需要合适对象和沟通机会。"
+  },
+  {
+    "id": "mental-011",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "呼吸、拉伸等放松练习门槛低，适合每日维护。"
+  },
+  {
+    "id": "mental-012",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "制定日程通常十到三十分钟，按周统筹最匹配。"
+  },
+  {
+    "id": "mental-013",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "带着失败风险尝试新事物需要准备和明显心理投入。"
+  },
+  {
+    "id": "mental-014",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "觉察并中止自我批评是可每日练习的认知习惯。"
+  },
+  {
+    "id": "mental-015",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "真正原谅一项过往错误是高心理成本的个人里程碑。"
+  },
+  {
+    "id": "mental-016",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "一次善待自己的小行动低门槛且有每日价值。"
+  },
+  {
+    "id": "mental-017",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "安排一件让自己快乐的小事可低摩擦每日完成。"
+  },
+  {
+    "id": "mental-018",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "接纳并改善一个缺点是长期心理项目，不同成长阶段仍可再次完成。"
+  },
+  {
+    "id": "mental-019",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "持续一天传播快乐需要多次主动互动，适合每周挑战。"
+  },
+  {
+    "id": "mental-020",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "表达感谢耗时短，但按周更能保持具体和真诚。"
+  },
+  {
+    "id": "mental-021",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "个人日记是典型低门槛每日反思行为。"
+  },
+  {
+    "id": "mental-022",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "提出可能被拒绝的要求需要情境、准备和社交勇气。"
+  },
+  {
+    "id": "mental-023",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "复盘真实错误不宜人为制造，按月记录更合理。"
+  },
+  {
+    "id": "mental-024",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "寻找一次开怀大笑的体验门槛低且可每日重复。"
+  },
+  {
+    "id": "mental-025",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "有意义地改变日常需要选择方案并适应新安排。"
+  },
+  {
+    "id": "mental-026",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "面对通常回避的事项需要明显意志力，适合每周攻克一次。"
+  },
+  {
+    "id": "mental-027",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "安排一次具体心理照护行动适合纳入每周维护。"
+  },
+  {
+    "id": "mental-028",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "为自己正式发声需要勇气与沟通，但会在不同重要情境中再次发生。"
+  },
+  {
+    "id": "mental-029",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "摆脱他人评价完成一次行动需要显著心理勇气。"
+  },
+  {
+    "id": "mental-030",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "克服一项具体恐惧是重大长期挑战，但人生中可以逐年面对不同恐惧。"
+  },
+  {
+    "id": "mental-031",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "认真道歉和补偿有明显心理成本，但针对不同事件可以合理重复。"
+  },
+  {
+    "id": "mental-032",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "识别借口并改为行动是需要每日练习的自我管理习惯。"
+  },
+  {
+    "id": "mental-033",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "全天关闭手机会影响联络与工作安排，需要提前协调。"
+  },
+  {
+    "id": "mental-034",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "一整天管理抱怨和消极表达需要持续觉察与控制。"
+  },
+  {
+    "id": "mental-035",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "用诚实沟通替代积怨需要选择时机并承担人际压力。"
+  },
+  {
+    "id": "mental-036",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "主动跨出舒适区需要准备和勇气，不宜高频重复奖励。"
+  },
+  {
+    "id": "mental-037",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "结清一项长期拖延事项需要集中投入，但每月仍可能处理不同积压事项。"
+  },
+  {
+    "id": "mental-038",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "走出舒适区需要勇气和准备，但应鼓励持续尝试不同的新体验。"
+  },
+  {
+    "id": "mental-039",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "主动拨打心理援助热线需要显著勇气并寻求专业支持。"
+  },
+  {
+    "id": "mental-040",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "首次预约并面见心理健康专家涉及协调、费用和心理勇气。"
+  },
+  {
+    "id": "outdoors-001",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "短暂到户外无需准备，具有明确每日身心价值。"
+  },
+  {
+    "id": "outdoors-002",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "顺手捡起一件垃圾低摩擦且可形成每日公共环境习惯。"
+  },
+  {
+    "id": "outdoors-003",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "探索新路径需要选线、出行并步行半小时以上。"
+  },
+  {
+    "id": "outdoors-004",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "low",
+    "xp": 75,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "公园或海滩活动本身轻松，但通常需要专程出行。"
+  },
+  {
+    "id": "outdoors-005",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "浇水低门槛，但多数植物无需每天统一浇灌，按周更稳妥。"
+  },
+  {
+    "id": "outdoors-006",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "园艺通常需工具并持续半小时以上，适合每周维护。"
+  },
+  {
+    "id": "outdoors-007",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "种树受季节、场地和苗木限制，并包含较重挖掘工作。"
+  },
+  {
+    "id": "outdoors-008",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "放风筝需合适天气、场地和器材，属于计划性户外活动。"
+  },
+  {
+    "id": "outdoors-009",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "种植蔬菜跨越播种、养护和生长，是季节性项目。"
+  },
+  {
+    "id": "outdoors-010",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "骑行通常持续半小时以上并需要路线与车辆准备。"
+  },
+  {
+    "id": "outdoors-011",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "夏季营地住宿是季节性多日活动，准备和体力成本高。"
+  },
+  {
+    "id": "outdoors-012",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "露营涉及装备、交通、搭建和过夜，通常占用半天以上。"
+  },
+  {
+    "id": "outdoors-013",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "冬季木屋露营受季节限制，并需住宿与交通协调。"
+  },
+  {
+    "id": "outdoors-014",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "划船需水域、船只或预约，通常持续一至数小时。"
+  },
+  {
+    "id": "outdoors-015",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "生火烹饪需要场地、燃料、食材和安全操作。"
+  },
+  {
+    "id": "outdoors-016",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "钓鱼通常需装备、地点许可并投入半天时间。"
+  },
+  {
+    "id": "outdoors-017",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "原生花卉种植需调查品种并配合适宜种植季。"
+  },
+  {
+    "id": "outdoors-018",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "露天过夜受天气、安全和场地限制，需完整夜间准备。"
+  },
+  {
+    "id": "outdoors-019",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "射箭练习需要场地、器材和技术指导，适合按月。"
+  },
+  {
+    "id": "outdoors-020",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "滑冰受季节或场馆条件限制，并需要专程出行。"
+  },
+  {
+    "id": "outdoors-021",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "篝火需要合法场地、燃料、天气条件和安全技能。"
+  },
+  {
+    "id": "outdoors-022",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "一次种植五棵树是高体力、多材料和场地协调的年度项目。"
+  },
+  {
+    "id": "outdoors-023",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "骑马通常需预约、费用、指导并承受较高身体负荷。"
+  },
+  {
+    "id": "outdoors-024",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "洞穴探险需专业装备、路线和安全准备，但可以按年度探索不同洞穴。"
+  },
+  {
+    "id": "outdoors-025",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "冬季露营是季节性多日活动，对装备、体能和风险管理要求高。"
+  },
+  {
+    "id": "outdoors-026",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "攀岩或绳降需要场地、装备、保护技术和较高体力。"
+  },
+  {
+    "id": "outdoors-027",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "滑翔依赖专业机构、天气、费用和勇气，但不是只能体验一次。"
+  },
+  {
+    "id": "outdoors-028",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "白水漂流需季节水况、团队和专业组织，风险与成本都高。"
+  },
+  {
+    "id": "outdoors-029",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "攀冰具有高技能、高装备和高风险成本，适合作为年度进阶活动。"
+  },
+  {
+    "id": "outdoors-030",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "水肺潜水需要培训、装备和安全条件，但取得能力后仍可年度重复。"
+  },
+  {
+    "id": "outdoors-031",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "登山需要长期准备、路线与风险管理，但可以挑战不同山峰。"
+  },
+  {
+    "id": "top-150-001",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅短、叙事明快，奇想世界丰富但阅读门槛低。"
+  },
+  {
+    "id": "top-150-002",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，寓言结构与群体心理主题需要一定思考。"
+  },
+  {
+    "id": "top-150-003",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "短篇冒险小说，线性叙事清楚，通常数小时可读完。"
+  },
+  {
+    "id": "top-150-004",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅短、儿童文学表达直白，主要负担在幻想设定。"
+  },
+  {
+    "id": "top-150-005",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅很短，但维多利亚时期语言和双重人格隐喻略有门槛。"
+  },
+  {
+    "id": "top-150-006",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇科幻，情节易读，但时间与文明演化设想需要思考。"
+  },
+  {
+    "id": "top-150-007",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "短篇青少年小说，语言浅白、结构清晰。"
+  },
+  {
+    "id": "top-150-008",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，成长叙事之外还涉及种族与司法议题。"
+  },
+  {
+    "id": "top-150-009",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅短且故事直白，但政治寓言需要理解历史语境。"
+  },
+  {
+    "id": "top-150-010",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "虽是中篇，叙述视角、象征体系和殖民主题都较密集。"
+  },
+  {
+    "id": "top-150-011",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中篇体量，语言直接，人物关系与主线都很清楚。"
+  },
+  {
+    "id": "top-150-012",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅短、句式简洁，象征意味不妨碍顺畅阅读。"
+  },
+  {
+    "id": "top-150-013",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "短篇黑色小说，节奏快、情节线性、阅读负担低。"
+  },
+  {
+    "id": "top-150-014",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅很短，但存在主义主题和冷峻叙述需要停下来思考。"
+  },
+  {
+    "id": "top-150-015",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "短小讽刺故事易读，理解其哲学与时代讽刺需一些背景。"
+  },
+  {
+    "id": "top-150-016",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅不长，但象征、阶层与不可靠自我叙述增加理解层次。"
+  },
+  {
+    "id": "top-150-017",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇科幻，旧式语言与科学设想使阅读略费力。"
+  },
+  {
+    "id": "top-150-018",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "原文极短，但文言、兵法概念和高度凝练的论述需要慢读。"
+  },
+  {
+    "id": "top-150-019",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "通俗青少年奇幻，线性冒险结构清楚，阅读节奏轻快。"
+  },
+  {
+    "id": "top-150-020",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "完整长篇体量，世界观与多线冒险比一般短篇更复杂。"
+  },
+  {
+    "id": "top-150-021",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，故事易懂，但方言、时代背景增加少量门槛。"
+  },
+  {
+    "id": "top-150-022",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "大型诗集版本篇幅长，诗体自由、意象密集，适合长期分段阅读。"
+  },
+  {
+    "id": "top-150-023",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅短、青少年口吻直接，冲突与人物线清晰。"
+  },
+  {
+    "id": "top-150-024",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "短篇寓言式小说，语言通俗、结构单纯。"
+  },
+  {
+    "id": "top-150-025",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅不长，但旧式译文、社会寓意与早期科幻想象略有门槛。"
+  },
+  {
+    "id": "top-150-026",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "短篇体量，情节清楚，但宗教哲学主题需要反思。"
+  },
+  {
+    "id": "top-150-027",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇、章节松快，群像生活叙事容易跟进。"
+  },
+  {
+    "id": "top-150-028",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇侦探故事，线索明确、类型叙事成熟易读。"
+  },
+  {
+    "id": "top-150-029",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅不长、冒险线清楚，但古典措辞和航海词汇略增负担。"
+  },
+  {
+    "id": "top-150-030",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇体量，叙事不长，但好莱坞讽刺与阴郁象征较密。"
+  },
+  {
+    "id": "top-150-031",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇通俗小说，章节简短、寓意直接。"
+  },
+  {
+    "id": "top-150-032",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅不长，但自造俚语、暴力叙事与道德讽刺显著提高难度。"
+  },
+  {
+    "id": "top-150-033",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅不长，公路主线清楚，但贡佐式跳跃语言需要适应。"
+  },
+  {
+    "id": "top-150-034",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中篇体量，故事简单，荒诞象征与家庭异化主题稍有门槛。"
+  },
+  {
+    "id": "top-150-035",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，书信框架、旧式语言与伦理议题增加复杂度。"
+  },
+  {
+    "id": "top-150-036",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "纪实回忆篇幅短、对话为主，语言平实。"
+  },
+  {
+    "id": "top-150-037",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "中篇虽不长，但仿古长句、地理考据与宇宙恐怖描写很密集。"
+  },
+  {
+    "id": "top-150-038",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅不长且节奏快，但非线性揭示和身份主题需留意。"
+  },
+  {
+    "id": "top-150-039",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇硬汉侦探小说，案件人物较多、语言风格略有门槛。"
+  },
+  {
+    "id": "top-150-040",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通中篇体量，时间跳跃与黑色幽默带来中等结构难度。"
+  },
+  {
+    "id": "top-150-041",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，古旧句法、宗教象征和道德论述较密。"
+  },
+  {
+    "id": "top-150-042",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，但宇宙学概念抽象，需要反复理解图示与论证。"
+  },
+  {
+    "id": "top-150-043",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅不长，但意识流、一天内多视角切换使结构难度较高。"
+  },
+  {
+    "id": "top-150-044",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "短篇反乌托邦，叙事直接、情节推进快。"
+  },
+  {
+    "id": "top-150-045",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅不长，但人物与线索故意盘绕，需集中注意力。"
+  },
+  {
+    "id": "top-150-046",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，古典文风与审美伦理主题带来适中难度。"
+  },
+  {
+    "id": "top-150-047",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "儿童文学篇幅不长，但英式古雅语言和拟人寓意略有门槛。"
+  },
+  {
+    "id": "top-150-048",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇成长小说，第一人称口语化、主线单纯。"
+  },
+  {
+    "id": "top-150-049",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "中短篇科幻，文字易读，但文明跃迁与超越主题较抽象。"
+  },
+  {
+    "id": "top-150-050",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅不长，却以密集独白讨论自由意志与自我矛盾。"
+  },
+  {
+    "id": "top-150-051",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，冒险线清楚，但世界观、种族和旅程较丰富。"
+  },
+  {
+    "id": "top-150-052",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，四段游记结构清楚，但古旧语言和政治讽刺密集。"
+  },
+  {
+    "id": "top-150-053",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，多位叙述者、意识流与时间拼接提高理解难度。"
+  },
+  {
+    "id": "top-150-054",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，情节清晰，反乌托邦制度与伦理需思考。"
+  },
+  {
+    "id": "top-150-055",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，军事成长线易读，政治哲学讨论增加少量负担。"
+  },
+  {
+    "id": "top-150-056",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，情节克制，人物关系和潜台词需持续体会。"
+  },
+  {
+    "id": "top-150-057",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，叙事清楚，但政治制度与语言控制主题较重。"
+  },
+  {
+    "id": "top-150-058",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅不长、追逐主线明确，但身份与真实边界的设定需思考。"
+  },
+  {
+    "id": "top-150-059",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅短、章节轻快，以喜剧方式呈现科幻想象。"
+  },
+  {
+    "id": "top-150-060",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，短章易读，但讽刺线与虚构宗教需串联。"
+  },
+  {
+    "id": "top-150-061",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "碎片拼贴、非线性段落和实验性语言使其成为长期高难阅读。"
+  },
+  {
+    "id": "top-150-062",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，主线清楚，但抒情语言和幻想意象较丰富。"
+  },
+  {
+    "id": "top-150-063",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，战争与爱情双线清楚，语言相对克制。"
+  },
+  {
+    "id": "top-150-064",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，政治审讯与意识形态论辩需要持续理解。"
+  },
+  {
+    "id": "top-150-065",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，月球社会设定、技术术语和政治组织线较复杂。"
+  },
+  {
+    "id": "top-150-066",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，句式简洁，但末世伦理和父子关系较沉重。"
+  },
+  {
+    "id": "top-150-067",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "篇幅中等但章节独立、案例通俗，核心是人际沟通实践。"
+  },
+  {
+    "id": "top-150-068",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，线性故事不难，但古旧文风与大量生存细节拖慢阅读。"
+  },
+  {
+    "id": "top-150-069",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅不长，但意识流、多视角与时间感知使理解难度较高。"
+  },
+  {
+    "id": "top-150-070",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，图文和碎片段落易读，讽刺结构需稍作整合。"
+  },
+  {
+    "id": "top-150-071",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，梦魇式因果、未完成结构与官僚寓言较难把握。"
+  },
+  {
+    "id": "top-150-072",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，冒险叙事顺直，专业细节适中。"
+  },
+  {
+    "id": "top-150-073",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，日记体语言变化清楚，情感与科学伦理并重。"
+  },
+  {
+    "id": "top-150-074",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，但术语密集、场景跳转快、世界观几乎不作解释。"
+  },
+  {
+    "id": "top-150-075",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，方言书写、历史语境和讽刺层次提高阅读负担。"
+  },
+  {
+    "id": "top-150-076",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅中等，语言随成长变化，后段意识流与审美讨论较密。"
+  },
+  {
+    "id": "top-150-077",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通偏长篇，嵌套叙述、家族关系与古典文风较复杂。"
+  },
+  {
+    "id": "top-150-078",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，线性群像与末日主题清楚，语言较平实。"
+  },
+  {
+    "id": "top-150-079",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，自发式散文、跳跃行程与文化语境需要适应。"
+  },
+  {
+    "id": "top-150-080",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，特殊叙述视角增加层次，但主线与人物仍清楚。"
+  },
+  {
+    "id": "top-150-081",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，时序跳跃、创伤记忆与魔幻段落理解难度较高。"
+  },
+  {
+    "id": "top-150-082",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，军事训练线清晰，策略与科幻设定带来适中复杂度。"
+  },
+  {
+    "id": "top-150-083",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇体量，纪实材料多但叙事线性、可读性强。"
+  },
+  {
+    "id": "top-150-084",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，第一人称回忆结构清楚，艺术主题不妨碍阅读。"
+  },
+  {
+    "id": "top-150-085",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，框架访谈与跨年代经历丰富但整体通俗。"
+  },
+  {
+    "id": "top-150-086",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，冒险主线易读，宗教与叙述可信度提供思考层次。"
+  },
+  {
+    "id": "top-150-087",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，社会调查、移民史与工业细节使阅读较沉重。"
+  },
+  {
+    "id": "top-150-088",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "多重意识流、错乱时序和语言实验使普通篇幅也具有高难度。"
+  },
+  {
+    "id": "top-150-089",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，书信日记拼接、古典语言与多人物追踪较费力。"
+  },
+  {
+    "id": "top-150-090",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "篇幅长、维多利亚科学论证密集，还需理解大量物种案例。"
+  },
+  {
+    "id": "top-150-091",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "三卷本史诗体量巨大，人物、地理、语言与历史设定都很庞杂。"
+  },
+  {
+    "id": "top-150-092",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，殖民语境、群像关系与含蓄冲突需要细读。"
+  },
+  {
+    "id": "top-150-093",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通偏长篇，古典语言和礼仪背景存在门槛，但情节清楚。"
+  },
+  {
+    "id": "top-150-094",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "古代史诗篇幅长，诗体、神话谱系与非线性返乡结构需长期阅读。"
+  },
+  {
+    "id": "top-150-095",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，冒险线清楚，但古旧文风与大量生活细节拖慢节奏。"
+  },
+  {
+    "id": "top-150-096",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "古代长篇史诗，人物神祇众多、战事反复且文化背景要求高。"
+  },
+  {
+    "id": "top-150-097",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，跨越天文、物理与生命史，需要消化大量科学概念。"
+  },
+  {
+    "id": "top-150-098",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "正文不算长，但古英语修辞、戏剧结构与哲学独白需要精读。"
+  },
+  {
+    "id": "top-150-099",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，历史背景、双城人物线和狄更斯式长句增加负担。"
+  },
+  {
+    "id": "top-150-100",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇，华丽多语文体、不可靠叙述与伦理距离要求细读。"
+  },
+  {
+    "id": "top-150-101",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长但叙事顺畅，时代与艺伎文化背景带来适中信息量。"
+  },
+  {
+    "id": "top-150-102",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇体量、专有名词、政治宗教体系和多方势力都很复杂。"
+  },
+  {
+    "id": "top-150-103",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长篇末世群像，人物线众多、跨度大，需要长期持续阅读。"
+  },
+  {
+    "id": "top-150-104",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "普通长篇中穿插哲学随笔，时间结构与观念讨论较密。"
+  },
+  {
+    "id": "top-150-105",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，重复清单、极端叙述与不可靠视角需要较强耐力。"
+  },
+  {
+    "id": "top-150-106",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "完整版本篇幅很长、人物成长跨年，适合分阶段持续阅读。"
+  },
+  {
+    "id": "top-150-107",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇体量大，主线间穿插社会寓言章节，历史主题沉重。"
+  },
+  {
+    "id": "top-150-108",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇心理小说，人物俄文称谓多、思想辩论密集。"
+  },
+  {
+    "id": "top-150-109",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "极端实验性语言、多语双关和梦境循环使其属于最高阅读难度。"
+  },
+  {
+    "id": "top-150-110",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，罗马历史人物众多、政治关系复杂但叙事尚清楚。"
+  },
+  {
+    "id": "top-150-111",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "研究型非虚构篇幅偏长，供应链、生态和饮食案例信息密集。"
+  },
+  {
+    "id": "top-150-112",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "多代家族、重名人物、循环时序与魔幻现实结构需要长期梳理。"
+  },
+  {
+    "id": "top-150-113",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，跨历史与地理的大量论证需要持续消化。"
+  },
+  {
+    "id": "top-150-114",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "篇幅长，旅行叙事不断转入认识论与价值哲学的密集讨论。"
+  },
+  {
+    "id": "top-150-115",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，古典措辞、礼仪细节与含蓄人物关系需细读。"
+  },
+  {
+    "id": "top-150-116",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，战争背景、人物群像和内心独白带来较高投入。"
+  },
+  {
+    "id": "top-150-117",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇体量加上循环情节、时间错序与荒诞逻辑，结构复杂。"
+  },
+  {
+    "id": "top-150-118",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅虽长但类型小说节奏快，追逃主线和目标都很明确。"
+  },
+  {
+    "id": "top-150-119",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "研究型非虚构，需对照历史叙事、史料偏差与教育观点。"
+  },
+  {
+    "id": "top-150-120",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "TAL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长，科技术语、语言学设定和高速多线情节较密。"
+  },
+  {
+    "id": "top-150-121",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇科幻体量大，宗教、性别与社会制度讨论占比很高。"
+  },
+  {
+    "id": "top-150-122",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇且文风浓密，政治经济背景、多人物视角和缓慢铺陈难度高。"
+  },
+  {
+    "id": "top-150-123",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇、多线时序、历史隐喻和魔幻语言共同提高理解门槛。"
+  },
+  {
+    "id": "top-150-124",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "大部头家族史跨越数十年，人物多且主题层次丰富。"
+  },
+  {
+    "id": "top-150-125",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "大部头小说包含大量捕鲸知识、哲学旁逸与古典长句。"
+  },
+  {
+    "id": "top-150-126",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅较长、古典文风和多阶段成长线需耐心，但结构仍清楚。"
+  },
+  {
+    "id": "top-150-127",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇研究著作，跨文明案例、生态因果与比较框架信息量巨大。"
+  },
+  {
+    "id": "top-150-128",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "篇幅偏长且科学领域跨度广，虽通俗仍需持续消化概念。"
+  },
+  {
+    "id": "top-150-129",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇古典诗体，三界结构、神学寓意与历史人物注释要求高。"
+  },
+  {
+    "id": "top-150-130",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长群像小说，金融、媒体与阶层线索交织，需要长期跟进。"
+  },
+  {
+    "id": "top-150-131",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "大部头历史冒险，人物与政治势力多，虽通俗仍需较长周期。"
+  },
+  {
+    "id": "top-150-132",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "后现代长篇以碎片视角、时序跳跃和符号谜题构成高难结构。"
+  },
+  {
+    "id": "top-150-133",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇家族与成长叙事跨越多年，人物和主题支线丰富。"
+  },
+  {
+    "id": "top-150-134",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "长篇体量大，神话体系、跨洲旅程与多重身份线索众多。"
+  },
+  {
+    "id": "top-150-135",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "系列规模远超单本，跨世代政治与心理史设定需要长期阅读。"
+  },
+  {
+    "id": "top-150-136",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长古典小说，插曲众多、文体古老且需理解骑士文学传统。"
+  },
+  {
+    "id": "top-150-137",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "全集体量大，横跨诗歌、短篇与随笔，风格和典故密集。"
+  },
+  {
+    "id": "top-150-138",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "大部头战争群像，人物众多、军事生活细节与心理描写沉重。"
+  },
+  {
+    "id": "top-150-139",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长意识流名作，典故、多文体实验和一天内复杂映射极难。"
+  },
+  {
+    "id": "top-150-140",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "大部头家族小说，人物称谓繁多，宗教伦理辩论密集。"
+  },
+  {
+    "id": "top-150-141",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长且采用版式迷宫、脚注嵌套与多层伪文献，实验性极强。"
+  },
+  {
+    "id": "top-150-142",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长后现代小说，人物线庞杂、专业典故密集、叙事高度碎片化。"
+  },
+  {
+    "id": "top-150-143",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长历史冒险，人物与复仇支线众多，完成需要长期投入。"
+  },
+  {
+    "id": "top-150-144",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长小说夹有大段哲学演说，人物线和观念负担都很重。"
+  },
+  {
+    "id": "top-150-145",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长恐怖群像跨越两代，多人物、多时间线与庞大篇幅并存。"
+  },
+  {
+    "id": "top-150-146",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长历史社会小说，人物众多并穿插大量历史、宗教与制度议论。"
+  },
+  {
+    "id": "top-150-147",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长史诗，家族称谓、战争历史与哲学章节都需长期跟进。"
+  },
+  {
+    "id": "top-150-148",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "大部头奇幻，家族势力、人物视角与政治线索密集交错。"
+  },
+  {
+    "id": "top-150-149",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "TAL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长小说含大量尾注、跳跃叙事和专业文化典故，实验性极强。"
+  },
+  {
+    "id": "top-150-150",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "超长历史爱情小说，人物和时代跨度大，需要稳定长期阅读。"
+  },
+  {
+    "id": "reading-001",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "读一章通常十到三十分钟，适合每日积累。"
+  },
+  {
+    "id": "reading-002",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "阅读一篇人物故事门槛低，每周选择一次更有内容质量。"
+  },
+  {
+    "id": "reading-003",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "low",
+    "xp": 75,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "参观图书馆本身轻松，但需要专程出行和停留。"
+  },
+  {
+    "id": "reading-004",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "借书需要联系他人并协调交接，按月较自然。"
+  },
+  {
+    "id": "reading-005",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "读完一本人物传记通常跨越多次阅读，是完整阅读项目。"
+  },
+  {
+    "id": "reading-006",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "借出一本书操作简单，但需合适对象和交接机会。"
+  },
+  {
+    "id": "reading-007",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "读完整本书通常需多日、多阶段投入。"
+  },
+  {
+    "id": "reading-008",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "筛选、打包并投递书籍适合年度集中整理。"
+  },
+  {
+    "id": "reading-009",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "low",
+    "xp": 75,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "有声书体力负担低，但完整收听通常需一至数小时。"
+  },
+  {
+    "id": "school-learning-001",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "low",
+    "xp": 75,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "纪录片通常持续一至两小时，适合每周深度观看。"
+  },
+  {
+    "id": "school-learning-002",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "阅读陌生主题文章可在半小时内完成，具有每日学习价值。"
+  },
+  {
+    "id": "school-learning-003",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "观看一次短教程门槛低，每周安排可要求实际消化。"
+  },
+  {
+    "id": "school-learning-004",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "适量阅读新闻是典型低摩擦每日信息习惯。"
+  },
+  {
+    "id": "school-learning-005",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "理解文化或宗教背景需要较完整材料和专注阅读。"
+  },
+  {
+    "id": "school-learning-006",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "一次聚焦学习或研究通常十到三十分钟即可形成结果。"
+  },
+  {
+    "id": "school-learning-007",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "博物馆参观涉及出行并通常占用半天。"
+  },
+  {
+    "id": "school-learning-008",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "按时交付作业或项目需要规划、执行并抵抗拖延。"
+  },
+  {
+    "id": "school-learning-009",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "导览活动需预约或出行，通常持续一至两小时。"
+  },
+  {
+    "id": "school-learning-010",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "超出要求深入研究需要主动扩展资料和较高专注。"
+  },
+  {
+    "id": "school-learning-011",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "连续七天学习新词是跨度整周的轻量连续挑战。"
+  },
+  {
+    "id": "school-learning-012",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 8
+      },
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "驾照需要长期练习、考试、费用和安全能力，是明确证照里程碑。"
+  },
+  {
+    "id": "school-learning-013",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "学校毕业代表多年课程和考核完成，是重大教育里程碑。"
+  },
+  {
+    "id": "school-learning-014",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 4
+      }
+    ],
+    "rationale": "一节正式课程通常持续半小时以上，并需固定时间参与。"
+  },
+  {
+    "id": "school-learning-015",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "讲座需安排时间或出行，通常持续一至两小时。"
+  },
+  {
+    "id": "school-learning-016",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "正式演示或演讲包含准备、表达和明显公开压力。"
+  },
+  {
+    "id": "school-learning-017",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "INT",
+        "points": 1
+      }
+    ],
+    "rationale": "有效提升编程技能需要一次完整练习和问题解决过程。"
+  },
+  {
+    "id": "school-learning-018",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "辩论需要资料准备、临场推理和公开表达勇气。"
+  },
+  {
+    "id": "school-learning-019",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "外语沟通提升需要持续练习，每周完成一次有效训练较合理。"
+  },
+  {
+    "id": "school-learning-020",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 3
+      },
+      {
+        "key": "CHA",
+        "points": 1
+      }
+    ],
+    "rationale": "手语沟通依赖动作技能和互动练习，适合每周推进。"
+  },
+  {
+    "id": "school-learning-021",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "学院或大学毕业是多年学习、项目与考核后的重大成就。"
+  },
+  {
+    "id": "social-001",
+    "cadence": "每年",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "生日或纪念贺卡随年度日期发生，准备成本低。"
+  },
+  {
+    "id": "social-002",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "闲聊电话低门槛，每周联系能稳定维护关系。"
+  },
+  {
+    "id": "social-003",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "朋友夜间聚会需要协调时间、出行和数小时参与。"
+  },
+  {
+    "id": "social-004",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "认识新人耗时可短，但需要主动交流和合适情境。"
+  },
+  {
+    "id": "social-005",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "共度一整天需双方协调并投入半天以上时间。"
+  },
+  {
+    "id": "social-006",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "写感谢信约需十到三十分钟，按月更能保持具体真诚。"
+  },
+  {
+    "id": "social-007",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "组织并讲好一个故事需要少量构思和表达。"
+  },
+  {
+    "id": "social-008",
+    "cadence": "每周",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "真正让他人快乐通常需要观察需求并付出具体行动。"
+  },
+  {
+    "id": "social-009",
+    "cadence": "每年",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "节日贺卡受年度节庆周期约束，执行门槛低。"
+  },
+  {
+    "id": "social-010",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "与陌生人交谈耗时短，但有一定社交勇气成本。"
+  },
+  {
+    "id": "social-011",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "重新联系失联对象需要寻找方式并克服尴尬或不确定性。"
+  },
+  {
+    "id": "social-012",
+    "cadence": "每日",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "即时通讯低摩擦，适合作为每日轻量联系。"
+  },
+  {
+    "id": "social-013",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "准备有心意的礼物需要了解需求、选择或制作。"
+  },
+  {
+    "id": "social-014",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "帮助搬家通常占用半天以上并有较高体力负担。"
+  },
+  {
+    "id": "social-015",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "STR",
+        "points": 1
+      }
+    ],
+    "rationale": "首次邀请一个新对象需要计划活动并承担被拒绝压力。"
+  },
+  {
+    "id": "social-016",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "手写并邮寄信件需要完整书写、准备信封和投递。"
+  },
+  {
+    "id": "social-017",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "联系旧老师需要回顾经历并认真组织内容，适合年度完成。"
+  },
+  {
+    "id": "social-018",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "low",
+    "xp": 35,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "与亲友相处可轻量进行，每周稳定维护关系最合适。"
+  },
+  {
+    "id": "social-019",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "成为常客需要跨多次到访建立熟悉关系，是持续行为里程碑。"
+  },
+  {
+    "id": "social-020",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "送花需购买或准备并安排交付，适合低频表达。"
+  },
+  {
+    "id": "social-021",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "跨国友人通信需要完整书写，也包含文化交流。"
+  },
+  {
+    "id": "social-022",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "high",
+    "xp": 120,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "参加社交活动需要出行、持续互动并承受一定社交消耗。"
+  },
+  {
+    "id": "travel-001",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 3
+      },
+      {
+        "key": "CUL",
+        "points": 1
+      }
+    ],
+    "rationale": "探索陌生城区需要路线规划、出行并停留一段时间。"
+  },
+  {
+    "id": "travel-002",
+    "cadence": "每周",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "改变日常路线成本不高，每周一次能保持环境探索价值。"
+  },
+  {
+    "id": "travel-003",
+    "cadence": "每月",
+    "tier": 1,
+    "energyDemand": "normal",
+    "xp": 45,
+    "stats": [
+      {
+        "key": "CHA",
+        "points": 2
+      }
+    ],
+    "rationale": "旅行明信片需选购、书写和投递，随旅行机会低频发生。"
+  },
+  {
+    "id": "travel-004",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "前往陌生城镇通常需交通规划并占用半天或更久。"
+  },
+  {
+    "id": "travel-005",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "前往一个长期向往的地方需要完整旅行投入，但愿望清单可以逐年完成。"
+  },
+  {
+    "id": "travel-006",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "跨省或跨州旅行需较长交通和住宿协调，适合年度。"
+  },
+  {
+    "id": "travel-007",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "STR",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "国家公园徒步包含长途出行、路线和明显体力投入。"
+  },
+  {
+    "id": "travel-008",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "历史遗迹参观通常需专程旅行并进行较完整游览。"
+  },
+  {
+    "id": "travel-009",
+    "cadence": "每月",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "TAL",
+        "points": 1
+      }
+    ],
+    "rationale": "制定可执行行程需检索交通、住宿和景点并权衡安排。"
+  },
+  {
+    "id": "travel-010",
+    "cadence": "终身一次",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "INT",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "办理电子护照包含材料、预约和手续，是明确证件里程碑。"
+  },
+  {
+    "id": "travel-011",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "STR",
+        "points": 2
+      }
+    ],
+    "rationale": "无目的地公路旅行通常占用整天，驾驶和即时决策负担较高。"
+  },
+  {
+    "id": "travel-012",
+    "cadence": "每月",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "读完整本旅游书需要多次阅读并形成目的地知识。"
+  },
+  {
+    "id": "travel-013",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "观看间歇泉需前往特定自然景区，但可以在不同旅程中观看不同地点。"
+  },
+  {
+    "id": "travel-014",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "大型体育赛事需抢票、旅行和现场停留，适合年度而非终身一次。"
+  },
+  {
+    "id": "travel-015",
+    "cadence": "每年",
+    "tier": 2,
+    "energyDemand": "normal",
+    "xp": 95,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 3
+      },
+      {
+        "key": "ENV",
+        "points": 1
+      }
+    ],
+    "rationale": "酒店或民宿住宿涉及预订、费用和出行，但并非稀有里程碑。"
+  },
+  {
+    "id": "travel-016",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "normal",
+    "xp": 450,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "出国旅行是多日、高费用和手续密集的活动，但可以每年访问不同国家。"
+  },
+  {
+    "id": "travel-017",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "外国文化历史建筑并非单一目的地，可在不同年度旅行中持续探索。"
+  },
+  {
+    "id": "travel-018",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 8
+      },
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "陌生文字环境带来跨境、语言与适应压力，但可在不同国家重复挑战。"
+  },
+  {
+    "id": "travel-019",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "搬到新城市是跨多日、高协调成本的重大生活迁移。"
+  },
+  {
+    "id": "travel-020",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 8
+      },
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "海外节日需要跨境旅行与活动协调，但不同节庆可按年度体验。"
+  },
+  {
+    "id": "travel-021",
+    "cadence": "每年",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "TAL",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "完成旅行视频需拍摄、整理和剪辑，是半天以上的创作项目。"
+  },
+  {
+    "id": "travel-022",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "全国公路旅行跨多地多日，驾驶、预算和路线协调成本极高。"
+  },
+  {
+    "id": "travel-023",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "随机目的地旅行不确定性、费用和临场规划成本很高，但并非逻辑上只能一次。"
+  },
+  {
+    "id": "travel-024",
+    "cadence": "每年",
+    "tier": 4,
+    "energyDemand": "normal",
+    "xp": 450,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "跨洲旅行通常多日且高费用，但可以逐年探索不同大陆。"
+  },
+  {
+    "id": "travel-025",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "CHA",
+        "points": 4
+      }
+    ],
+    "rationale": "移居新国家涉及签证、搬迁、语言和长期适应，是重大人生项目。"
+  },
+  {
+    "id": "destinations-001",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "自由女神像是交通便利的城市地标，主要成本在跨城旅行与游览。"
+  },
+  {
+    "id": "destinations-002",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "观看落基山脉需要区域旅行，但不要求高风险攀登。"
+  },
+  {
+    "id": "destinations-003",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "大峡谷是成熟景区，参观需长途旅行但普通观景风险有限。"
+  },
+  {
+    "id": "destinations-004",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "加拿大国家电视塔位于城市中心，属于常规国际城市地标游览。"
+  },
+  {
+    "id": "destinations-005",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "尼亚加拉瀑布交通和设施成熟，主要难度是长途到访。"
+  },
+  {
+    "id": "destinations-006",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "金门大桥是易于抵达的城市地标，不需专业能力。"
+  },
+  {
+    "id": "destinations-007",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "奇琴伊察是成熟历史景区，需国际旅行和现场游览。"
+  },
+  {
+    "id": "destinations-008",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "normal",
+    "xp": 450,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "CUL",
+        "points": 4
+      }
+    ],
+    "rationale": "加拉帕戈斯群岛偏远、受保护且需飞机与船只多段协调。"
+  },
+  {
+    "id": "destinations-009",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "长城是成熟景点，但台阶和长距离步行带来明显体力负担。"
+  },
+  {
+    "id": "destinations-010",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "马丘比丘地处高海拔山区，交通链复杂并有显著身体适应成本。"
+  },
+  {
+    "id": "destinations-011",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "巨石阵是成熟历史景点，属于常规长途文化游览。"
+  },
+  {
+    "id": "destinations-012",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "normal",
+    "xp": 450,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 8
+      },
+      {
+        "key": "ENV",
+        "points": 4
+      }
+    ],
+    "rationale": "复活节岛位置极偏远，航线有限且旅行费用高。"
+  },
+  {
+    "id": "destinations-013",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "埃菲尔铁塔是交通便利的城市地标，完成难度主要来自跨城旅行。"
+  },
+  {
+    "id": "destinations-014",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "罗马斗兽场是成熟城市历史景点，游览成本中等。"
+  },
+  {
+    "id": "destinations-015",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "比萨斜塔是常规城市景点，无专业或高风险要求。"
+  },
+  {
+    "id": "destinations-016",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "亚马逊雨林偏远、湿热且有健康与安全风险，需要专业行程。"
+  },
+  {
+    "id": "destinations-017",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "ENV",
+        "points": 2
+      }
+    ],
+    "rationale": "救世主基督雕像是成熟城市景点，需国际旅行但风险有限。"
+  },
+  {
+    "id": "destinations-018",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 5
+      },
+      {
+        "key": "CUL",
+        "points": 2
+      }
+    ],
+    "rationale": "任务仅要求亲眼观看富士山，不要求登顶，属于常规目的地游览。"
+  },
+  {
+    "id": "destinations-019",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "埃及金字塔是成熟历史景区，主要难度为国际旅行和气候。"
+  },
+  {
+    "id": "destinations-020",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "佩特拉需长距离步行并面对炎热环境，但仍有成熟旅游设施。"
+  },
+  {
+    "id": "destinations-021",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "normal",
+    "xp": 210,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "泰姬陵是交通成熟的国际历史地标，现场游览风险有限。"
+  },
+  {
+    "id": "destinations-022",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "澳大利亚内陆偏远、炎热且补给距离长，需要专业路线与安全准备。"
+  },
+  {
+    "id": "destinations-023",
+    "cadence": "终身一次",
+    "tier": 3,
+    "energyDemand": "high",
+    "xp": 270,
+    "stats": [
+      {
+        "key": "CUL",
+        "points": 5
+      },
+      {
+        "key": "INT",
+        "points": 2
+      }
+    ],
+    "rationale": "吴哥窟是成熟景区，但寺庙群范围大且气候炎热，体力消耗较高。"
+  },
+  {
+    "id": "destinations-024",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "normal",
+    "xp": 450,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "任务仅要求亲眼看见乞力马扎罗山，但目的地较偏远且交通成本高。"
+  },
+  {
+    "id": "destinations-025",
+    "cadence": "终身一次",
+    "tier": 4,
+    "energyDemand": "high",
+    "xp": 600,
+    "stats": [
+      {
+        "key": "ENV",
+        "points": 8
+      },
+      {
+        "key": "STR",
+        "points": 4
+      }
+    ],
+    "rationale": "南极洲极端偏远、昂贵且受天气制约，是最高成本的探险目的地。"
+  }
+]

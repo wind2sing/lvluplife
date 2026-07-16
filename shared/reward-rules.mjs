@@ -8,16 +8,19 @@ export const CATEGORY_REWARD_STATS = {
   旅行: ['ENV', 'CUL'], 一生必去: ['CUL', 'ENV'],
 }
 
-const energyMultiplier = { low: 0.9, normal: 1, high: 1.15 }
-const cadenceMultiplier = { 每日: 0.82, 每周: 0.95, 每月: 1.05, 每年: 1.15, 终身一次: 1.25 }
-const cadenceStatMultiplier = { 每日: 0.82, 每周: 0.95, 每月: 1, 每年: 1.08, 终身一次: 1.15 }
+const xpByTierAndEnergy = {
+  1: { low: 35, normal: 45, high: 60 },
+  2: { low: 75, normal: 95, high: 120 },
+  3: { low: 160, normal: 210, high: 270 },
+  4: { low: 350, normal: 450, high: 600 },
+}
+const statBudgetByTier = { 1: 2, 2: 4, 3: 7, 4: 12 }
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
-const roundFive = (value) => Math.round(value / 5) * 5
 
-export function inferTier(energyDemand = 'normal', cadence = '终身一次') {
+export function inferTier(energyDemand = 'normal') {
   const energyTier = energyDemand === 'low' ? 1 : energyDemand === 'high' ? 3 : 2
-  return cadence === '终身一次' && energyDemand === 'high' ? 4 : energyTier
+  return energyTier
 }
 
 export function inferQuestEnergy(tier) {
@@ -25,19 +28,14 @@ export function inferQuestEnergy(tier) {
   return normalizedTier === 1 ? 'low' : normalizedTier >= 3 ? 'high' : 'normal'
 }
 
-export function calculateReward({ level = 1, tier, energyDemand = 'normal', cadence = '终身一次', primaryStat = 'INT', secondaryStat }) {
-  const normalizedEnergy = energyMultiplier[energyDemand] ? energyDemand : 'normal'
-  const normalizedCadence = cadenceMultiplier[cadence] ? cadence : '终身一次'
-  const normalizedTier = tier ? clamp(Math.round(Number(tier) || 1), 1, 4) : inferTier(normalizedEnergy, normalizedCadence)
-  const normalizedLevel = clamp(Math.round(Number(level) || 1), 1, 30)
-  const base = [0, 55, 115, 235, 480][normalizedTier]
-  const levelMultiplier = Math.min(1.35, 1 + (normalizedLevel - 1) * 0.012)
-  const xp = clamp(roundFive(base * energyMultiplier[normalizedEnergy] * cadenceMultiplier[normalizedCadence] * levelMultiplier), 25, 1500)
-  const statBudget = clamp(Math.round((normalizedTier * 3 + normalizedLevel / 8) * energyMultiplier[normalizedEnergy] * cadenceStatMultiplier[normalizedCadence]), 2, 18)
-  const pointCap = Math.max(normalizedLevel * 3, normalizedTier * 3)
+export function calculateReward({ tier, energyDemand = 'normal', primaryStat = 'INT', secondaryStat }) {
+  const normalizedEnergy = ['low', 'normal', 'high'].includes(energyDemand) ? energyDemand : 'normal'
+  const normalizedTier = tier ? clamp(Math.round(Number(tier) || 1), 1, 4) : inferTier(normalizedEnergy)
+  const xp = xpByTierAndEnergy[normalizedTier][normalizedEnergy]
+  const statBudget = statBudgetByTier[normalizedTier]
   const hasSecondary = normalizedTier > 1 && secondaryStat && secondaryStat !== primaryStat
-  const primaryPoints = clamp(hasSecondary ? Math.ceil(statBudget * 0.65) : statBudget, 1, pointCap)
-  const secondaryPoints = hasSecondary ? clamp(statBudget - primaryPoints, 1, pointCap) : 0
+  const primaryPoints = hasSecondary ? Math.ceil(statBudget * 2 / 3) : statBudget
+  const secondaryPoints = hasSecondary ? statBudget - primaryPoints : 0
   return {
     tier: normalizedTier,
     tierName: TIER_NAMES[normalizedTier],
